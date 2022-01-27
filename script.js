@@ -1,7 +1,11 @@
+const qn = 5;
+
 var t;
 var timerInterval;
 let questions;
 let completed = [];
+var answers = [];
+var qNumber = 0;
 
 //useful functions
 function randint(min, max) {
@@ -46,21 +50,24 @@ function getCookie(cname) {
 
 
 function generateQuestionID() {
-  number = randint(0, 2);
-  if (completed.length == 3) {
+  number = randint(0, qn-1);
+  if (completed.length == qn) {
     alert('completed');
     return -1;
   }
   else {
     while (contains(number, completed)) {
-      number = randint(0, 2);
+      number = randint(0, qn-1);
     }
     completed.push(number);
+    qNumber = number;
     return number;
   }
 }
 
 function answerClicked(ans) {
+  answers.push([qNumber, ans]);
+  console.log(answers);
   nextQuestion();
 }
 
@@ -112,6 +119,6 @@ function start() {
       console.error(error);
     });
 
-    var cookie = document.getElementById("cookie");
-    cookie.innerHTML = getCookie('test');
+    //var cookie = document.getElementById("cookie");
+    //cookie.innerHTML = getCookie('test');
 }
