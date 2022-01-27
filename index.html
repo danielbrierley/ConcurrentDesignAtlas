@@ -8,8 +8,16 @@
     </head>
     <body onload="start()">
         <div class='contents'>
-            <div style="width:100%; height:100%; background-color: green;"></div>
-            <p id='cookie'></p>
+            <div style="width:100%; height:100%; background-color: green;">
+                <p id="question"></p>
+                <p id="timer"></p>
+                <div class="answers">
+                    <button class="ans" id="ans1" onclick="answerClicked(1)"></button>
+                    <button class="ans" id="ans2" onclick="answerClicked(2)"></button>
+                    <button class="ans" id="ans3" onclick="answerClicked(3)"></button>
+                    <button class="ans" id="ans4" onclick="answerClicked(4)"></button>
+                </div>
+            </div>
         </div>
         <div class='navbar'>
             <button class="tab">

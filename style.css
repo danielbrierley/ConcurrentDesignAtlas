@@ -3,11 +3,16 @@ body {
     overflow:hidden;
 }
 
+p {
+    margin:0;
+}
+
 /*Desktop*/
 .contents {
     width:calc(100% - 20vh);
     height:100%;
     float:right;
+    font-size:20px;
 }
 
 .navbar {
@@ -46,6 +51,41 @@ body {
     /*position:relative;*/
 
 }
+
+.answers {
+    width:100%;
+    height:80%;
+    float:bottom;
+}
+
+.ans {
+    width:50%;
+    height:50%;
+    border:none;
+    float:right;
+    font-size:20px;
+}
+
+.ans:nth-child(odd) {
+    float:left;
+}
+
+#ans1 {
+    background-color: red;
+}
+
+#ans2 {
+    background-color: green;
+}
+
+#ans3 {
+    background-color: yellow;
+}
+
+#ans4 {
+    background-color: blue;
+}
+
 
 .navbar { 
     background-color: green;
