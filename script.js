@@ -7,6 +7,29 @@ let completed = [];
 var answers = [];
 var qNumber = 0;
 
+
+var pb = 0;
+
+function move() {
+  console.log(pb);
+  console.log(answers.length);
+  var width = pb;
+
+  pb = answers.length*20;
+  var elem = document.getElementById("myBar");
+  var id = setInterval(frame, 10);
+  function frame() {
+    if (width >= pb) {
+      clearInterval(id);
+      pb--;
+    } else {
+      width++;
+      elem.style.width = width + "%";
+      elem.innerHTML = width + "%";
+    }
+  }
+}
+
 //useful functions
 function randint(min, max) {
   min = Math.ceil(min);
@@ -68,6 +91,7 @@ function generateQuestionID() {
 function answerClicked(ans) {
   answers.push([qNumber, ans]);
   console.log(answers);
+  move();
   nextQuestion();
 }
 
@@ -97,7 +121,7 @@ function timer() {
     te = document.getElementById("timer");
     te.innerHTML = t;
     if (t < 0) {
-      nextQuestion();
+      answerClicked(-1);
     }
 }
 

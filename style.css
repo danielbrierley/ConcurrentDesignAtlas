@@ -80,11 +80,24 @@ p {
 }
 
 #ans3 {
-    background-color: yellow;
+    background-color: blue;
 }
 
 #ans4 {
+    background-color: yellow;
+}
+
+#myProgress {
+    width: 100%;
+    height:100%;
     background-color: blue;
+}
+
+#myBar {
+    width: 0%;
+    font-size:200%;
+    height: 100%;
+    background-color: magenta;
 }
 
 
