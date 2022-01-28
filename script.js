@@ -136,7 +136,7 @@ function start() {
     }
     
     console.log("Fetching data...");
-    getJSON("test.json").then(data => {
+    getJSON("questions.json").then(data => {
       questions = data;
       nextQuestion();
     }).catch(error => {
