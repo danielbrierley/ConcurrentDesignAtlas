@@ -5,12 +5,27 @@ var timerInterval;
 let questions;
 let completed = [];
 var answers = [];
+var ansList = [];
 var qNumber = 0;
 
-
 var pb = 0;
+let map = [];
 
-function move() {
+function shuffleAnswers(answers) {
+  newAns = [];
+  map = [];
+  for (x = 0; x < answers.length; x++) {
+    i = randint(0, answers.length-1);
+    while (contains(i, map)) {
+      i = randint(0, answers.length-1);
+    }
+    newAns.push(answers[i]);
+    map.push(i);
+  }
+  return newAns;
+}
+
+function move(callback=function() {return}) {
   console.log(pb);
   console.log(answers.length);
   var width = pb;
@@ -19,9 +34,11 @@ function move() {
   var elem = document.getElementById("myBar");
   var id = setInterval(frame, 10);
   function frame() {
-    if (width >= pb) {
+    if (width == pb) {
       clearInterval(id);
       pb--;
+      //console.log('callback');
+      callback();
     } else {
       width++;
       elem.style.width = width + "%";
@@ -45,7 +62,6 @@ function contains(item, array) {
     }
   }
   return c;
-
 }
 
 //COOKIES
@@ -75,7 +91,7 @@ function getCookie(cname) {
 function generateQuestionID() {
   number = randint(0, qn-1);
   if (completed.length == qn) {
-    alert('completed');
+    //alert('completed');
     return -1;
   }
   else {
@@ -89,10 +105,33 @@ function generateQuestionID() {
 }
 
 function answerClicked(ans) {
+  if (ans >= 0) {
+    ans = map[ans];
+    console.log(ansList[ans]);
+  }
   answers.push([qNumber, ans]);
+  if (answers.length < 5) {
+    move();
+    nextQuestion();
+  }
+  else {
+    move(setCompleted);
+  }
   console.log(answers);
-  move();
-  nextQuestion();
+}
+
+function setCompleted() {
+  clearInterval(timerInterval);
+  qDisplay = document.getElementById('mcq'); qDisplay.style.display = 'none';
+  score = 0;
+  for (x = 0; x < answers.length; x++) {
+    answer = answers[x];
+    //question = questions.questions[x];
+    if (answer[1] == 0) {
+      score += 1;
+    } 
+  }
+  console.log(score);
 }
 
 function nextQuestion() {
@@ -105,8 +144,15 @@ function nextQuestion() {
   questionElement = document.getElementById("question");
   questionElement.innerHTML = question.question;
 
-  for (x = 0; x < question.answers.length; x++) {
-    answer = question.answers[x];
+  console.log(question.answers);
+  //console.log(shuffleAnswers(question.answers));
+  //console.log(map);
+  shuffled = shuffleAnswers(question.answers);
+  console.log(shuffled);
+  ansList = question.answers;
+
+  for (x = 0; x < shuffled.length; x++) {
+    answer = shuffled[x];
     answerElement = document.getElementById("ans"+(x+1));
     answerElement.innerHTML = answer;
   }
