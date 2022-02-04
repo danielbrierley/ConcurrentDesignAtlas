@@ -26,6 +26,15 @@
             #password {
                 top:calc(60% + 60px);
             }
+            
+            button {
+                position: absolute;
+                left:15%;
+                width:70%;
+                height:50px;
+                font-size:20px;
+                top:calc(60% + 120px);
+            }
         </style>
         <!--<link rel="icon" href="images/ThePolarb3ar.png">-->
         <script src="login.js"></script>
@@ -35,6 +44,7 @@
             <div class='login'>
                 <input type="text" id="username" placeholder="USERNAME">
                 <input type="password" id="password" placeholder="PASSWORD">
+                <button onclick="logIn()">Log In</button>
             </div>
     </body>
 </html>
