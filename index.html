@@ -2,29 +2,70 @@
     <head>
         <title>Atlas Test</title>
         <link rel="stylesheet" type="text/css" href="./style.css">
+        <link rel="stylesheet" type="text/css" href="./login.css">
+        <link rel="stylesheet" type="text/css" href="./quiz.css">
         <!--<link rel="icon" href="images/ThePolarb3ar.png">-->
         <script src="script.js"></script>
+        
+        <link rel="apple-touch-icon" href="images/icon.png">
+        <link rel="apple-touch-startup-image" href="images/launch.png">
+        <meta name="apple-mobile-web-app-title" content="Atlas">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="black">
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+        
     </head>
-    <body onload="start()">
-        <div class='contents'>
+    <body>
+        <div class="pages" id='login' style='display:none'>
+            <input type="text" id="username" placeholder="USERNAME">
+            <input type="password" id="password" placeholder="PASSWORD">
+            <button id="loginButton" onclick="logIn()">Log In</button>
         </div>
-        <div class='navbar'>
-            <button class="tab">
-                tab 1
-            </button>
-            <button class="tab">
-                tab 2
-            </button>
-            <button class="tab">
-                tab 3
-            </button>
-            <button class="tab">
-                tab 4
-            </button>
-            <button class="tab">
-                tab 5
-            </button>
+
+        <div class="pages" id='quiz' style='display:none'>
+            <div id='mcq'>
+            <div style="width:100%; height:100%; background-color: green;">
+                <div class="question">
+                    <p id="question"></p>
+                    <p id="timer"></p>
+                </div>
+                <div class="answers">
+                    <button class="ans" id="ans1" onclick="answerClicked(0)"></button>
+                    <button class="ans" id="ans2" onclick="answerClicked(1)"></button>
+                    <button class="ans" id="ans3" onclick="answerClicked(2)"></button>
+                    <button class="ans" id="ans4" onclick="answerClicked(3)"></button>
+                </div>
+                <div id="myProgress">
+                    <div id="myBar">0%</div>
+                </div>
+            </div>
+            </div>
+        </div>
+
+        <div class='pages' id='home' style="display:block">
+            <div class='contents'>
+                <a onclick="switchPage('quiz')" href="#">quiz</a>
+                <br>
+                <a onclick="switchPage('login')" href="#">Log In</a>
+            </div>
+
+            <div class='navbar'>
+                <button class="tab">
+                    tab 1
+                </button>
+                <button class="tab">
+                    tab 2
+                </button>
+                <button class="tab">
+                    tab 3
+                </button>
+                <button class="tab">
+                    tab 4
+                </button>
+                <button class="tab">
+                    tab 5
+                </button>
+            </div>
         </div>
     </body>
 </html>

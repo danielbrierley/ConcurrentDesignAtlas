@@ -11,6 +11,18 @@ var qNumber = 0;
 var pb = 0;
 let map = [];
 
+function switchPage(id) {
+  pages = document.getElementsByClassName("pages");
+  for (x = 0; x < pages.length; x++) {
+    pages[x].style.display = 'none';
+  }
+  page = document.getElementById(id);
+  page.style.display = 'block';
+  if (id == 'quiz') {
+    start();
+  }
+}
+
 function shuffleAnswers(answers) {
   newAns = [];
   map = [];
