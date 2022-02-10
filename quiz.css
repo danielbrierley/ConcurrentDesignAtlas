@@ -1,4 +1,12 @@
-
+#quiz {
+    position: relative;
+    background-image: url("images/quiz.png");
+    background-size: auto 100%;
+    width:100%;
+    height: 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+}
 
 .question {
     width:100%;
@@ -8,6 +16,7 @@
 }
 
 .answers {
+    opacity: 0.5;
     width:100%;
     height:80%;
     float:bottom;
@@ -19,6 +28,13 @@
     width: 100%;
     height:10%;
     background-color: blue;
+}
+
+#myBar {
+    width: 0%;
+    font-size:200%;
+    height: 100%;
+    background-color: magenta;
 }
 
 .ans {

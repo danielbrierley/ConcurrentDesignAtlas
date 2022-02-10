@@ -4,7 +4,7 @@
         <link rel="stylesheet" type="text/css" href="./style.css">
         <link rel="stylesheet" type="text/css" href="./login.css">
         <link rel="stylesheet" type="text/css" href="./quiz.css">
-        <!--<link rel="icon" href="images/ThePolarb3ar.png">-->
+        <link rel="icon" href="images/icon.png">
         <script src="script.js"></script>
         
         <link rel="apple-touch-icon" href="images/icon.png">
@@ -15,7 +15,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
         
     </head>
-    <body>
+    <body onload="start()">
         <div class="pages" id='login' style='display:none'>
             <input type="text" id="username" placeholder="USERNAME">
             <input type="password" id="password" placeholder="PASSWORD">
@@ -24,7 +24,6 @@
 
         <div class="pages" id='quiz' style='display:none'>
             <div id='mcq'>
-            <div style="width:100%; height:100%; background-color: green;">
                 <div class="question">
                     <p id="question"></p>
                     <p id="timer"></p>
@@ -39,14 +38,16 @@
                     <div id="myBar">0%</div>
                 </div>
             </div>
-            </div>
         </div>
 
-        <div class='pages' id='home' style="display:block">
+        <div class='pages' id='home' style="display:none">
             <div class='contents'>
+                <p id="key"></p>
                 <a onclick="switchPage('quiz')" href="#">quiz</a>
                 <br>
                 <a onclick="switchPage('login')" href="#">Log In</a>
+                <br>
+                <a onclick="clearCookies()" href="#">Clear Cookies</a>
             </div>
 
             <div class='navbar'>
@@ -66,6 +67,10 @@
                     tab 5
                 </button>
             </div>
+        </div>
+
+        <div class="pages" id="noscript" style="display:block">
+            <noscript>JavaScript is required to use this app</noscript>
         </div>
     </body>
 </html>
