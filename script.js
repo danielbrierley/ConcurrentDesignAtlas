@@ -237,7 +237,7 @@ function switchPage(id) {
 
 function start() {
   key = getCookie('key');
-  if (key) {
+  if (!key) {
     switchPage('login');
   }
   else {

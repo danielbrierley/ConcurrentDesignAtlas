@@ -4,27 +4,27 @@
         {"theme": "Solar System",
         "question": "Which planet is closest to the sun?",
         "type": 0, 
-        "answers": ["Mercury","Saturn","Uranus","Earth"]},
+        "answers": ["Mercury","Saturn","Uranus"]},
 
         {"theme": "Solar System",
         "question": "What is the biggest planet in our solar system?",
         "type": 0, 
-        "answers": ["Jupiter","Saturn","Venus","Neptune"]},
+        "answers": ["Jupiter","Saturn","Venus"]},
 
         {"theme": "Solar System",
         "question": "How many planets does our solar system consist of?",
         "type": 0, 
-        "answers": ["8","10","12","5"]},
+        "answers": ["8","10","12"]},
 
         {"theme": "Solar System",
         "question": "How many gas giants are there in the solar system?",
         "type": 0, 
-        "answers": ["4","9","10","5"]},
+        "answers": ["4","9","10"]},
 
         {"theme": "Solar System",
         "question": "Which planet has the highest atmopheric temperature?",
         "type": 0, 
-        "answers": ["Venus","Mercury","Earth","Mars"]}
+        "answers": ["Venus","Mercury","Earth"]}
 
     ]
 }
