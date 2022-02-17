@@ -197,8 +197,10 @@ function startQuiz() {
       return data; // returns a promise, which resolves to this data value
     }
     
+    key = getCookie('key');
+    console.log(key);
     console.log("Fetching data...");
-    getJSON("questions.json").then(data => {
+    getJSON("http://127.0.0.1:5000/api.json?key="+key).then(data => {
       questions = data;
       nextQuestion();
     }).catch(error => {
