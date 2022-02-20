@@ -17,9 +17,12 @@
     </head>
     <body onload="start()">
         <div class="pages" id='login' style='display:none'>
-            <input type="text" id="username" placeholder="USERNAME">
-            <input type="password" id="password" placeholder="PASSWORD">
-            <button id="loginButton" onclick="logIn()">Log In</button>
+            <form>
+                <input type="text" id="username" placeholder="USERNAME" autocomplete="username">
+                <input type="password" id="password" placeholder="PASSWORD" autocomplete="current-password">
+                <button class="loginButtons" id="createButton" onclick="logIn(createAccount)">Create Account</button>
+                <button class="loginButtons" id="loginButton" onclick="logIn()">Log In</button>
+            </form>
         </div>
 
         <div class="pages" id='quiz' style='display:none'>

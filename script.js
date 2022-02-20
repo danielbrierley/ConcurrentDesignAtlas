@@ -11,6 +11,8 @@ var qNumber = 0;
 var pb = 0;
 let map = [];
 
+var req = 0;
+
 
 //useful functions
 function randint(min, max) {
@@ -42,6 +44,15 @@ async function sha256(message) { //https://stackoverflow.com/questions/18338890/
   // convert bytes to hex string                  
   const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
   return hashHex;
+}
+
+async function getJSON(url) {
+  const response = await fetch(url);
+  if(!response.ok) // check if response worked (no 404 errors etc...)
+    throw new Error(response.statusText);
+
+  const data = response.json(); // get JSON from the response
+  return data; // returns a promise, which resolves to this data value
 }
 
 //COOKIES
@@ -81,9 +92,9 @@ function clearCookies() {
 
 
 //Quiz
-function shuffleAnswers(answers) {
-  newAns = [];
-  map = [];
+function shuffleAnswers(answers) { //Shuffle answers for user so they can be decoded back to original order
+  newAns = []; //New order of answers
+  map = []; //Translator to convert new order to old order
   for (x = 0; x < answers.length; x++) {
     i = randint(0, answers.length-1);
     while (contains(i, map)) {
@@ -95,7 +106,7 @@ function shuffleAnswers(answers) {
   return newAns;
 }
 
-function move(callback=function() {return}) {
+function move(callback=function() {return}) { //Move progress bar 
   console.log(pb);
   console.log(answers.length);
   var width = pb;
@@ -117,7 +128,7 @@ function move(callback=function() {return}) {
   }
 }
 
-function generateQuestionID() {
+function generateQuestionID() { //Generat a random question ID
   number = randint(0, qn-1);
   if (completed.length == qn) {
     //alert('completed');
@@ -135,72 +146,68 @@ function generateQuestionID() {
 
 function answerClicked(ans) {
   if (ans >= 0) {
-    ans = map[ans];
+    ans = map[ans]; //Remap answer back to original order
     console.log(ansList[ans]);
   }
-  answers.push([qNumber, ans]);
+  answers.push([qNumber, ans]); //Add question and user answer to a list
   if (answers.length < 5) {
-    move();
-    nextQuestion();
+    move(); //Move progress bar by 20%
+    nextQuestion(); //Generate next question
   }
   else {
-    move(setCompleted);
+    move(setCompleted); //Move progress bar to 100% before finishing the set
   }
   console.log(answers);
 }
 
 
 function nextQuestion() {
+  //Reset 10 second timer
   t = 10;
   clearInterval(timerInterval);
+  //Generate next question id
   index = generateQuestionID();
   
-
+  //Set text in question box
   question = questions.questions[index];
   questionElement = document.getElementById("question");
   questionElement.innerHTML = question.question;
 
   console.log(question.answers);
-  //console.log(shuffleAnswers(question.answers));
-  //console.log(map);
-  shuffled = shuffleAnswers(question.answers);
+  shuffled = shuffleAnswers(question.answers); //shuffle answers
   console.log(shuffled);
   ansList = question.answers;
 
-  for (x = 0; x < shuffled.length; x++) {
+  for (x = 0; x < shuffled.length; x++) { //Set text in each answer box
     answer = shuffled[x];
     answerElement = document.getElementById("ans"+(x+1));
     answerElement.innerHTML = answer;
   }
 
+  //Start 10 second timer
   timerInterval = setInterval(timer, 1000);
   te = document.getElementById("timer");
   te.innerHTML = t;
 }
 
 function timer() {
+    //Every 1 second this is run
     t -= 1;
     te = document.getElementById("timer");
     te.innerHTML = t;
     if (t < 0) {
-      answerClicked(-1);
+      answerClicked(-1); //Progress without a correct answer
     }
 }
 
 function startQuiz() {
-    const getJSON = async url => {
-      const response = await fetch(url);
-      if(!response.ok) // check if response worked (no 404 errors etc...)
-        throw new Error(response.statusText);
-    
-      const data = response.json(); // get JSON from the response
-      return data; // returns a promise, which resolves to this data value
-    }
-    
+    //Read API key from Cookie
     key = getCookie('key');
     console.log(key);
     console.log("Fetching data...");
-    getJSON("http://127.0.0.1:5000/api.json?key="+key).then(data => {
+
+    //Fetch questions from server
+    getJSON("http://127.0.0.1:5000/api.json?key="+key+"&theme=SolarSystem").then(data => {
       questions = data;
       nextQuestion();
     }).catch(error => {
@@ -212,8 +219,14 @@ function startQuiz() {
 }
 
 function setCompleted() {
+  //Clear the timer
   clearInterval(timerInterval);
-  qDisplay = document.getElementById('mcq'); qDisplay.style.display = 'none';
+
+  //Hide the quiz div
+  qDisplay = document.getElementById('mcq'); 
+  qDisplay.style.display = 'none';
+
+  //Verifies all answers at the end
   score = 0;
   for (x = 0; x < answers.length; x++) {
     answer = answers[x];
@@ -226,10 +239,12 @@ function setCompleted() {
 }
 
 function switchPage(id) {
+  //Hide all pages
   pages = document.getElementsByClassName("pages");
   for (x = 0; x < pages.length; x++) {
     pages[x].style.display = 'none';
   }
+  //Show the specified page
   page = document.getElementById(id);
   page.style.display = 'block';
   if (id == 'quiz') {
@@ -237,28 +252,66 @@ function switchPage(id) {
   }
 }
 
-function start() {
+function authenticate(key) {
+  var auth;
+  authJson = getJSON("http://127.0.0.1:5000/auth.json?key="+key).then(data => {
+    console.log(data);
+    auth = data.auth;
+  }).catch(error => {
+    console.error(error);
+  });
+
+  if (auth != '') {
+    return true;
+  }
+  else {
+    return false;
+  }
+}
+
+function start(txt=null) {
+  //Load the page
   key = getCookie('key');
   if (!key) {
     switchPage('login');
   }
-  else {
+  else if (authenticate(key)) {
     document.getElementById('key').innerHTML = key;
     switchPage('home');
   }
+  else {
+    switchPage('');
+  }
 }
 
-function logIn() {
+function createAccount(key) {
+  username = document.getElementById("username").value;
+  result = getJSON("http://127.0.0.1:5000/create.json?key="+key+"&username="+username).then(data => {
+    console.log(data);
+    if (data.code == 200) {
+      start();
+    }
+    else {
+      console.log(data.code+': '+data.message);
+    }
+  }).catch(error => {
+    console.error(error);
+  });
+}
+
+function logIn(callback = start) {
   username = document.getElementById("username").value;
   password = document.getElementById("password").value;
   document.getElementById("password").value = '';
+  //Hash username then password then combined hashes to make a unique key
   sha256(username).then((userHash) => {
     sha256(password).then((passHash) => {
       sha256(userHash+passHash).then((key) => {
         console.log(key)
         setCookie('key', key, 10000);
         document.getElementById('key').innerHTML = key;
-        switchPage('home');
+        //Go to homepage
+        callback(key);
       })
     })
   })
