@@ -9,6 +9,7 @@ app = Flask(__name__)
 CORS(app)
 
 def hash(key):
+    #TODO hash the key through a secure hashing algorithm
     return key
 
 def verifyKey(key):
