@@ -43,7 +43,11 @@
         </div>
 
         <div class='pages' id='home' style="display:none">
-            <div class='contents'>
+            <div class='contents' id='0' style="display:none">
+            </div>
+            <div class='contents' id='1' style="display:none">
+            </div>
+            <div class='contents' id='2' style="display:none">
                 <p id="key"></p>
                 <a onclick="switchPage('quiz')" href="#">quiz</a>
                 <br>
@@ -51,21 +55,25 @@
                 <br>
                 <a onclick="clearCookies()" href="#">Clear Cookies</a>
             </div>
+            <div class='contents' id='3' style="display:none">
+            </div>
+            <div class='contents' id='4' style="display:none">
+            </div>
 
             <div class='navbar'>
-                <button class="tab">
+                <button class="tab" onclick="switchTab('0')">
                     tab 1
                 </button>
-                <button class="tab">
+                <button class="tab" onclick="switchTab('1')">
                     tab 2
                 </button>
-                <button class="tab">
-                    tab 3
+                <button class="tab" onclick="switchTab('2')">
+                    Home
                 </button>
-                <button class="tab">
+                <button class="tab" onclick="switchTab('3')">
                     tab 4
                 </button>
-                <button class="tab">
+                <button class="tab" onclick="switchTab('4')">
                     tab 5
                 </button>
             </div>
