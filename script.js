@@ -253,34 +253,39 @@ function switchPage(id) {
 }
 
 function authenticate(key) {
-  var auth;
+  var data2;
   authJson = getJSON("http://127.0.0.1:5000/auth.json?key="+key).then(data => {
     console.log(data);
-    auth = data.auth;
+    data2 = data;
+    start2(data2);
   }).catch(error => {
     console.error(error);
   });
 
-  if (auth != '') {
-    return true;
-  }
-  else {
-    return false;
-  }
 }
 
 function start(txt=null) {
   //Load the page
   key = getCookie('key');
-  if (!key) {
+  console.log(key);
+  if (key == "") {
     switchPage('login');
   }
-  else if (authenticate(key)) {
-    document.getElementById('key').innerHTML = key;
+  else {
+      authenticate(key);
+  }
+}
+
+function start2(data){
+  console.log(data);
+  document.getElementById('key').innerHTML = key;
+  if (data.code == 200) {
     switchPage('home');
   }
   else {
-    switchPage('');
+    error = document.getElementById('error');
+    error.innerHTML = data.message;
+    switchPage('login');
   }
 }
 
