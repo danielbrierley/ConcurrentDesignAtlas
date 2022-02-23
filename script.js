@@ -250,6 +250,20 @@ function switchPage(id) {
   if (id == 'quiz') {
     startQuiz();
   }
+  else if (id == "home") {
+    switchTab("2");
+  }
+}
+
+function switchTab(id) {
+  //Hide all pages
+  pages = document.getElementsByClassName("contents");
+  for (x = 0; x < pages.length; x++) {
+    pages[x].style.display = 'none';
+  }
+  //Show the specified page
+  page = document.getElementById(id);
+  page.style.display = 'block';
 }
 
 function authenticate(key) {
