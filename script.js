@@ -290,6 +290,13 @@ function start(txt=null) {
   }
 }
 
+function setLoginColour(colour) {
+  form = document.getElementsByClassName("loginInput");
+  for (x = 0; x < form.length; x++) {
+    form[x].style.backgroundColor = colour;
+  }
+}
+
 function start2(data){
   console.log(data);
   document.getElementById('key').innerHTML = key;
@@ -299,6 +306,7 @@ function start2(data){
   else {
     error = document.getElementById('error');
     error.innerHTML = data.message;
+    setLoginColour('#ff6666');
     switchPage('login');
   }
 }
@@ -311,6 +319,8 @@ function createAccount(key) {
       start();
     }
     else {
+      error = document.getElementById('error');
+      error.innerHTML = data.message;
       console.log(data.code+': '+data.message);
     }
   }).catch(error => {
@@ -319,6 +329,7 @@ function createAccount(key) {
 }
 
 function logIn(callback = start) {
+  setLoginColour('#ffffff');
   username = document.getElementById("username").value;
   password = document.getElementById("password").value;
   document.getElementById("password").value = '';

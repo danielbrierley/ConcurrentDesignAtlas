@@ -18,9 +18,9 @@
     <body onload="start()">
         <div class="pages" id='login' style='display:none'>
             <form>
-                <p id="error">test</p>
-                <input type="text" id="username" placeholder="USERNAME" autocomplete="username">
-                <input type="password" id="password" placeholder="PASSWORD" autocomplete="current-password">
+                <p id="error"></p>
+                <input class="loginInput" type="text" id="username" placeholder="USERNAME" autocomplete="username">
+                <input class="loginInput" type="password" id="password" placeholder="PASSWORD" autocomplete="current-password">
                 <button class="loginButtons" id="createButton" onclick="logIn(createAccount)">Create Account</button>
                 <button class="loginButtons" id="loginButton" onclick="logIn()">Log In</button>
             </form>
@@ -63,7 +63,7 @@
 
             <div class='navbar'>
                 <button class="tab" onclick="switchTab('0')">
-                    tab 1
+                    Learn
                 </button>
                 <button class="tab" onclick="switchTab('1')">
                     tab 2
@@ -72,10 +72,10 @@
                     Home
                 </button>
                 <button class="tab" onclick="switchTab('3')">
-                    tab 4
+                    Settings
                 </button>
                 <button class="tab" onclick="switchTab('4')">
-                    tab 5
+                    Profile
                 </button>
             </div>
         </div>

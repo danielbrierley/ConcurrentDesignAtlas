@@ -1,3 +1,4 @@
+from getpass import getuser
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 import json
@@ -21,6 +22,17 @@ def verifyKey(key):
         return False
     else:
         return True
+
+def getUsername(key):
+    con = sqlite3.connect('questions.db')
+    cur = con.cursor()
+    result = cur.execute('SELECT username FROM users WHERE credentials=?', (key,)).fetchall()
+    con.close()
+    print(result)
+    try:
+        return result[0][0]
+    except:
+        return ''
 
 @app.route('/')
 def home():
@@ -90,9 +102,69 @@ def createAccount():
             return '{"code": 200, "message": "OK"}'
         else:
             con.close()
-            return '{"code": 409, "message": "An account with the specified username already exists"}'
+            return '{"code": 409, "message": "An account with that username already exists"}'
     else:
         return '{"code": 400, "message": "The key or username are empty"}'
+
+@app.route('/username.json')
+def user():
+    key = request.args.get('key')
+    username = getUsername(key)
+    if username:
+        return '{"code": 200, "message": "OK", "username": "%s"}' % username
+    else:
+        return '{"code": 404, "message": "Username could not be found"}'
+
+@app.route('/achievements.json')
+def getAchievements():
+    key = request.args.get('key')
+    con = sqlite3.connect('questions.db')
+    cur = con.cursor()
+    achievementsRaw = cur.execute('SELECT name, description, achievementid FROM achievements')
+    achievements = []
+    for achievement in achievementsRaw:
+        id = achievement[2]
+        print(id)
+        username = getUsername(key)
+        granted = alreadyGranted(username, id)
+        achievements.append({'name': achievement[0], 'description': achievement[1], 'granted': granted})
+    con.close()
+
+    jsonToReturn = {'code': 200, 'message': 'OK', 'achievements': achievements}
+    return jsonToReturn
+
+def alreadyGranted(username, achievementid):
+    con = sqlite3.connect('questions.db')
+    cur = con.cursor()
+    numOfResults = len(cur.execute('SELECT * FROM achievementLog WHERE username=? AND achievementid=?', (username,achievementid)).fetchall())
+    con.close()
+    if numOfResults:
+        return True
+    else:
+        return False
+
+
+@app.route('/grant.json')
+def grantAchievement():
+    key = request.args.get('key')
+    print(key)
+    achievementid = request.args.get('achievementid')
+    username = getUsername(key)
+    print(username)
+    if username:
+        if alreadyGranted(username, achievementid):
+            return '{"code": 409, "message": "Achievement has already been granted to this user"}'
+        else:
+            con = sqlite3.connect('questions.db')
+            cur = con.cursor()
+            cur.execute('INSERT INTO achievementLog (username, achievementid) VALUES (?, ?)', (username,achievementid))
+            con.commit()
+            con.close()
+            return '{"code": 200, "message": "OK"}'
+    else:
+        return '{"code": 404, "message": "User not found"}'
+
+
 
 if __name__ == '__main__':
     app.run()
