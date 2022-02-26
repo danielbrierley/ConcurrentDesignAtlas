@@ -113,6 +113,7 @@ function move(callback=function() {return}) { //Move progress bar
 
   pb = answers.length*20;
   var elem = document.getElementById("myBar");
+  var rocket = document.getElementById("rocket");
   var id = setInterval(frame, 10);
   function frame() {
     if (width == pb) {
@@ -124,6 +125,7 @@ function move(callback=function() {return}) { //Move progress bar
       width++;
       elem.style.width = width + "%";
       elem.innerHTML = width + "%";
+      rocket.style.left = "calc(+"+width + "% - 70px)";
     }
   }
 }
