@@ -152,6 +152,12 @@ function answerClicked(ans) {
     ans = map[ans]; //Remap answer back to original order
     console.log(ansList[ans]);
   }
+  if (ans == 0) {
+    document.getElementById('resultview').innerHTML = 'Correct';
+  }
+  else {
+    document.getElementById('resultview').innerHTML = 'Incorrect';
+  }
   answers.push([qNumber, ans]); //Add question and user answer to a list
   if (answers.length < 5) {
     move(); //Move progress bar by 20%
@@ -229,6 +235,9 @@ function setCompleted() {
   qDisplay = document.getElementById('mcq'); 
   qDisplay.style.display = 'none';
 
+  resultView = document.getElementById('result')
+  resultView.style.display = 'block';
+
   //Verifies all answers at the end
   score = 0;
   for (x = 0; x < answers.length; x++) {
@@ -254,7 +263,7 @@ function switchPage(id) {
     startQuiz();
   }
   else if (id == "home") {
-    switchTab("4");
+    switchTab("2");
   }
 }
 
@@ -305,12 +314,21 @@ function profile() {
   document.getElementById('usernameProfile').innerHTML = username;
   getJSON("http://127.0.0.1:5000/achievements.json?key="+key+"").then(data => {
     console.log(data);
-    achievements = data.achievements
+    achievements = data.achievements;
+    listItems = document.getElementById('achievements').children;
+    for (x = 0; x < listItems.length; x++) {
+      listItems[x].remove();
+    }
     for (x = 0; x < achievements.length; x++) {
       achievement = achievements[x];
       ul = document.getElementById('acheivements');
       li = document.createElement("li");
       li.innerHTML = achievement.name+': '+achievement.description;
+      img = document.createElement("img");
+      img.src = achievement.image;
+      img.style.width = '10vh';
+      img.style.height = '10vh';
+      li.appendChild(img);
       //txt = document.createTextNode(achievement.name+': '+achievement.description);
       //li.appendChild(txt);
       if (achievement.granted) {

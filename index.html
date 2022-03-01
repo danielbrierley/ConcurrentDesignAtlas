@@ -31,6 +31,7 @@
         <div class="pages" id='quiz' style='display:none'>
             <div id='mcq'>
                 <p id="timer"></p>
+                <p id="resultview"></p>
                 <div class="question">
                     <p id="question"></p>
                 </div>
@@ -38,6 +39,20 @@
                     <button class="ans" id="ans1" onclick="answerClicked(0)"></button>
                     <button class="ans" id="ans2" onclick="answerClicked(1)"></button>
                     <button class="ans" id="ans3" onclick="answerClicked(2)"></button>
+                </div>
+            </div>
+            <div id="result" style='display:none'>
+                Result
+                <center>
+                <div class="questionResult">
+                    <div class="questionResultSub" style="background-color: blue">
+                        question?
+                    </div>
+                    <div class="questionResultSub" style="background-color: red">
+                        <div class="resultAnswer">
+                            ans1
+                        </div>
+                    </div>
                 </div>
             </div>
             <div id="myProgress">
@@ -60,6 +75,24 @@
                 <a onclick="switchPage('login')" href="#">Log In</a>
                 <br>
                 <a onclick="clearCookies()" href="#">Clear Cookies</a>
+                <!--------------------->
+                <div class="questionResult">
+                    <div class="questionResultSub" style="background-color: blue">
+                        question?
+                    </div>
+                    <div class="questionResultSub" style="background-color: purple">
+                        <div class="resultAnswer ans1">
+                            ans1
+                        </div>
+                        <div class="resultAnswer ans2">
+                            ans2
+                        </div>
+                        <div class="resultAnswer ans3">
+                            ans3
+                        </div>
+                    </div>
+                </div>
+                <!---------------------->
             </div>
             <div class='contents' id='3' style="display:none">
                 <p>Settings</p>
