@@ -238,6 +238,19 @@ function setCompleted() {
   resultView = document.getElementById('result')
   resultView.style.display = 'block';
 
+  x = 0;
+  result = document.getElementById('result'+(x+1)).children;
+  questionBox = result[0];
+  answer = result[1].children;
+  question = questions.questions[answers[x][0]];
+  console.log(question);
+  questionBox.innerHTML = question.question;
+  for (y = 0; y < 3; y++) {
+    answer[y].innerHTML = question.answers[y];
+    answer[y].style.border = 'hidden';
+  }
+  answer[answers[x][1]].style.borderStyle = 'solid';
+
   //Verifies all answers at the end
   score = 0;
   for (x = 0; x < answers.length; x++) {

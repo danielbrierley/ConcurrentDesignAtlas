@@ -83,7 +83,9 @@
 }
 
 .resultAnswer {
-    width:calc(100% / 3);
+    width:calc(100% / 3 - 2px);
+    border-style: solid;
+    border: 3px;
     height:100%;
     top:0%;
     float:left;
@@ -91,15 +93,12 @@
 
 .ans1 {
     background-color:green;
-    left:0%;
 }
 
 .ans2 {
     background-color:red;
-    left:calc(100% / 3);
 }
 
 .ans3 {
     background-color:red;
-    left:calc(100% / 3 * 2);
 }
