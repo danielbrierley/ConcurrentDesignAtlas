@@ -1,5 +1,5 @@
 from getpass import getuser
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, send_file
 from flask_cors import CORS
 import json
 import sqlite3
@@ -77,7 +77,7 @@ def auth():
     key = hash(key)
     print(key)
     if verifyKey(key):
-        return '{"code": 200, "message": "OK", "auth": "%s"}' % key
+        return '{"code": 200, "message": "OK", "auth": "%s", "username": "%s"}' % (key, getUsername(key))
     else:
         return '{"code": 403, "message": "Username or Password is incorrect", "auth": ""}'
 
@@ -164,7 +164,10 @@ def grantAchievement():
     else:
         return '{"code": 404, "message": "User not found"}'
 
-
+@app.route('/image.png')
+def get_image():
+    filename = request.args.get('id')+'.png'
+    return send_file(filename, mimetype='image/png')
 
 if __name__ == '__main__':
     app.run()

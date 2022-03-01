@@ -13,6 +13,7 @@ let map = [];
 
 var req = 0;
 
+var username;
 
 //useful functions
 function randint(min, max) {
@@ -253,7 +254,7 @@ function switchPage(id) {
     startQuiz();
   }
   else if (id == "home") {
-    switchTab("2");
+    switchTab("4");
   }
 }
 
@@ -266,6 +267,64 @@ function switchTab(id) {
   //Show the specified page
   page = document.getElementById(id);
   page.style.display = 'block';
+  if (id == "0") {
+    learn();
+  }
+  else if (id == "1") {
+    shop();
+  }
+  else if (id == "2") {
+    home();
+  }
+  else if (id == "3") {
+    settings();
+  }
+  else if (id == "4") {
+    profile();
+  }
+}
+
+function learn() {
+  console.log('learn');
+}
+
+function shop() {
+  console.log('shop');
+}
+
+function home() {
+  console.log('home');
+}
+
+function settings() {
+  console.log('settings');
+}
+
+function profile() {
+  console.log('profile');
+  document.getElementById('usernameProfile').innerHTML = username;
+  getJSON("http://127.0.0.1:5000/achievements.json?key="+key+"").then(data => {
+    console.log(data);
+    achievements = data.achievements
+    for (x = 0; x < achievements.length; x++) {
+      achievement = achievements[x];
+      ul = document.getElementById('acheivements');
+      li = document.createElement("li");
+      li.innerHTML = achievement.name+': '+achievement.description;
+      //txt = document.createTextNode(achievement.name+': '+achievement.description);
+      //li.appendChild(txt);
+      if (achievement.granted) {
+        li.style.color = 'green';
+      }
+      else {
+        li.style.color = 'red';
+      }
+      document.getElementById("achievements").appendChild(li);
+      console.log(achievement);
+    }
+  }).catch(error => {
+    console.error(error);
+  });
 }
 
 function authenticate(key) {
@@ -273,6 +332,7 @@ function authenticate(key) {
   authJson = getJSON("http://127.0.0.1:5000/auth.json?key="+key).then(data => {
     console.log(data);
     data2 = data;
+    username = data.username;
     start2(data2);
   }).catch(error => {
     console.error(error);

@@ -4,6 +4,8 @@
         <link rel="stylesheet" type="text/css" href="./style.css">
         <link rel="stylesheet" type="text/css" href="./login.css">
         <link rel="stylesheet" type="text/css" href="./quiz.css">
+        <link rel="stylesheet" type="text/css" href="./settings.css">
+
         <link rel="icon" href="images/icon.png">
         <script src="script.js"></script>
         
@@ -46,8 +48,10 @@
 
         <div class='pages' id='home' style="display:none">
             <div class='contents' id='0' style="display:none">
+                <p>Learn</p>
             </div>
             <div class='contents' id='1' style="display:none">
+                <p>Shop</p>
             </div>
             <div class='contents' id='2' style="display:none">
                 <p id="key"></p>
@@ -58,8 +62,21 @@
                 <a onclick="clearCookies()" href="#">Clear Cookies</a>
             </div>
             <div class='contents' id='3' style="display:none">
+                <p>Settings</p>
+                <div class="settings" id="opt1">
+                    <label class="switch">
+                        <input type="checkbox">
+                        <span class="slider round"></span>
+                    </label>
+                    Sound
+                </div>
             </div>
             <div class='contents' id='4' style="display:none">
+                <p>Profile</p>
+                <p id="usernameProfile"></p>
+                <ul id="achievements">
+                        
+                </ul>
             </div>
 
             <div class='navbar'>
@@ -67,7 +84,7 @@
                     Learn
                 </button>
                 <button class="tab" onclick="switchTab('1')">
-                    tab 2
+                    Shop
                 </button>
                 <button class="tab" onclick="switchTab('2')">
                     Home
