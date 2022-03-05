@@ -29,34 +29,33 @@
         </div>
 
         <div class="pages" id='quiz' style='display:none'>
-            <div id='mcq'>
-                <p id="timer"></p>
-                <p id="resultview"></p>
-                <div class="question">
-                    <p id="question"></p>
-                </div>
-                <div class="answers">
-                    <button class="ans" id="ans1" onclick="answerClicked(0)"></button>
-                    <button class="ans" id="ans2" onclick="answerClicked(1)"></button>
-                    <button class="ans" id="ans3" onclick="answerClicked(2)"></button>
-                </div>
+            <div id="map" style='display:none' onclick="startQuiz()">
             </div>
-            <div id="result" style='display:none'>
-                Result
-                <center>
-                <div class="questionResult" id="result1">
-                    <div class="questionResultSub" style="background-color: blue"></div>
-                    <div class="questionResultSub" style="background-color: purple">
-                        <div class="resultAnswer ans1"></div>
-                        <div class="resultAnswer ans2"></div>
-                        <div class="resultAnswer ans3"></div>
+            <div id="quiz2" style='display:none'>
+                <div id='mcq'>
+                    <p id="timer"></p>
+                    <p id="resultview"></p>
+                    <div class="question">
+                        <p id="question"></p>
+                    </div>
+                    <div class="answers">
+                        <button class="ans" id="ans1" onclick="answerClicked(0)"></button>
+                        <button class="ans" id="ans2" onclick="answerClicked(1)"></button>
+                        <button class="ans" id="ans3" onclick="answerClicked(2)"></button>
                     </div>
                 </div>
-                </center>
-            </div>
-            <div id="myProgress">
-                <div id="myBar" style="float: left">0%</div>
-                <img id="rocket" src="images/rocket.png" style="float: right; height: 100%; position:absolute;left:calc(0% - 70px)"/>
+                <div id="result" style='display:none' onclick="planets()">
+                    <div id="resultTitle">
+
+                    </div>
+                    <center>
+                    <div id="resultDiv"></div>
+                    </center>
+                </div>
+                <div id="myProgress">
+                    <div id="myBar" style="float: left">0%</div>
+                    <img id="rocket" src="images/rocket.png" style="float: right; height: 100%; position:absolute;left:calc(0% - 70px)"/>
+                </div>
             </div>
         </div>
 
@@ -74,24 +73,6 @@
                 <a onclick="switchPage('login')" href="#">Log In</a>
                 <br>
                 <a onclick="clearCookies()" href="#">Clear Cookies</a>
-                <!--------------------->
-                <div class="questionResult">
-                    <div class="questionResultSub" style="background-color: blue">
-                        Which planet has the highest atmopheric temperature?
-                    </div>
-                    <div class="questionResultSub" style="background-color: purple">
-                        <div class="resultAnswer ans1">
-                            Mercury
-                        </div>
-                        <div class="resultAnswer ans2">
-                            Saturn
-                        </div>
-                        <div class="resultAnswer ans3">
-                            Uranus
-                        </div>
-                    </div>
-                </div>
-                <!---------------------->
             </div>
             <div class='contents' id='3' style="display:none">
                 <p>Settings</p>

@@ -1,3 +1,6 @@
+const ip = "127.0.0.1:5000";
+
+
 const qn = 5;
 
 var t;
@@ -14,6 +17,8 @@ let map = [];
 var req = 0;
 
 var username;
+
+var questionNo;
 
 //useful functions
 function randint(min, max) {
@@ -117,7 +122,7 @@ function move(callback=function() {return}) { //Move progress bar
   var rocket = document.getElementById("rocket");
   var id = setInterval(frame, 10);
   function frame() {
-    if (width == pb) {
+    if (width >= pb || width >= 100) {
       clearInterval(id);
       pb--;
       //console.log('callback');
@@ -178,6 +183,8 @@ function nextQuestion() {
   index = generateQuestionID();
   
   //Set text in question box
+  console.log(questions.questions);
+  console.log(index);
   question = questions.questions[index];
   questionElement = document.getElementById("question");
   questionElement.innerHTML = question.question;
@@ -210,21 +217,48 @@ function timer() {
 }
 
 function startQuiz() {
+    quiz2 = document.getElementById('quiz2');
+    quiz2.style.display = 'block';
+
+    map = document.getElementById('map');
+    map.style.display = 'none';
+    
     //Read API key from Cookie
     key = getCookie('key');
     console.log(key);
     console.log("Fetching data...");
 
     //Fetch questions from server
-    getJSON("http://127.0.0.1:5000/api.json?key="+key+"&theme=SolarSystem").then(data => {
+    getJSON("http://"+ip+"/api.json?key="+key+"&theme=SolarSystem").then(data => {
       questions = data;
+      console.log(questions);
       nextQuestion();
-    }).catch(error => {
-      console.error(error);
-    });
+    })//.catch(error => {
+      //console.error(error);
+    //});
 
     //var cookie = document.getElementById("cookie");
     //cookie.innerHTML = getCookie('test');
+}
+
+function planets() {
+  completed = [];
+  pb = 0;
+
+  quiz2 = document.getElementById('quiz2');
+  quiz2.style.display = 'none';
+
+  mcq = document.getElementById('mcq');
+  mcq.style.display = 'block';
+
+  mcq = document.getElementById('result');
+  mcq.style.display = 'none';
+
+  map = document.getElementById('map');
+  map.style.display = 'block';
+
+  console.log(questionNo);
+
 }
 
 function setCompleted() {
@@ -238,18 +272,43 @@ function setCompleted() {
   resultView = document.getElementById('result')
   resultView.style.display = 'block';
 
-  x = 0;
-  result = document.getElementById('result'+(x+1)).children;
-  questionBox = result[0];
-  answer = result[1].children;
-  question = questions.questions[answers[x][0]];
-  console.log(question);
-  questionBox.innerHTML = question.question;
-  for (y = 0; y < 3; y++) {
-    answer[y].innerHTML = question.answers[y];
-    answer[y].style.border = 'hidden';
+  resultDiv = document.getElementById('resultDiv');
+
+  resultChildren  = resultDiv.children;
+  console.log(resultChildren);
+  for (e = 0; e < resultChildren.length; e++) {
+    resultChildren[e].remove();
   }
-  answer[answers[x][1]].style.borderStyle = 'solid';
+
+  for (x = 0; x < 5; x++) {
+
+    questionResult = document.createElement('div');
+    questionResult.setAttribute('class', 'questionResult');
+
+    questionBox = document.createElement('div');
+    questionBox.setAttribute('class','questionResultSub');
+    question = questions.questions[answers[x][0]];
+    console.log(question);
+    questionBox.innerHTML = question.question;
+    questionResult.appendChild(questionBox);
+    
+    
+    answerBox = document.createElement('div');
+    answerBox.setAttribute('class', 'questionResultSub');
+
+    for (y = 0; y < 3; y++) {
+      answer = document.createElement('div');
+      answer.setAttribute('class', 'resultAnswer ans'+(y+1));
+      answer.innerHTML = question.answers[y];
+      answer.style.border = 'hidden';
+      if (answers[x][1] == y) {
+        answer.style.border = 'solid';
+      }
+      answerBox.appendChild(answer);
+    }
+    questionResult.appendChild(answerBox);
+    resultDiv.appendChild(questionResult);
+  }
 
   //Verifies all answers at the end
   score = 0;
@@ -273,9 +332,10 @@ function switchPage(id) {
   page = document.getElementById(id);
   page.style.display = 'block';
   if (id == 'quiz') {
-    startQuiz();
+    planets();
   }
   else if (id == "home") {
+    questionNo = 0;
     switchTab("2");
   }
 }
@@ -325,7 +385,7 @@ function settings() {
 function profile() {
   console.log('profile');
   document.getElementById('usernameProfile').innerHTML = username;
-  getJSON("http://127.0.0.1:5000/achievements.json?key="+key+"").then(data => {
+  getJSON("http://"+ip+"/achievements.json?key="+key+"").then(data => {
     console.log(data);
     achievements = data.achievements;
     listItems = document.getElementById('achievements').children;
@@ -360,7 +420,7 @@ function profile() {
 
 function authenticate(key) {
   var data2;
-  authJson = getJSON("http://127.0.0.1:5000/auth.json?key="+key).then(data => {
+  authJson = getJSON("http://"+ip+"/auth.json?key="+key).then(data => {
     console.log(data);
     data2 = data;
     username = data.username;
@@ -406,7 +466,7 @@ function start2(data){
 
 function createAccount(key) {
   username = document.getElementById("username").value;
-  result = getJSON("http://127.0.0.1:5000/create.json?key="+key+"&username="+username).then(data => {
+  result = getJSON("http://"+ip+"/create.json?key="+key+"&username="+username).then(data => {
     console.log(data);
     if (data.code == 200) {
       start();
