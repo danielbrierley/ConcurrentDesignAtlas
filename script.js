@@ -263,6 +263,10 @@ function startQuiz() {
 
 function planets() {
   planetNo += 1;
+  console.log(planetNo+' '+(rocketPositions.length-2));
+  if (planetNo == rocketPositions.length-2) {
+    console.log('done');
+  }
   rocket2 = document.getElementById('rocket2');
   rocket2.style.left = 'calc('+rocketX+'px - 20vw)';
   rocket2.style.top = 'calc('+rockety+'px - 20vw)';
@@ -559,11 +563,17 @@ function moveRocket(x=50, y=50) {
       rocketX = x;
       rocketY = y;
       clearInterval(id);
+      if (planetNo == rocketPositions.length-2) {
+        endQuiz();
+      }
     }
 
   }
 }
 
+function endQuiz() {
+  console.log('end quiz');
+}
 
 function convRadians(degrees){
   var pi = Math.PI;
