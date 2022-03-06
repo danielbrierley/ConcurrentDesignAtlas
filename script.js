@@ -1,4 +1,4 @@
-const ip = "127.0.0.1:5000";
+const ip = "127.0.0.1:5000";//"127.0.0.1:5000";
 
 
 const qn = 5;
@@ -19,6 +19,16 @@ var req = 0;
 var username;
 
 var questionNo;
+
+var rocketPos = 0;
+var width = 0;
+
+
+var planetNo = -1;
+var rocketPositions = [[195, 820], [70, 780], [330, 760], [130, 660], [315, 620], [95, 430], [330, 440], [310, 230], [80, 200], [195, 50]]
+
+var rocketX = rocketPositions[0][0];
+var rockety = rocketPositions[0][1];
 
 //useful functions
 function randint(min, max) {
@@ -84,7 +94,6 @@ function getCookie(cname) {
     return "";
 }
 
-
 function clearCookies() {
   var cookies = document.cookie.split(";");
 
@@ -95,7 +104,6 @@ function clearCookies() {
       document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT";
   }
 }
-
 
 //Quiz
 function shuffleAnswers(answers) { //Shuffle answers for user so they can be decoded back to original order
@@ -115,25 +123,32 @@ function shuffleAnswers(answers) { //Shuffle answers for user so they can be dec
 function move(callback=function() {return}) { //Move progress bar 
   console.log(pb);
   console.log(answers.length);
-  var width = pb;
 
-  pb = answers.length*20;
-  var elem = document.getElementById("myBar");
-  var rocket = document.getElementById("rocket");
+  rocketPos = answers.length*20;
   var id = setInterval(frame, 10);
   function frame() {
-    if (width >= pb || width >= 100) {
+    if (width >= 100) {
       clearInterval(id);
-      pb--;
-      //console.log('callback');
       callback();
-    } else {
+    }
+    if (width < rocketPos) {
       width++;
-      elem.style.width = width + "%";
-      elem.innerHTML = width + "%";
-      rocket.style.left = "calc(+"+width + "% - 70px)";
+      setRocket(width)
+    }
+    else if (width > rocketPos) {
+      width--;
+      setRocket(width)
     }
   }
+}
+
+function setRocket(width) {
+  elem = document.getElementById("myBar");
+  rocket = document.getElementById("rocket");
+  elem.style.width = width + "%";
+  elem.innerHTML = width + "%";
+  rocket.style.left = "calc(+"+width + "% - 70px)";
+
 }
 
 function generateQuestionID() { //Generat a random question ID
@@ -153,6 +168,7 @@ function generateQuestionID() { //Generat a random question ID
 }
 
 function answerClicked(ans) {
+  rocketPos += 20;
   if (ans >= 0) {
     ans = map[ans]; //Remap answer back to original order
     console.log(ansList[ans]);
@@ -165,15 +181,13 @@ function answerClicked(ans) {
   }
   answers.push([qNumber, ans]); //Add question and user answer to a list
   if (answers.length < 5) {
-    move(); //Move progress bar by 20%
     nextQuestion(); //Generate next question
   }
-  else {
-    move(setCompleted); //Move progress bar to 100% before finishing the set
-  }
+  //else {
+    //move(setCompleted); //Move progress bar to 100% before finishing the set
+  //}
   console.log(answers);
 }
-
 
 function nextQuestion() {
   //Reset 10 second timer
@@ -222,6 +236,12 @@ function startQuiz() {
 
     map = document.getElementById('map');
     map.style.display = 'none';
+    rocketPos = 0;
+    width = 0;
+    answers = [];
+    setRocket(0);
+    move(setCompleted);
+
     
     //Read API key from Cookie
     key = getCookie('key');
@@ -242,6 +262,11 @@ function startQuiz() {
 }
 
 function planets() {
+  planetNo += 1;
+  rocket2 = document.getElementById('rocket2');
+  rocket2.style.left = 'calc('+rocketX+'px - 20vw)';
+  rocket2.style.top = 'calc('+rockety+'px - 20vw)';
+
   completed = [];
   pb = 0;
 
@@ -256,6 +281,9 @@ function planets() {
 
   map = document.getElementById('map');
   map.style.display = 'block';
+
+  nextRocket = rocketPositions[planetNo+1];
+  moveRocket(nextRocket[0],nextRocket[1])
 
   console.log(questionNo);
 
@@ -277,7 +305,7 @@ function setCompleted() {
   resultChildren  = resultDiv.children;
   console.log(resultChildren);
   for (e = 0; e < resultChildren.length; e++) {
-    resultChildren[e].remove();
+    resultChildren[e].style.display = 'none';//remove();
   }
 
   for (x = 0; x < 5; x++) {
@@ -498,4 +526,51 @@ function logIn(callback = start) {
       })
     })
   })
+}
+
+function moveRocket(x=50, y=50) {
+  changex = x-rocketX;
+  changey = y-rockety;
+
+  stepx = changex/50;
+  stepy = changey/50;
+
+  console.log(stepx);
+  console.log(stepy);
+
+  angle = Math.atan(changey/changex);
+  if (changex < 0) {
+    angle += Math.PI;
+  }
+  console.log(convDegrees(angle));
+
+  rocket2 = document.getElementById('rocket2');
+  rocket2.style.left = 'calc('+rocketX+'px - 20vw)';
+  rocket2.style.top = rockety;
+  rocket2.style.transform = 'rotate('+angle+'rad)';
+  var id = setInterval(frame, 10);
+  function frame() {
+    rocketX += stepx;
+    rocket2.style.left = 'calc('+rocketX+'px - 20vw)';
+    rockety += stepy;
+    rocket2.style.top = 'calc('+rockety+'px - 20vw)';
+
+    if ((rocketX <= x & stepx < 0) || (rocketX >= x & stepx > 0)) {
+      rocketX = x;
+      rocketY = y;
+      clearInterval(id);
+    }
+
+  }
+}
+
+
+function convRadians(degrees){
+  var pi = Math.PI;
+  return degrees * (pi/180);
+}
+
+function convDegrees(radians){
+  var pi = Math.PI;
+  return radians / (pi/180);
 }
