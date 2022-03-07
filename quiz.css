@@ -90,9 +90,13 @@
     left:calc(100%/3*2);
 }
 
+#congrats {
+    text-align: center;
+    padding-top: 4%;
+}
 
 .questionResult {
-    background-color: #fb78c8;
+    background-color: #fb78c9dd;
     width:90%;
     height:10%;
     padding: 5px;

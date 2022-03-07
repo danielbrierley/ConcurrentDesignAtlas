@@ -309,7 +309,8 @@ function setCompleted() {
   resultChildren  = resultDiv.children;
   console.log(resultChildren);
   for (e = 0; e < resultChildren.length; e++) {
-    resultChildren[e].style.display = 'none';//remove();
+    resultChildren[e].style.display = 'none';
+    //resultChildren[0].remove();
   }
 
   for (x = 0; x < 5; x++) {
@@ -422,7 +423,7 @@ function profile() {
     achievements = data.achievements;
     listItems = document.getElementById('achievements').children;
     for (x = 0; x < listItems.length; x++) {
-      listItems[x].remove();
+      listItems[x].style.display = 'none';
     }
     for (x = 0; x < achievements.length; x++) {
       achievement = achievements[x];
