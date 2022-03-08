@@ -174,10 +174,18 @@ function answerClicked(ans) {
     console.log(ansList[ans]);
   }
   if (ans == 0) {
-    document.getElementById('resultview').innerHTML = 'Correct';
+    timerBack = document.getElementById('timerBackground');
+    timerBack.classList.remove('incorrect');
+    timerBack.classList.remove('correct');
+    timerBack.offsetWidth;
+    timerBack.classList.add('correct');
   }
   else {
-    document.getElementById('resultview').innerHTML = 'Incorrect';
+    timerBack = document.getElementById('timerBackground');
+    timerBack.classList.remove('incorrect');
+    timerBack.classList.remove('correct');
+    timerBack.offsetWidth;
+    timerBack.classList.add('incorrect');
   }
   answers.push([qNumber, ans]); //Add question and user answer to a list
   if (answers.length < 5) {
@@ -285,6 +293,10 @@ function planets() {
 
   map = document.getElementById('map');
   map.style.display = 'block';
+
+  timerBack = document.getElementById('timerBackground');
+  timerBack.classList.remove('incorrect');
+  timerBack.classList.remove('correct');
 
   nextRocket = rocketPositions[planetNo+1];
   moveRocket(nextRocket[0],nextRocket[1])
@@ -574,6 +586,15 @@ function moveRocket(x=50, y=50) {
 
 function endQuiz() {
   console.log('end quiz');
+  rocketPos = 0;
+  width = 0;
+  
+  
+  planetNo = -1;
+  rocketX = rocketPositions[0][0];
+  rockety = rocketPositions[0][1];
+  
+  switchPage('home');
 }
 
 function convRadians(degrees){

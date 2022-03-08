@@ -30,13 +30,52 @@
 }
 
 .question {
+    width:90%;
+    height:12%;
+    position:absolute;
+    float:top;
+    top: 10%;
+    left: calc(5% - 6px);
+    background-color: white;
+    border: 3px;
+    border-style: solid;
+    padding: 3px;
+    font-size:20;
+}
+
+.timer {
     width:35%;
     height:12%;
     position:absolute;
     float:top;
     left:46%;
     top:37%;
-    font-size:20
+    background-color: white;
+    border: 3px;
+    border-style: solid;
+}
+
+.correct {
+    animation: correctAni 0.3s 1 linear;
+}
+
+@keyframes correctAni {
+    0% {background-color: green;}
+    100% {background-color: white;}
+}
+
+.incorrect {
+    animation: incorrectAni 0.3s 1 linear;
+}
+
+@keyframes incorrectAni {
+    0% {background-color: red;}
+    100% {background-color: white;}
+}
+
+
+#timer {
+    font-size:500%;
 }
 
 .answers {
@@ -45,7 +84,6 @@
     float:bottom;
     bottom:100%;
 }
-
 
 #myProgress {
     width: 100%;
@@ -64,7 +102,6 @@
 }
 
 .ans {
-    opacity:0.5;
     width:calc(100%/3);
     height:35%;
     top:55%;
@@ -72,10 +109,7 @@
     float:right;
     position:absolute;
     font-size:20px;
-}
-
-.ans:nth-child(odd) {
-    float:left;
+    background-color: #ffffffaa;
 }
 
 #ans1 {
