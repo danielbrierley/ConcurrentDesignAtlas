@@ -56,7 +56,7 @@
 }
 
 .correct {
-    animation: correctAni 0.3s 1 linear;
+    animation: correctAni 0.4s 1 linear;
 }
 
 @keyframes correctAni {
@@ -65,7 +65,7 @@
 }
 
 .incorrect {
-    animation: incorrectAni 0.3s 1 linear;
+    animation: incorrectAni 0.4s 1 linear;
 }
 
 @keyframes incorrectAni {
@@ -164,4 +164,30 @@
 
 .ans3 {
     background-color:red;
+}
+
+.rewardDiv {
+    background-color: #fb78c9;
+    width: 90%;
+    height: 10%;
+    left: 10%;
+    margin-top: 15%;
+    float: right;
+    border: solid 3px;
+}
+
+#meteorites {
+    font-size: 18px;
+    float: left;
+}
+
+.meteoriteImage {
+    animation: spin 1s infinite linear;
+    height: 10vh;
+    float: right;
+}
+
+@keyframes spin {
+    0% {transform: rotate(0deg)}
+    100% {transform: rotate(360deg)}
 }

@@ -1,4 +1,4 @@
 INSERT INTO achievements (name, description)
 VALUES
-('Achievement1', 'This is a test'),
-('Achievement2', 'This is a test 2')
+('Achievement3', 'This is a test 5'),
+('Achievement4', 'This is a test 6')

@@ -1,0 +1,54 @@
+#achievements {
+    margin: 0;
+    padding: 0;
+    padding: 5px;
+}
+
+#achievements li {
+    margin-left: 2px;
+    margin-right: 2px;
+    list-style-type: none;
+    float: left;
+    position: relative;
+}
+
+#achievementDisabler {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    left: 0%;
+    top: 0%;
+}
+
+#achievementImage {
+    width: 10vh;
+    height: 10vh;
+}
+
+#achievementPopup {
+    background-color: greenyellow;
+    position: absolute;
+    width:96%;
+    height: 60%;
+    left: 2%;
+    top: 20%;
+}
+
+.an {
+    float: left;
+    width: calc(100% - 10vh);
+    height: 10vh;
+    background-color: cyan;
+}
+
+.ai {
+    float: right;
+    width: 10vh;
+    background-color: yellow;
+}
+
+.ad {
+    top: 10vh;
+    float: left;
+    background-color: magenta;
+}

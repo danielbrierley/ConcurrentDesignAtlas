@@ -10,6 +10,7 @@ let completed = [];
 var answers = [];
 var ansList = [];
 var qNumber = 0;
+var achievements;
 
 var pb = 0;
 let map = [];
@@ -26,6 +27,7 @@ var width = 0;
 
 var planetNo = -1;
 var rocketPositions = [[195, 820], [70, 780], [330, 760], [130, 660], [315, 620], [95, 430], [330, 440], [310, 230], [80, 200], [195, 50]]
+var planetList = ['Mercury', 'Venus', 'Earth', 'Mars', 'Jupiter', 'Saturn', 'Uranus', 'Neptune']
 
 var rocketX = rocketPositions[0][0];
 var rockety = rocketPositions[0][1];
@@ -254,6 +256,7 @@ function startQuiz() {
     //Read API key from Cookie
     key = getCookie('key');
     console.log(key);
+    console.log(planetList[planetNo]);
     console.log("Fetching data...");
 
     //Fetch questions from server
@@ -272,6 +275,8 @@ function startQuiz() {
 function planets() {
   planetNo += 1;
   console.log(planetNo+' '+(rocketPositions.length-2));
+  planetName = document.getElementById('planetName');
+  planetName.innerHTML = planetList[planetNo]; 
   if (planetNo == rocketPositions.length-2) {
     console.log('done');
   }
@@ -364,6 +369,7 @@ function setCompleted() {
       score += 1;
     } 
   }
+  document.getElementById('meteorites').innerHTML = 'You have earned '+score+' meteorites!'
   console.log(score);
 }
 
@@ -439,28 +445,54 @@ function profile() {
     }
     for (x = 0; x < achievements.length; x++) {
       achievement = achievements[x];
-      ul = document.getElementById('acheivements');
+      ul = document.getElementById('acheivements');//.onclick();
       li = document.createElement("li");
-      li.innerHTML = achievement.name+': '+achievement.description;
+      //li.innerHTML = achievement.name+': '+achievement.description;
       img = document.createElement("img");
       img.src = achievement.image;
       img.style.width = '10vh';
       img.style.height = '10vh';
-      li.appendChild(img);
       //txt = document.createTextNode(achievement.name+': '+achievement.description);
       //li.appendChild(txt);
       if (achievement.granted) {
-        li.style.color = 'green';
+        img.style.filter = "grayscale(0%)";
       }
       else {
-        li.style.color = 'red';
+        img.style.filter = "grayscale(100%)";
       }
+      console.log(x);
+      l = x;
+      img.onclick = function() {showAchievement(this.parentElement.id[0]);};
+      console.log(img.onclick);
+      li.id = x+'achievement';
+      li.appendChild(img);
       document.getElementById("achievements").appendChild(li);
       console.log(achievement);
     }
-  }).catch(error => {
-    console.error(error);
-  });
+  })//.catch(error => {
+    //console.error(error);
+  //});
+}
+
+function showAchievement(id) {
+  console.log(id);
+  achievementName = document.getElementById('achievementName');
+  achievementName.innerHTML = achievements[id].name;
+  achievementDescription = document.getElementById('achievementDescription');
+  achievementDescription.innerHTML = achievements[id].description;
+  achievementImage.src = achievements[id].image;
+  achievementPopup = document.getElementById('achievementPopup');
+  achievementPopup.style.display = 'block';
+  achievementDisabler = document.getElementById('achievementDisabler');
+  achievementDisabler.style.display = 'block';
+}
+
+function hideAchievement() {
+  achievementPopup = document.getElementById('achievementPopup');
+  achievementPopup.style.display = 'none';
+  achievementDisabler = document.getElementById('achievementDisabler');
+  achievementDisabler.style.display = 'none';
+
 }
 
 function authenticate(key) {
@@ -470,14 +502,15 @@ function authenticate(key) {
     data2 = data;
     username = data.username;
     start2(data2);
-  }).catch(error => {
-    console.error(error);
-  });
+  })//.catch(error => {
+  //  console.error(error);
+  //});
 
 }
 
 function start(txt=null) {
   //Load the page
+  //window.location = '#';
   key = getCookie('key');
   console.log(key);
   if (key == "") {
@@ -500,6 +533,7 @@ function start2(data){
   document.getElementById('key').innerHTML = key;
   if (data.code == 200) {
     switchPage('home');
+    switchTab('2');
   }
   else {
     error = document.getElementById('error');

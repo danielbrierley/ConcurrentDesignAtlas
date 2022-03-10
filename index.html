@@ -5,6 +5,7 @@
         <link rel="stylesheet" type="text/css" href="./login.css">
         <link rel="stylesheet" type="text/css" href="./quiz.css">
         <link rel="stylesheet" type="text/css" href="./settings.css">
+        <link rel="stylesheet" type="text/css" href="./profile.css">
 
         <link rel="icon" href="images/icon.png">
         <script src="script.js"></script>
@@ -13,7 +14,7 @@
         <link rel="apple-touch-startup-image" href="images/launch.png">
         <meta name="apple-mobile-web-app-title" content="Atlas">
         <meta name="apple-mobile-web-app-capable" content="yes">
-        <meta name="apple-mobile-web-app-status-bar-style" content="black">
+        <meta name="apple-mobile-web-app-status-bar-style" content="red">
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
         
     </head>
@@ -30,6 +31,7 @@
 
         <div class="pages" id='quiz' style='display:none'>
             <div id="map" style='display:none' onclick="startQuiz()">
+                <p id="planetName"></p>
                 <img id="rocket2" src="images/rocket.png" style="position: absolute; height: 40vw; transform: rotate(-90deg);">
             </div>
             <div id="quiz2" style='display:none'>
@@ -56,6 +58,10 @@
                     <center>
                     <div id="resultDiv"></div>
                     </center>
+                    <div class="rewardDiv">
+                        <p id="meteorites"></p>
+                        <img class="meteoriteImage" src="images/meteorite.png" />
+                    </div>
                 </div>
                 <div id="myProgress">
                     <div id="myBar" style="float: left">0%</div>
@@ -66,10 +72,10 @@
 
         <div class='pages' id='home' style="display:none">
             <div class='contents' id='0' style="display:none">
-                <p>Learn</p>
+                <h1 id="learnTitle">Learn</h1>
             </div>
             <div class='contents' id='1' style="display:none">
-                <p>Shop</p>
+                <h1 id="shopTitle">Shop</h1>
             </div>
             <div class='contents' id='2' style="display:none">
                 <p id="key"></p>
@@ -95,6 +101,19 @@
                 <ul id="achievements">
                         
                 </ul>
+                <div id="achievementDisabler" style="display:none" onclick="hideAchievement()"></div>
+                <div id="achievementPopup" style="display:none">
+                    <div class="an">
+                        <h3 id="achievementName"></h3>
+                    </div>
+                    <div class="ai">
+                        <img id="achievementImage"/>
+                    </div>
+                    <div class="ad">
+                        <p id="achievementDescription"></p>
+                    </div>
+                    
+                </div>
             </div>
 
             <div class='navbar'>

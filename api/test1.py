@@ -127,7 +127,7 @@ def getAchievements():
         print(id)
         username = getUsername(key)
         granted = alreadyGranted(username, id)
-        achievements.append({'name': achievement[0], 'description': achievement[1], 'granted': granted, 'image': 'http://127.0.0.1:5500/images/icon.png'})
+        achievements.append({'id': id, 'name': achievement[0], 'description': achievement[1], 'granted': granted, 'image': 'http://127.0.0.1:5500/images/icon.png'})
     con.close()
 
     jsonToReturn = {'code': 200, 'message': 'OK', 'achievements': achievements}
