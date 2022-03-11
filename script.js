@@ -369,7 +369,12 @@ function setCompleted() {
       score += 1;
     } 
   }
-  document.getElementById('meteorites').innerHTML = 'You have earned '+score+' meteorites!'
+  if (score == 1) {
+    document.getElementById('meteorites').innerHTML = 'You have earned '+score+' meteorite!';
+  }
+  else {
+    document.getElementById('meteorites').innerHTML = 'You have earned '+score+' meteorites!'
+  }
   console.log(score);
 }
 
