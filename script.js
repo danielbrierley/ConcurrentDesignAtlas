@@ -1,6 +1,6 @@
 //const ip = "apitest2-b5pthtwkoq-nw.a.run.app";
 const ip = "127.0.0.1:5000";
-
+const protocol = "https://";
 
 const qn = 5;
 
@@ -267,7 +267,7 @@ function startQuiz() {
     console.log("Fetching data...");
 
     //Fetch questions from server
-    getJSON("http://"+ip+"/api.json?key="+key+"&theme=SolarSystem").then(data => {
+    getJSON(protocol+ip+"/api.json?key="+key+"&theme=SolarSystem").then(data => {
       questions = data;
       console.log(questions);
       nextQuestion();
@@ -448,7 +448,7 @@ function settings() {
 function profile() {
   console.log('profile');
   document.getElementById('usernameProfile').innerHTML = username;
-  getJSON("http://"+ip+"/achievements.json?key="+key+"").then(data => {
+  getJSON(protocol+ip+"/achievements.json?key="+key+"").then(data => {
     console.log(data);
     achievements = data.achievements;
     listItems = document.getElementById('achievements').children;
@@ -509,7 +509,7 @@ function hideAchievement() {
 
 function authenticate(key) {
   var data2;
-  authJson = getJSON("http://"+ip+"/auth.json?key="+key).then(data => {
+  authJson = getJSON(protocol+ip+"/auth.json?key="+key).then(data => {
     console.log(data);
     data2 = data;
     username = data.username;
@@ -557,7 +557,7 @@ function start2(data){
 
 function createAccount(key) {
   username = document.getElementById("username").value;
-  result = getJSON("http://"+ip+"/create.json?key="+key+"&username="+username).then(data => {
+  result = getJSON(protocol+ip+"/create.json?key="+key+"&username="+username).then(data => {
     console.log(data);
     if (data.code == 200) {
       start();
