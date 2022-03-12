@@ -21,6 +21,7 @@
 
 #map {
     position: relative;
+    background-color: #e980c3;
     background-image: url("images/planets.png");
     background-size: auto 100%;
     width:100%;
@@ -126,7 +127,9 @@
 
 #congrats {
     text-align: center;
-    padding-top: 4%;
+    position: absolute;
+    width: 100%;
+    margin-top: 1vh;
 }
 
 .questionResult {
@@ -170,15 +173,16 @@
     background-color: #fb78c9;
     width: 90%;
     height: 10%;
-    left: 10%;
-    margin-top: 15%;
+    top: 5%;
     float: right;
     border: solid 3px;
+    position: relative;
 }
 
 #meteorites {
     margin-top: 30px;
     font-size: 18px;
+    width: calc(100% - 10vh);
     float: left;
 }
 

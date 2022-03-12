@@ -1,7 +1,10 @@
-const ip = "127.0.0.1:5000";//"127.0.0.1:5000";
+//const ip = "apitest2-b5pthtwkoq-nw.a.run.app";
+const ip = "127.0.0.1:5000";
 
 
 const qn = 5;
+
+const rocketSize = '10vh';
 
 var t;
 var timerInterval;
@@ -26,11 +29,13 @@ var width = 0;
 
 
 var planetNo = -1;
+var rocketScreenHeight = 844;
 var rocketPositions = [[195, 820], [70, 780], [330, 760], [130, 660], [315, 620], [95, 430], [330, 440], [310, 230], [80, 200], [195, 50]]
 var planetList = ['Mercury', 'Venus', 'Earth', 'Mars', 'Jupiter', 'Saturn', 'Uranus', 'Neptune']
 
 var rocketX = rocketPositions[0][0];
 var rockety = rocketPositions[0][1];
+
 
 //useful functions
 function randint(min, max) {
@@ -54,7 +59,9 @@ async function sha256(message) { //https://stackoverflow.com/questions/18338890/
   const msgBuffer = new TextEncoder().encode(message);                    
 
   // hash the message
+  console.log('test');
   const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
+  console.log('test');
 
   // convert ArrayBuffer to Array
   const hashArray = Array.from(new Uint8Array(hashBuffer));
@@ -149,7 +156,7 @@ function setRocket(width) {
   rocket = document.getElementById("rocket");
   elem.style.width = width + "%";
   elem.innerHTML = width + "%";
-  rocket.style.left = "calc(+"+width + "% - 70px)";
+  rocket.style.left = "calc(+"+width + "% - 8vh)";
 
 }
 
@@ -601,15 +608,27 @@ function moveRocket(x=50, y=50) {
   console.log(convDegrees(angle));
 
   rocket2 = document.getElementById('rocket2');
-  rocket2.style.left = 'calc('+rocketX+'px - 20vw)';
+  rocket2.style.left = 'calc('+rocketX+'px - '+rocketSize+')';
   rocket2.style.top = rockety;
   rocket2.style.transform = 'rotate('+angle+'rad)';
   var id = setInterval(frame, 10);
   function frame() {
+    body = document.body,
+    html = document.documentElement;
+    //height = Math.max( body.scrollHeight, body.offsetHeight, 
+    //                   html.clientHeight, html.scrollHeight, html.offsetHeight );
+
+    height = html.clientHeight;
+    heightRatio = height/844;
+    console.log(height);
+    console.log(heightRatio);
+
     rocketX += stepx;
-    rocket2.style.left = 'calc('+rocketX+'px - 20vw)';
+    console.log(rocketX);
+    rocket2.style.left = 'calc(50% - (195 * (100vh / 844)) + ('+rocketX+' * (100vh / 844)) - '+rocketSize+')';
+    //rocket2.style.left = 'calc(50% - '+(195*heightRatio)+'px + '+(rocketX*heightRatio)+'px - '+rocketSize+')';
     rockety += stepy;
-    rocket2.style.top = 'calc('+rockety+'px - 20vw)';
+    rocket2.style.top = 'calc('+(rockety/8.44)+'% - '+rocketSize+')';
 
     if ((rocketX <= x & stepx < 0) || (rocketX >= x & stepx > 0)) {
       rocketX = x;
