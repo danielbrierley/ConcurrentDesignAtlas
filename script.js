@@ -69,9 +69,9 @@ async function sha256(message) { //https://stackoverflow.com/questions/18338890/
   const msgBuffer = new TextEncoder().encode(message);                    
 
   // hash the message
-  console.log('test');
+  //console.log('test');
   const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
-  console.log('test');
+  //console.log('test');
 
   // convert ArrayBuffer to Array
   const hashArray = Array.from(new Uint8Array(hashBuffer));
@@ -140,8 +140,8 @@ function shuffleAnswers(answers) { //Shuffle answers for user so they can be dec
 }
 
 function move(callback=function() {return}) { //Move progress bar 
-  console.log(pb);
-  console.log(answers.length);
+  //console.log(pb);
+  //console.log(answers.length);
 
   rocketPos = answers.length*20;
   var id = setInterval(frame, 10);
@@ -190,7 +190,7 @@ function answerClicked(ans) {
   rocketPos += 20;
   if (ans >= 0) {
     ans = map[ans]; //Remap answer back to original order
-    console.log(ansList[ans]);
+    //console.log(ansList[ans]);
   }
   if (ans == 0) {
     timerBack = document.getElementById('timerBackground');
@@ -213,7 +213,7 @@ function answerClicked(ans) {
   //else {
     //move(setCompleted); //Move progress bar to 100% before finishing the set
   //}
-  console.log(answers);
+  //console.log(answers);
 }
 
 function nextQuestion() {
@@ -224,15 +224,15 @@ function nextQuestion() {
   index = generateQuestionID();
   
   //Set text in question box
-  console.log(questions.questions);
-  console.log(index);
+  //console.log(questions.questions);
+  //console.log(index);
   question = questions.questions[index];
   questionElement = document.getElementById("question");
   questionElement.innerHTML = question.question;
 
-  console.log(question.answers);
+  //console.log(question.answers);
   shuffled = shuffleAnswers(question.answers); //shuffle answers
-  console.log(shuffled);
+  //console.log(shuffled);
   ansList = question.answers;
 
   for (x = 0; x < shuffled.length; x++) { //Set text in each answer box
@@ -272,14 +272,14 @@ function startQuiz() {
     
     //Read API key from Cookie
     key = getCookie('key');
-    console.log(key);
-    console.log(planetList[planetNo]);
-    console.log("Fetching data...");
+    //console.log(key);
+    //console.log(planetList[planetNo]);
+    //console.log("Fetching data...");
 
     //Fetch questions from server
     getJSON(protocol+ip+"/api.json?key="+key+"&theme=SolarSystem").then(data => {
       questions = data;
-      console.log(questions);
+      //console.log(questions);
       nextQuestion();
     })//.catch(error => {
       //console.error(error);
@@ -291,11 +291,11 @@ function startQuiz() {
 
 function planets() {
   planetNo += 1;
-  console.log(planetNo+' '+(rocketPositions.length-2));
+  //console.log(planetNo+' '+(rocketPositions.length-2));
   planetName = document.getElementById('planetName');
   planetName.innerHTML = planetList[planetNo]; 
   if (planetNo == rocketPositions.length-2) {
-    console.log('done');
+    //console.log('done');
   }
   rocket2 = document.getElementById('rocket2');
   rocket2.style.left = 'calc('+rocketX+'px - 20vw)';
@@ -323,7 +323,7 @@ function planets() {
   nextRocket = rocketPositions[planetNo+1];
   moveRocket(nextRocket[0],nextRocket[1])
 
-  console.log(questionNo);
+  //console.log(questionNo);
 
 }
 
@@ -341,7 +341,7 @@ function setCompleted() {
   resultDiv = document.getElementById('resultDiv');
 
   resultChildren  = resultDiv.children;
-  console.log(resultChildren);
+  //console.log(resultChildren);
   for (e = 0; e < resultChildren.length; e++) {
     resultChildren[e].style.display = 'none';
     //resultChildren[0].remove();
@@ -355,7 +355,7 @@ function setCompleted() {
     questionBox = document.createElement('div');
     questionBox.setAttribute('class','questionResultSubTop');
     question = questions.questions[answers[x][0]];
-    console.log(question);
+    //console.log(question);
     questionBox.innerHTML = question.question;
     questionResult.appendChild(questionBox);
     
@@ -392,7 +392,7 @@ function setCompleted() {
   else {
     document.getElementById('meteorites').innerHTML = 'You have earned '+score+' meteorites!'
   }
-  console.log(score);
+  //console.log(score);
 }
 
 function switchPage(id) {
@@ -440,26 +440,26 @@ function switchTab(id) {
 }
 
 function learn() {
-  console.log('learn');
+  //console.log('learn');
 }
 
 function shop() {
-  console.log('shop');
+  //console.log('shop');
 }
 
 function home() {
-  console.log('home');
+  //console.log('home');
 }
 
 function settings() {
-  console.log('settings');
+  //console.log('settings');
 }
 
 function profile() {
-  console.log('profile');
+  //console.log('profile');
   document.getElementById('usernameProfile').innerHTML = username;
   getJSON(protocol+ip+"/achievements.json?key="+key+"").then(data => {
-    console.log(data);
+    //console.log(data);
     achievements = data.achievements;
     listItems = document.getElementById('achievements').children;
     for (x = 0; x < listItems.length; x++) {
@@ -482,14 +482,14 @@ function profile() {
       else {
         img.style.filter = "grayscale(100%)";
       }
-      console.log(x);
+      //console.log(x);
       l = x;
       img.onclick = function() {showAchievement(this.parentElement.id[0]);};
-      console.log(img.onclick);
+      //console.log(img.onclick);
       li.id = x+'achievement';
       li.appendChild(img);
       document.getElementById("achievements").appendChild(li);
-      console.log(achievement);
+      //console.log(achievement);
     }
   })//.catch(error => {
     //console.error(error);
@@ -497,7 +497,7 @@ function profile() {
 }
 
 function showAchievement(id) {
-  console.log(id);
+  //console.log(id);
   achievementName = document.getElementById('achievementName');
   achievementName.innerHTML = achievements[id].name;
   achievementDescription = document.getElementById('achievementDescription');
@@ -520,7 +520,7 @@ function hideAchievement() {
 function authenticate(key) {
   var data2;
   authJson = getJSON(protocol+ip+"/auth.json?key="+key).then(data => {
-    console.log(data);
+    //console.log(data);
     data2 = data;
     username = data.username;
     start2(data2);
@@ -534,7 +534,7 @@ function start(txt=null) {
   //Load the page
   //window.location = '#';
   key = getCookie('key');
-  console.log(key);
+  //console.log(key);
   if (key == "") {
     switchPage('login');
   }
@@ -551,7 +551,7 @@ function setLoginColour(colour) {
 }
 
 function start2(data){
-  console.log(data);
+  //console.log(data);
   document.getElementById('key').innerHTML = key;
   if (data.code == 200) {
     switchPage('home');
@@ -568,14 +568,14 @@ function start2(data){
 function createAccount(key) {
   username = document.getElementById("username").value;
   result = getJSON(protocol+ip+"/create.json?key="+key+"&username="+username).then(data => {
-    console.log(data);
+    //console.log(data);
     if (data.code == 200) {
       start();
     }
     else {
       error = document.getElementById('error');
       error.innerHTML = data.message;
-      console.log(data.code+': '+data.message);
+      //console.log(data.code+': '+data.message);
     }
   }).catch(error => {
     console.error(error);
@@ -591,7 +591,7 @@ function logIn(callback = start) {
   sha256(username).then((userHash) => {
     sha256(password).then((passHash) => {
       sha256(userHash+passHash).then((key) => {
-        console.log(key)
+        //console.log(key)
         setCookie('key', key, 10000);
         document.getElementById('key').innerHTML = key;
         //Go to homepage
@@ -608,14 +608,14 @@ function moveRocket(x=50, y=50) {
   stepx = changex/50;
   stepy = changey/50;
 
-  console.log(stepx);
-  console.log(stepy);
+  //console.log(stepx);
+  //console.log(stepy);
 
   angle = Math.atan(changey/changex);
   if (changex < 0) {
     angle += Math.PI;
   }
-  console.log(convDegrees(angle));
+  //console.log(convDegrees(angle));
 
   rocket2 = document.getElementById('rocket2');
   rocket2.style.left = 'calc('+rocketX+'px - '+rocketSize+')';
@@ -630,11 +630,11 @@ function moveRocket(x=50, y=50) {
 
     height = html.clientHeight;
     heightRatio = height/844;
-    console.log(height);
-    console.log(heightRatio);
+    //console.log(height);
+    //console.log(heightRatio);
 
     rocketX += stepx;
-    console.log(rocketX);
+    //console.log(rocketX);
     rocket2.style.left = 'calc(50% - (195 * (100vh / 844)) + ('+rocketX+' * (100vh / 844)) - '+rocketSize+')';
     //rocket2.style.left = 'calc(50% - '+(195*heightRatio)+'px + '+(rocketX*heightRatio)+'px - '+rocketSize+')';
     rockety += stepy;
@@ -653,7 +653,7 @@ function moveRocket(x=50, y=50) {
 }
 
 function endQuiz() {
-  console.log('end quiz');
+  //console.log('end quiz');
   rocketPos = 0;
   width = 0;
   
