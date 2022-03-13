@@ -1,6 +1,6 @@
-//const ip = "apitest2-b5pthtwkoq-nw.a.run.app";
-const ip = "127.0.0.1:5000";
-const protocol = "http://";
+const ip = "apitest2-b5pthtwkoq-nw.a.run.app";
+//const ip = "127.0.0.1:5000";
+const protocol = "https://";
 
 const qn = 24;
 

@@ -2,6 +2,7 @@ from flask import Flask, request, jsonify, send_file, render_template
 from flask_cors import CORS
 import json
 import sqlite3
+import os
 
 
 
@@ -284,4 +285,5 @@ def userList():
 #    return 'test'
 
 if __name__ == '__main__':
-    app.run()
+    #app.run()
+    app.run(debug=True, host="0.0.0.0", port=int(os.environ.get("PORT", 8080)))
