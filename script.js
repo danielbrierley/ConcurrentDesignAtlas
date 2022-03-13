@@ -1,8 +1,8 @@
-const ip = "apitest2-b5pthtwkoq-nw.a.run.app";
-//const ip = "127.0.0.1:5000";
-const protocol = "https://";
+//const ip = "apitest2-b5pthtwkoq-nw.a.run.app";
+const ip = "127.0.0.1:5000";
+const protocol = "http://";
 
-const qn = 5;
+const qn = 24;
 
 const rocketSize = '10vh';
 
@@ -277,7 +277,7 @@ function startQuiz() {
     //console.log("Fetching data...");
 
     //Fetch questions from server
-    getJSON(protocol+ip+"/api.json?key="+key+"&theme=SolarSystem").then(data => {
+    getJSON(protocol+ip+"/questions.json?key="+key+"&theme=SolarSystem").then(data => {
       questions = data;
       //console.log(questions);
       nextQuestion();
@@ -392,6 +392,17 @@ function setCompleted() {
   else {
     document.getElementById('meteorites').innerHTML = 'You have earned '+score+' meteorites!'
   }
+  timestamp = Date.now();
+  console.log(timestamp);
+  console.log(username);
+  sha256(timestamp+username).then((uid) => {
+    getJSON(protocol+ip+"/addmeteors.json?key="+key+"&uid="+uid+'&amount='+score).then(data => {
+      console.log(data);
+    });
+    getJSON(protocol+ip+"/addResult.json?key="+key+"&uid="+uid+'&amount='+score).then(data => {
+      console.log(data);
+    });
+  })
   //console.log(score);
 }
 

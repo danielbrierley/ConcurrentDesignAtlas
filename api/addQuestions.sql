@@ -1,8 +1,26 @@
 INSERT INTO questions (question, theme, ans1, ans2, ans3) 
-VALUES ("Which planet is closest to the sun?", "SolarSystem", "Mercury", "Saturn", "Uranus"),
+VALUES 
+("Which planet is closest to the sun?", "SolarSystem", "Mercury", "Saturn", "Uranus"),
 ("What is the biggest planet in our solar system?", "SolarSystem", "Jupiter", "Saturn", "Venus"),
 ("How many planets does our solar system consist of?", "SolarSystem", "8", "10", "12"),
 ("How many gas giants are there in the solar system?", "SolarSystem", "4", "9", "10"),
-("Which planet has the highest atmopheric temperature?", "SolarSystem", "Venus", "Mercury", "Earth");
-
-
+("Which planet has the highest atmopheric temperature?", "SolarSystem", "Venus", "Mercury", "Earth"),
+("How many moons are in our solar system?", "SolarSystem", "181", "35", "28"),
+("How many moon does jupiter have?", "SolarSystem", "67", "44", "38"),
+("What is the diameter of Earth'S moon?", "SolarSystem", "2,159 miles", "2,159 Kilometers", "2,159 centimeters"),
+("Which planet is named after the Roman god of war?", "SolarSystem", "Mars", "Jupiter", "Saturn"),
+("Which planet has a day that lasts eight months?", "SolarSystem", "Venus", "Earth", "Mars"),
+("What is the third planet from the sun?", "SolarSystem", "Earth", "Mars", "Venus"),
+("Which planet has the largest ring system?", "SolarSystem", "Saturn", "Pluto", "Mercury"),
+("What is the only known moon of pluto?", "SolarSystem", "Charon", "Plutonia", "Ganymede"),
+("What is the Earth's Radius?", "SolarSystem", "6,371km", "5674km", "4567km"),
+("What is the rotational period?", "SolarSystem", "24 hours", "29 days", "360 days"),
+("Which is shorter, Mercury's day or year?", "SolarSystem", "Year", "Day", "None"),
+("Which is one of Mars' moons?", "SolarSystem", "Phobos", "Galieo", "Luna"),
+("What is the seventh planet from the sun in our solar system?", "SolarSystem", "Uranus", "Neptune", "Jupiter"),
+("What type of star is the sun?", "SolarSystem", "G-type main sequence star", "White Dwarf", "Red Giant"),
+("Which planet was the first planet located through mathematical predictions rather than through regular observations of the sky?", "SolarSystem", "Neptune", "Mars", "Saturn"),
+("How many days does it take Earth to orbit the sun?", "SolarSystem", "365 days", "66 days", "102 days"),
+("Which planet is famous for its big red spot on it?", "SolarSystem", "Jupiter", "Saturn", "Neptune"),
+("Which planet is tilted on its side nearly at a right angle?", "SolarSystem", "Uranus", "Neptune", "Jupiter"),
+("Pluto is what kind of planet?", "SolarSystem", "Dwarf Planet", "Gas Giant", "Rocky Planet");
