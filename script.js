@@ -1,6 +1,6 @@
-//const ip = "apitest2-b5pthtwkoq-nw.a.run.app";
-const ip = "127.0.0.1:5000";
-const protocol = "http://";
+const ip = "apitest2-b5pthtwkoq-nw.a.run.app";
+//const ip = "127.0.0.1:5000";
+const protocol = "https://";
 
 const qn = 5;
 
@@ -36,6 +36,16 @@ var planetList = ['Mercury', 'Venus', 'Earth', 'Mars', 'Jupiter', 'Saturn', 'Ura
 var rocketX = rocketPositions[0][0];
 var rockety = rocketPositions[0][1];
 
+function preventDefault(e){
+  e.preventDefault();
+}
+
+function disableScroll(){
+  document.body.addEventListener('touchmove', preventDefault, { passive: false });
+}
+function enableScroll(){
+  document.body.removeEventListener('touchmove', preventDefault);
+}
 
 //useful functions
 function randint(min, max) {
@@ -343,7 +353,7 @@ function setCompleted() {
     questionResult.setAttribute('class', 'questionResult');
 
     questionBox = document.createElement('div');
-    questionBox.setAttribute('class','questionResultSub');
+    questionBox.setAttribute('class','questionResultSubTop');
     question = questions.questions[answers[x][0]];
     console.log(question);
     questionBox.innerHTML = question.question;
@@ -351,7 +361,7 @@ function setCompleted() {
     
     
     answerBox = document.createElement('div');
-    answerBox.setAttribute('class', 'questionResultSub');
+    answerBox.setAttribute('class', 'questionResultSubBottom');
 
     for (y = 0; y < 3; y++) {
       answer = document.createElement('div');
