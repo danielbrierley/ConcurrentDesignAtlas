@@ -2,6 +2,7 @@ from flask import Flask, request, jsonify, send_file, render_template
 from flask_cors import CORS
 import json
 import sqlite3
+import os
 
 
 
@@ -35,10 +36,10 @@ def getUsername(key):
 
 @app.route('/')
 def home():
-    #redirect to api.json
-    return '<html><head><script>window.location = "/api.json"</script></head></html>'
+    #redirect to questions.json
+    return '<html><head><script>window.location = "/questions.json"</script></head></html>'
 
-@app.route('/api.json')
+@app.route('/questions.json')
 def question():
     key = request.args.get('key')
     key = hash(key)
@@ -163,6 +164,91 @@ def grantAchievement():
     else:
         return '{"code": 404, "message": "User not found"}'
 
+def alreadyMeteor(uid):
+    con = sqlite3.connect('questions.db')
+    cur = con.cursor()
+    print(uid)
+    numOfResults = len(cur.execute('SELECT * FROM meteorLog WHERE logid=?', (uid,)).fetchall())
+    con.close()
+    if numOfResults:
+        return True
+    else:
+        return False
+
+@app.route('/addmeteors.json')
+def addMeteor():
+    key = request.args.get('key')
+    print(key)
+    uid = request.args.get('uid')
+    amount = request.args.get('amount')
+
+    username = getUsername(key)
+    print(username)
+    if username:
+        if alreadyMeteor(uid):
+            return '{"code": 409, "message": "This request has already been fulfilled"}'
+        else:
+            con = sqlite3.connect('questions.db')
+            cur = con.cursor()
+            cur.execute('INSERT INTO meteorLog (logid, username, amount) VALUES (?, ?, ?)', (uid,username,amount))
+            con.commit()
+            con.close()
+            return '{"code": 200, "message": "OK"}'
+    else:
+        return '{"code": 404, "message": "User not found"}'
+
+def alreadyResult(uid):
+    con = sqlite3.connect('questions.db')
+    cur = con.cursor()
+    print(uid)
+    numOfResults = len(cur.execute('SELECT * FROM questionLog WHERE logid=?', (uid,)).fetchall())
+    con.close()
+    if numOfResults:
+        return True
+    else:
+        return False
+
+@app.route('/addResult.json')
+def addResult():
+    key = request.args.get('key')
+    print(key)
+    uid = request.args.get('uid')
+    amount = request.args.get('amount')
+
+    username = getUsername(key)
+    print(username)
+    if username:
+        if alreadyResult(uid):
+            return '{"code": 409, "message": "This request has already been fulfilled"}'
+        else:
+            con = sqlite3.connect('questions.db')
+            cur = con.cursor()
+            cur.execute('INSERT INTO questionLog (logid, username, amount) VALUES (?, ?, ?)', (uid,username,amount))
+            con.commit()
+            con.close()
+            return '{"code": 200, "message": "OK"}'
+    else:
+        return '{"code": 404, "message": "User not found"}'
+
+@app.route('/getMeteors.json')
+def getMeteors():
+    username = request.args.get('username')
+    con = sqlite3.connect('questions.db')
+    cur = con.cursor()
+    meteors = cur.execute('SELECT SUM(amount) FROM meteorLog WHERE username=?', (username,)).fetchall()[0]
+    con.close()
+    return '{"code": 200, "message": "OK", "meteors": '+str(meteors[0])+'}'
+
+@app.route('/getResults.json')
+def getResults():
+    username = request.args.get('username')
+    con = sqlite3.connect('questions.db')
+    cur = con.cursor()
+    results = cur.execute('SELECT SUM(amount), COUNT(amount) FROM questionLog WHERE username=?', (username,)).fetchall()[0]
+    con.close()
+    return '{"code": 200, "message": "OK", "correct": '+str(results[0])+', "total": '+str(results[1]*5)+'}'
+
+
 @app.route('/image.png')
 def get_image():
     filename = request.args.get('id')+'.png'
@@ -172,10 +258,32 @@ def get_image():
 def returnFile():
     return render_template("index.html")
 
+@app.route('/userList.json')
+def userList():
+    key = request.args.get('key')
+    if key == '34034db3c6d844c8c005a5826ee8745ab97418d195356ab0ad8ab10fb5f46d8e':
+        con = sqlite3.connect('questions.db')
+        cur = con.cursor()
+        userArray = []
+        values = cur.execute('SELECT username FROM users')
+        for user in values:
+            userArray.append(user[0])
+        con.close()
+        jsonToSend = {}
+        jsonToSend['code'] = 200
+        jsonToSend['message'] = 'OK'
+        jsonToSend['users'] = userArray
+
+        return jsonToSend
+    else:
+        return '{"code": 403, "message": "Forbidden"}'
+        
+
 #@app.errorhandler(404)
 #def notFound(e):
 #    print(e)
 #    return 'test'
 
 if __name__ == '__main__':
-    app.run()
+    #app.run()
+    app.run(debug=True, host="0.0.0.0", port=int(os.environ.get("PORT", 8080)))
