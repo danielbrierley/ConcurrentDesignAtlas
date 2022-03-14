@@ -191,6 +191,10 @@
     float: left;
 }
 
+.meteorCounter{
+    float: right
+}
+
 .meteoriteImage {
     animation: spin 1s infinite linear;
     height: 8ch;

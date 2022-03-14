@@ -33,6 +33,8 @@ var rocketScreenHeight = 844;
 var rocketPositions = [[195, 820], [70, 780], [330, 760], [130, 660], [315, 620], [95, 430], [330, 440], [310, 230], [80, 200], [195, 50]]
 var planetList = ['Mercury', 'Venus', 'Earth', 'Mars', 'Jupiter', 'Saturn', 'Uranus', 'Neptune']
 
+var meteors = 0;
+
 var rocketX = rocketPositions[0][0];
 var rockety = rocketPositions[0][1];
 
@@ -294,6 +296,10 @@ function planets() {
   //console.log(planetNo+' '+(rocketPositions.length-2));
   planetName = document.getElementById('planetName');
   planetName.innerHTML = planetList[planetNo]; 
+
+  meteorCount = document.getElementById('meteorCount');
+  meteorCount.innerHTML = meteors; 
+
   if (planetNo == rocketPositions.length-2) {
     //console.log('done');
   }
@@ -386,6 +392,7 @@ function setCompleted() {
       score += 1;
     } 
   }
+  meteors += score;
   if (score == 1) {
     document.getElementById('meteorites').innerHTML = 'You have earned '+score+' meteorite!';
   }
