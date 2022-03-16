@@ -14,6 +14,7 @@ var answers = [];
 var ansList = [];
 var qNumber = 0;
 var achievements;
+var streak = 0;
 
 var pb = 0;
 let map = [];
@@ -163,6 +164,13 @@ function move(callback=function() {return}) { //Move progress bar
   }
 }
 
+function grantAchievement(aid) {
+  console.log(key);
+  getJSON(protocol+ip+"/grant.json?key="+key+"&achievementid="+aid).then(data => {
+    console.log(data);
+  })
+}
+
 function setRocket(width) {
   elem = document.getElementById("myBar");
   rocket = document.getElementById("rocket");
@@ -200,6 +208,11 @@ function answerClicked(ans) {
     timerBack.classList.remove('correct');
     timerBack.offsetWidth;
     timerBack.classList.add('correct');
+    streak += 1;
+    if (streak == 5) {
+      grantAchievement(3);
+    }
+    console.log(streak);
   }
   else {
     timerBack = document.getElementById('timerBackground');
@@ -207,6 +220,8 @@ function answerClicked(ans) {
     timerBack.classList.remove('correct');
     timerBack.offsetWidth;
     timerBack.classList.add('incorrect');
+    streak = 0;
+    console.log(streak);
   }
   answers.push([qNumber, ans]); //Add question and user answer to a list
   if (answers.length < 5) {
@@ -293,6 +308,9 @@ function startQuiz() {
 
 function planets() {
   planetNo += 1;
+  if (planetNo == 7) {
+    grantAchievement(2);
+  }
   //console.log(planetNo+' '+(rocketPositions.length-2));
   planetName = document.getElementById('planetName');
   planetName.innerHTML = planetList[planetNo]; 
@@ -423,12 +441,18 @@ function switchPage(id) {
   page = document.getElementById(id);
   page.style.display = 'block';
   if (id == 'quiz') {
-    planets();
+    startStory();
   }
   else if (id == "home") {
     questionNo = 0;
     switchTab("2");
   }
+}
+
+function startStory() {
+  grantAchievement(1);
+  planets();
+
 }
 
 function switchTab(id) {
