@@ -15,6 +15,7 @@ var ansList = [];
 var qNumber = 0;
 var achievements;
 var streak = 0;
+var incorrect = 0;
 
 var pb = 0;
 let map = [];
@@ -35,6 +36,7 @@ var rocketPositions = [[195, 820], [70, 780], [330, 760], [130, 660], [315, 620]
 var planetList = ['Mercury', 'Venus', 'Earth', 'Mars', 'Jupiter', 'Saturn', 'Uranus', 'Neptune']
 
 var meteors = 0;
+
 
 var rocketX = rocketPositions[0][0];
 var rockety = rocketPositions[0][1];
@@ -410,7 +412,14 @@ function setCompleted() {
       score += 1;
     } 
   }
+  incorrect += (5-score);
+  if (incorrect >= 10) {
+    grantAchievement(4);
+  }
   meteors += score;
+  if (meteors >= 25) {
+    grantAchievement(5);
+  }
   if (score == 1) {
     document.getElementById('meteorites').innerHTML = 'You have earned '+score+' meteorite!';
   }
@@ -452,7 +461,7 @@ function switchPage(id) {
 function startStory() {
   grantAchievement(1);
   planets();
-
+  meteors = 0;
 }
 
 function switchTab(id) {
@@ -596,6 +605,13 @@ function start2(data){
   //console.log(data);
   document.getElementById('key').innerHTML = key;
   if (data.code == 200) {
+    getJSON(protocol+ip+'/getResults.json?username='+username).then(data => {
+      incorrect += data.total-data.correct;
+      if (incorrect >= 10) {
+        grantAchievement(4);
+      }
+      console.log(incorrect);
+    });
     switchPage('home');
     switchTab('2');
   }
