@@ -8,7 +8,7 @@
     background-repeat: no-repeat;
 }
 
-#result {
+.result {
     position: relative;
     background-image: url("images/result.png");
     background-size: auto 100%;
@@ -180,6 +180,15 @@
     height: 8ch;
     top: 1ch;
     float: right;
+    border: solid 3px;
+    position: relative;
+}
+
+.rewardDivEnd {
+    background-color: #fb78c9;
+    width: 90%;
+    height: 8ch;
+    top: 1ch;
     border: solid 3px;
     position: relative;
 }

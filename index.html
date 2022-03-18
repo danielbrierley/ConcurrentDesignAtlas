@@ -56,9 +56,9 @@
                             <button class="ans" id="ans3" onclick="answerClicked(2)"></button>
                         </div>
                     </div>
-                    <div id="result" style='display:none' onclick="planets()">
+                    <div class="result" id="result" style='display:none' onclick="planets()">
                         <div id="resultTitle">
-                            <h1 id="congrats">Congratulations!</h1>
+                            <h1 id="congrats">Mission Complete!</h1>
                         </div>
                         <center>
                         <div id="resultDiv"></div>
@@ -68,11 +68,32 @@
                             <img class="meteoriteImage" src="images/meteorite.png" />
                         </div>
                     </div>
+
                     <div id="myProgress">
                         <div id="myBar" style="float: left">0%</div>
                         <img id="rocket" src="images/rocket.png" style="float: right; height: 20vh; position:absolute;left:calc(0% - 70px); top:-50%"/>
                     </div>
                 </div>
+
+                    
+                <div class="result" id="endofstory" style='display:none' onclick="switchPage('home')">
+                    <div id="resultTitle">
+                        <h1 id="congrats">Congratulations!</h1>
+                    </div>
+
+                    <center>
+                    <div id="resultDivEnd">
+                        <p>You have completed the Solar System Storyline</p>
+                        <p id="resultCorrect">12/40</p>
+                        <div class="rewardDivEnd">
+
+                            <p id="meteoritesEnd"></p>
+                            <img class="meteoriteImage" src="images/meteorite.png" />
+                        </div>
+                    </div>
+                    </center>
+                </div>
+
             </div>
 
             <div class='pages' id='home' style="display:none">
@@ -85,10 +106,6 @@
                 <div class='contents' id='2' style="display:none">
                     <p id="key"></p>
                     <a onclick="switchPage('quiz')" href="#">quiz</a>
-                    <br>
-                    <a onclick="switchPage('login')" href="#">Log In</a>
-                    <br>
-                    <a onclick="clearCookies()" href="#">Clear Cookies</a>
                 </div>
                 <div class='contents' id='3' style="display:none">
                     <h1 id="settingsTitle">Settings</h1>
@@ -98,6 +115,11 @@
                             <span class="slider round"></span>
                         </label>
                         Sound
+                        <label class="switch">
+                            <input type="checkbox">
+                            <span class="slider round"></span>
+                        </label>
+                        music
                     </div>
                 </div>
                 <div class='contents' id='4' style="display:none">
@@ -105,11 +127,12 @@
                     <img id="profilePic">
                     <p id="usernameProfile"></p>
                     <h4>Achievements</h4>
-                    <ul id="achievements">
-                            
-                    </ul>
+                    <ul id="achievements"></ul>
+
+                    <h4>My Stats</h4>
+                    <p id="stats">12/25</p>
                     <div id="achievementDisabler" style="display:none" onclick="hideAchievement()"></div>
-                    <div id="achievementPopup" style="display:none">
+                    <div id="achievementPopup" style="display:none; background-color: #fb78c9;">
                         <div class="an">
                             <h3 id="achievementName"></h3>
                         </div>
@@ -140,6 +163,12 @@
                         Profile
                     </button>
                 </div>
+            </div>
+
+            <div class="achievementPopup" id="achievUnlocked" style="display:none">
+                <img id="achievIcn"/>
+                <p id="achievunlock" style="font-size: 2.5ch;">Achievement Unlocked!</p>
+                <p id="achievtitle"></p>
             </div>
 
             <div class="pages" id="noscript" style="display:block">

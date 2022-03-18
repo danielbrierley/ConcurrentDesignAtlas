@@ -93,3 +93,16 @@ p {
     height: 100%;
     opacity: 0;
 }
+
+.achievementPopup {
+    background-color: cyan;
+    position: absolute; 
+    width: 90%; 
+    left:5%; 
+    height:10vh
+}
+
+#achievIcn {
+    height:10vh;
+    float: right
+}

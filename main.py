@@ -153,14 +153,34 @@ def grantAchievement():
     print(username)
     if username:
         if alreadyGranted(username, achievementid):
-            return '{"code": 409, "message": "Achievement has already been granted to this user"}'
+            con = sqlite3.connect('questions.db')
+            cur = con.cursor()
+            achievementInfo = cur.execute("SELECT achievementid, name, description FROM achievements WHERE achievementid=?", (achievementid,)).fetchall()[0]
+            con.close()
+
+            jsonToSend = {}
+            jsonToSend['code'] = 409
+            jsonToSend['message'] = 'Achievement has already been granted to this user'
+            jsonToSend['id'] = achievementInfo[0]
+            jsonToSend['name'] = achievementInfo[1]
+            jsonToSend['description'] = achievementInfo[2]
+            jsonToSend['image'] = 'http://127.0.0.1:5500/images/icon.png'
+            return jsonToSend
         else:
             con = sqlite3.connect('questions.db')
             cur = con.cursor()
             cur.execute('INSERT INTO achievementLog (username, achievementid) VALUES (?, ?)', (username,achievementid))
+            achievementInfo = cur.execute("SELECT achievementid, name, description FROM achievements WHERE achievementid=?", (achievementid,)).fetchall()[0]
             con.commit()
             con.close()
-            return '{"code": 200, "message": "OK"}'
+            jsonToSend = {}
+            jsonToSend['code'] = 200
+            jsonToSend['message'] = 'OK'
+            jsonToSend['id'] = achievementInfo[0]
+            jsonToSend['name'] = achievementInfo[1]
+            jsonToSend['description'] = achievementInfo[2]
+            jsonToSend['image'] = 'http://127.0.0.1:5500/images/icon.png'
+            return jsonToSend
     else:
         return '{"code": 404, "message": "User not found"}'
 

@@ -32,8 +32,8 @@ var width = 0;
 
 var planetNo = -1;
 var rocketScreenHeight = 844;
-var rocketPositions = [[195, 820], [70, 780], [330, 760], [130, 660], [315, 620], [95, 430], [330, 440], [310, 230], [80, 200], [195, 50]]
-var planetList = ['Mercury', 'Venus', 'Earth', 'Mars', 'Jupiter', 'Saturn', 'Uranus', 'Neptune']
+var rocketPositions = [[195, 820], [70, 780], [330, 760], [130, 660], [315, 620], [95, 430], [330, 440], [310, 230], [80, 200], [195, 50]];
+var planetList = ['Mercury', 'Venus', 'Earth', 'Mars', 'Jupiter', 'Saturn', 'Uranus', 'Neptune'];
 
 var meteors = 0;
 
@@ -48,6 +48,7 @@ function preventDefault(e){
 function disableScroll(){
   document.body.addEventListener('touchmove', preventDefault, { passive: false });
 }
+
 function enableScroll(){
   document.body.removeEventListener('touchmove', preventDefault);
 }
@@ -168,8 +169,20 @@ function move(callback=function() {return}) { //Move progress bar
 
 function grantAchievement(aid) {
   console.log(key);
+  console.log(achievements);
   getJSON(protocol+ip+"/grant.json?key="+key+"&achievementid="+aid).then(data => {
     console.log(data);
+    if (data.code == 200) {
+      achievementName = document.getElementById('achievtitle');
+      achievementName.innerHTML = data.name+' - '+data.description;
+      achievementIcon = document.getElementById('achievIcn');
+      console.log(aid);
+      achievementIcon.src = 'images/achievements/ach'+aid+'.png';//achievements[id].image;
+      achievementIcon.alt = 'achievement '+aid;
+      achievementPopup2 = document.getElementById('achievUnlocked');
+      achievementPopup2.style.display = 'block';
+      a = setInterval(function() {achievementPopup2.style.display = 'none'; clearInterval(a)}, 3000)
+    }
   })
 }
 
@@ -332,6 +345,10 @@ function planets() {
 
   quiz2 = document.getElementById('quiz2');
   quiz2.style.display = 'none';
+
+
+  endScreen = document.getElementById('endofstory');
+  endScreen.style.display = 'none';
 
   mcq = document.getElementById('mcq');
   mcq.style.display = 'block';
@@ -522,7 +539,8 @@ function profile() {
       li = document.createElement("li");
       //li.innerHTML = achievement.name+': '+achievement.description;
       img = document.createElement("img");
-      img.src = achievement.image;
+      img.src = 'images/achievements/ach'+(x+1)+'.png';//achievement.image;
+      img.alt = 'achievement '+(x+1);
       img.style.width = '10vh';
       img.style.height = '10vh';
       //txt = document.createTextNode(achievement.name+': '+achievement.description);
@@ -545,6 +563,13 @@ function profile() {
   })//.catch(error => {
     //console.error(error);
   //});
+  getJSON(protocol+ip+"/getResults.json?username="+username+"").then(data => {
+    correct = data.correct;
+    total = data.total;
+    stats = document.getElementById('stats');
+    stats.innerHTML = correct+'/'+total;
+
+  })
 }
 
 function showAchievement(id) {
@@ -553,8 +578,15 @@ function showAchievement(id) {
   achievementName.innerHTML = achievements[id].name;
   achievementDescription = document.getElementById('achievementDescription');
   achievementDescription.innerHTML = achievements[id].description;
-  achievementImage.src = achievements[id].image;
+  achievementImage.src = 'images/achievements/ach'+(parseInt(id)+1)+'.png';//achievements[id].image;
+  achievementImage.alt = 'achievement '+(parseInt(id)+1);
   achievementPopup = document.getElementById('achievementPopup');
+  if (achievements[id].granted){
+    achievementPopup.style.backgroundColor = '#fb78c9';
+  }
+  else {
+    achievementPopup.style.backgroundColor = '#888888';
+  }
   achievementPopup.style.display = 'block';
   achievementDisabler = document.getElementById('achievementDisabler');
   achievementDisabler.style.display = 'block';
@@ -720,7 +752,12 @@ function endQuiz() {
   rocketX = rocketPositions[0][0];
   rockety = rocketPositions[0][1];
   
-  switchPage('home');
+  planetsEnd = document.getElementById('map');
+  planetsEnd.style.display = 'none';
+  
+  endOfStory = document.getElementById('endofstory');
+  endOfStory.style.display = 'block';
+  //switchPage('home');
 }
 
 function convRadians(degrees){
