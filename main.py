@@ -415,6 +415,37 @@ def getIcon():
 def factOTD():
     return {'code': 200, 'message': 'OK', 'fact': 'test fact'}
 
+@app.route('/facts.json')
+def facts():
+    key = request.args.get('key')
+    key = hash(key)
+    print(key)
+    if verifyKey(key):
+        type = request.args.get('theme')
+        print(type)
+
+        jsonToSend = {}
+        factArray = []
+        con = sqlite3.connect('questions.db')
+        cur = con.cursor()
+        v = (type,)
+        if type == None:
+            values = cur.execute("SELECT category, fact FROM facts")
+        else:
+            values = cur.execute("SELECT category, fact FROM facts WHERE category=?", v)
+        for row in values:
+            fact = {'category':row[0], 'fact':row[1]}
+            factArray.append(fact)
+        con.close()
+        jsonToSend['facts'] = [factArray]
+        
+        jsonToSend['code'] = 200
+        jsonToSend['message'] = 'OK'
+        response = jsonToSend
+    else:
+        return '{"code": 403, "message": "Your key is not permitted to perform this action"}'
+    
+    return response
 
 #@app.errorhandler(404)
 #def notFound(e):

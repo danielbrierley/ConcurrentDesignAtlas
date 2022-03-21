@@ -1,4 +1,4 @@
-INSERT INTO  facts (fact, category)
+INSERT INTO  facts (category, fact)
 VALUES
 ('Planets', 'There are 8 planets in our solar system. The order of he from closest from the sun to the farthest goes: Mercury, Venus, Earth, Mars, Jupiter, Saturn, Uranus and Neptune.'),
 ('Planets', 'Among these planets, there are 4 Gas giants. These are the planets that are farthest away from the sun. Jupiter, Saturn, Uranus and Neptune.'),
