@@ -1,0 +1,92 @@
+#shopContents {
+    margin: 0;
+    padding: 0;
+    padding: 5px;
+}
+
+#shopContents li {
+    margin-left: 2px;
+    margin-right: 2px;
+    margin: 2px;
+    list-style-type: none;
+    display: inline-block;
+}
+
+.cost {
+    text-align: center;
+}
+
+
+.meteoriteCost {
+    animation: spin 1s infinite linear;
+    height: 2ch;
+}
+
+#shopDisabler {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    left: 0%;
+    top: 0%;
+}
+
+#itemImage {
+    width: 30vh;
+    height: 30vh;
+}
+
+#itemPopup {
+    position: absolute;
+    width:30vh;
+    height: 40%;
+    left: 2%;
+    left: calc(50% - 15vh);
+    top: 30%;
+}
+
+.ic {
+    width: 100%;
+    text-align: center;
+    /*background-color: cyan;*/
+}
+
+.ii {
+    width: 30vh;
+    /*background-color: yellow;*/
+}
+
+#itemCost {
+    bottom: 0.3ch;
+    text-align: right;
+    position: relative;
+}
+
+.costText {
+    bottom: 0.3ch;
+    text-align: right;
+    position: relative;
+}
+
+#purchase {
+    font-size: 3ch;
+    width: 70%;
+}
+
+
+#shopContents {
+    height: calc(100vh - 20vw);
+    overflow-y:scroll;
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+}
+
+
+@media (max-width: 450px) {
+    #shopContents {
+        height: calc(100% - 22vw);
+    }
+}
+
+#shopContents::-webkit-scrollbar {
+    display: none;
+}

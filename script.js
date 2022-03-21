@@ -14,8 +14,11 @@ var answers = [];
 var ansList = [];
 var qNumber = 0;
 var achievements;
+var shopList;
+var achievements;
 var streak = 0;
 var incorrect = 0;
+var icon;
 
 var pb = 0;
 let map = [];
@@ -36,10 +39,13 @@ var rocketPositions = [[195, 820], [70, 780], [330, 760], [130, 660], [315, 620]
 var planetList = ['Mercury', 'Venus', 'Earth', 'Mars', 'Jupiter', 'Saturn', 'Uranus', 'Neptune'];
 
 var meteors = 0;
-
+var totalScore = 0;
 
 var rocketX = rocketPositions[0][0];
 var rockety = rocketPositions[0][1];
+
+var music = true;
+var sound = true;
 
 function preventDefault(e){
   e.preventDefault();
@@ -434,6 +440,7 @@ function setCompleted() {
     grantAchievement(4);
   }
   meteors += score;
+  totalScore += score;
   if (meteors >= 25) {
     grantAchievement(5);
   }
@@ -513,6 +520,65 @@ function learn() {
 
 function shop() {
   //console.log('shop');
+  getJSON(protocol+ip+"/shop.json?key="+key+"").then(data => {
+    //console.log(data);
+    shopList = data.shop;
+    meteors = data.meteors[0];
+    meteorCountShop = document.getElementById('meteorCountShop');
+    meteorCountShop.innerHTML = meteors;
+    listItems = document.getElementById('shopContents').children;
+    for (x = 0; x < listItems.length; x++) {
+      listItems[x].style.display = 'none';
+    }
+    for (x = 0; x < shopList.length; x++) {
+      item = shopList[x];
+      ul = document.getElementById('acheivements');//.onclick();
+      li = document.createElement("li");
+      //li.innerHTML = item.name+': '+item.description;
+      img = document.createElement("img");
+      img.src = 'images/shop/item'+item.id+'.png';//item.image;
+      img.alt = 'item '+item.id;
+      img.classList.add('imageGrid');
+      //txt = document.createTextNode(item.name+': '+item.description);
+      //li.appendChild(txt);
+      /*if (item.granted) {
+        img.style.filter = "grayscale(0%)";
+      }
+      else {
+        img.style.filter = "grayscale(100%)";
+      }*/
+      //console.log(x);
+      l = x;
+      //img.onclick = function() {showitem(this.parentElement.id[0]);};
+      //console.log(img.onclick);
+      li.id = x+'item';
+      console.log(item.cost);
+      div = document.createElement("div");
+      div.classList.add("cost");
+
+      span = document.createElement("span");
+      span.classList.add("costText");
+      span.innerHTML = item.cost;
+      if (item.cost > meteors) {
+        span.style.color = 'red';
+        console.log('red');
+      }
+
+      mimg = document.createElement("img");
+      mimg.classList.add("meteoriteCost");
+      mimg.src = "images/meteorite.png";
+      
+      div.appendChild(span);
+      div.appendChild(mimg);
+
+      li.onclick = function() {showItem(this.id[0]);};
+
+      li.appendChild(img);
+      li.appendChild(div);
+      document.getElementById("shopContents").appendChild(li);
+      //console.log(item);
+    }
+  })
 }
 
 function home() {
@@ -535,14 +601,13 @@ function profile() {
     }
     for (x = 0; x < achievements.length; x++) {
       achievement = achievements[x];
-      ul = document.getElementById('acheivements');//.onclick();
+      ul = document.getElementById('achievements');//.onclick();
       li = document.createElement("li");
       //li.innerHTML = achievement.name+': '+achievement.description;
       img = document.createElement("img");
-      img.src = 'images/achievements/ach'+(x+1)+'.png';//achievement.image;
-      img.alt = 'achievement '+(x+1);
-      img.style.width = '10vh';
-      img.style.height = '10vh';
+      img.src = 'images/achievements/ach'+achievement.id+'.png';//achievement.image;
+      img.alt = 'achievement '+achievement.id;
+      img.classList.add('imageGrid');
       //txt = document.createTextNode(achievement.name+': '+achievement.description);
       //li.appendChild(txt);
       if (achievement.granted) {
@@ -560,7 +625,7 @@ function profile() {
       document.getElementById("achievements").appendChild(li);
       //console.log(achievement);
     }
-  })//.catch(error => {
+  });//.catch(error => {
     //console.error(error);
   //});
   getJSON(protocol+ip+"/getResults.json?username="+username+"").then(data => {
@@ -569,7 +634,111 @@ function profile() {
     stats = document.getElementById('stats');
     stats.innerHTML = correct+'/'+total;
 
-  })
+  });
+
+  getJSON(protocol+ip+"/inventory.json?key="+key+"").then(data => {
+    //console.log(data);
+    inventory = data.inventory;
+    listItems = document.getElementById('inventory').children;
+    for (x = 0; x < listItems.length; x++) {
+      listItems[x].style.display = 'none';
+    }
+    for (x = 0; x < inventory.length; x++) {
+      item = inventory[x];
+      ul = document.getElementById('inventory');//.onclick();
+      li = document.createElement("li");
+      //li.innerHTML = item.name+': '+item.description;
+      img = document.createElement("img");
+      img.src = 'images/shop/item'+item.id+'.png';//item.image;
+      img.alt = 'item '+item.id;
+      img.classList.add('imageGrid');
+      //txt = document.createTextNode(item.name+': '+item.description);
+      //li.appendChild(txt);
+      //console.log(x);
+      l = x;
+      img.onclick = function() {setPFP(this.parentElement.id[0]);};
+      //console.log(img.onclick);
+      li.id = x+'item';
+      li.appendChild(img);
+      document.getElementById("inventory").appendChild(li);
+      //console.log(item);
+    }
+  }); 
+  getJSON(protocol+ip+"/geticon.json?username="+username+"").then(data => {
+    console.log(data);
+    setIcon(data.icon);
+  });
+}
+
+function setPFP(id) {
+  id = inventory[id].id;
+  getJSON(protocol+ip+"/seticon.json?key="+key+"&id="+id).then(data => {
+    console.log(data);
+    setIcon(data.icon);
+  });
+  console.log(id);
+}
+
+function setIcon(id) {
+  icon = id;
+  profilePic = document.getElementById('profilePic');
+  profilePic.src = "images/shop/item"+id+".png"
+}
+
+function showItem(id) {
+  //console.log(id);
+  itemCost = document.getElementById('itemCost');
+  itemCost.innerHTML = shopList[id].cost;
+  
+  //mimg = document.createElement("img");
+  //mimg.classList.add("meteoriteCost");
+  //mimg.src = "images/meteorite.png";
+  //itemCost.appendChild(mimg);
+
+  itemImage = document.getElementById('itemImage');
+  itemImage.src = 'images/shop/item'+(parseInt(id)+1)+'.png';//achievements[id].image;
+  itemImage.alt = 'item '+(parseInt(id)+1);
+  itemPopup = document.getElementById('itemPopup');
+
+  purchaseButton = document.getElementById('purchase');
+  if (shopList[id].cost > meteors) {
+    purchaseButton.disabled = true;
+    itemCost.style.color = 'red';
+  }
+  else {
+    purchaseButton.disabled = false;
+    itemCost.style.color = 'black';
+    purchaseButton.onclick = function() {purchaseItem(shopList[id].id);};
+  }
+
+  /*if (achievements[id].granted){
+    achievementPopup.style.backgroundColor = '#fb78c9';
+  }
+  else {
+    achievementPopup.style.backgroundColor = '#888888';
+  }*/
+  itemPopup.style.display = 'block';
+  shopDisabler = document.getElementById('shopDisabler');
+  shopDisabler.style.display = 'block';
+}
+
+function purchaseItem(id) {
+  console.log(id);
+  sha256(id+username).then((uid) => {
+    getJSON(protocol+ip+"/purchase.json?key="+key+"&uid="+uid+'&item='+id).then(data => {
+      meteors = data.meteors;
+      shop();
+      console.log(data);
+    });
+  });
+}
+
+function hideItem() {
+  itemPopup = document.getElementById('itemPopup');
+  itemPopup.style.display = 'none';
+  shopDisabler = document.getElementById('shopDisabler');
+  shopDisabler.style.display = 'none';
+
 }
 
 function showAchievement(id) {
@@ -578,6 +747,7 @@ function showAchievement(id) {
   achievementName.innerHTML = achievements[id].name;
   achievementDescription = document.getElementById('achievementDescription');
   achievementDescription.innerHTML = achievements[id].description;
+  achievementImage = document.getElementById('achievementImage');
   achievementImage.src = 'images/achievements/ach'+(parseInt(id)+1)+'.png';//achievements[id].image;
   achievementImage.alt = 'achievement '+(parseInt(id)+1);
   achievementPopup = document.getElementById('achievementPopup');
@@ -597,7 +767,6 @@ function hideAchievement() {
   achievementPopup.style.display = 'none';
   achievementDisabler = document.getElementById('achievementDisabler');
   achievementDisabler.style.display = 'none';
-
 }
 
 function authenticate(key) {
@@ -744,8 +913,18 @@ function moveRocket(x=50, y=50) {
 
 function endQuiz() {
   //console.log('end quiz');
+
+  resultCorrect = document.getElementById('resultCorrect');
+  resultCorrect.innerHTML = totalScore+"/40"; 
+
+  meteoritesEnd = document.getElementById('meteoritesEnd');
+  meteoritesEnd.innerHTML = "You earned a total of "+meteors+" Meteorites!"; 
+
+
   rocketPos = 0;
   width = 0;
+  totalScore = 0;
+  meteors = 0;
   
   
   planetNo = -1;
@@ -758,6 +937,21 @@ function endQuiz() {
   endOfStory = document.getElementById('endofstory');
   endOfStory.style.display = 'block';
   //switchPage('home');
+}
+
+function logOut() {
+  clearCookies();
+  window.location = ''; //reload
+}
+
+function toggleSound() {
+  sound = !sound;
+  console.log(sound);
+}
+
+function toggleMusic() {
+  music = !music;
+  console.log(music);
 }
 
 function convRadians(degrees){

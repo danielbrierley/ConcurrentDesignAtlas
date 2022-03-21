@@ -200,6 +200,15 @@
     float: left;
 }
 
+#meteoritesEnd {
+    margin-top: calc(1ch);
+    font-size: 18px;
+    width: calc(100% - 15vh);
+    margin-top:1.5ch;
+    float: left;
+}
+
+
 .meteorCounter{
     float: right
 }
@@ -220,8 +229,3 @@
     display: none;
 }
 
-
-@keyframes spin {
-    0% {transform: rotate(0deg)}
-    100% {transform: rotate(360deg)}
-}

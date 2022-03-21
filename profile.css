@@ -52,3 +52,43 @@
     float: left;
     /*background-color: magenta;*/
 }
+
+#inventory {
+    margin: 0;
+    padding: 0;
+    padding: 5px;
+}
+
+#inventory li {
+    margin-left: 2px;
+    margin-right: 2px;
+    margin: 2px;
+    list-style-type: none;
+    display: inline-block;
+}
+
+.profile {
+    float: right;
+    position: absolute;
+    text-align: right;
+    top:0%;
+    right: 0%;
+}
+
+.profileScroll {
+    height: calc(100vh - 20vw);
+    overflow-y:scroll;
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+}
+
+
+@media (max-width: 450px) {
+    .profileScroll {
+        height: calc(100% - 22vw);
+    }
+}
+
+.profileScroll::-webkit-scrollbar {
+    display: none;
+}

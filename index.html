@@ -6,6 +6,7 @@
         <link rel="stylesheet" type="text/css" href="./quiz.css">
         <link rel="stylesheet" type="text/css" href="./settings.css">
         <link rel="stylesheet" type="text/css" href="./profile.css">
+        <link rel="stylesheet" type="text/css" href="./shop.css">
 
         <link rel="icon" href="images/icon.png">
         <script src="script.js"></script>
@@ -83,11 +84,11 @@
 
                     <center>
                     <div id="resultDivEnd">
-                        <p>You have completed the Solar System Storyline</p>
+                        <p>You have completed the Solar System Storyline!</p>
                         <p id="resultCorrect">12/40</p>
                         <div class="rewardDivEnd">
 
-                            <p id="meteoritesEnd"></p>
+                            <p id="meteoritesEnd">You earned a total of 40 Meteorites!</p>
                             <img class="meteoriteImage" src="images/meteorite.png" />
                         </div>
                     </div>
@@ -99,38 +100,101 @@
             <div class='pages' id='home' style="display:none">
                 <div class='contents' id='0' style="display:none">
                     <h1 id="learnTitle">Learn</h1>
+                    <div class="learn">
+
+                    </div>
                 </div>
+
                 <div class='contents' id='1' style="display:none">
                     <h1 id="shopTitle">Shop</h1>
+                    <div class="meteorCounter" style="position:absolute; right:0%; top: 0%;">
+                        <p id="meteorCountShop" style="float: left; font-size: 7ch">0</p>
+                        <img class="meteoriteImage" src="images/meteorite.png" style="float: right"/>
+                    </div>
+                    <ul id="shopContents"></ul>
+
+                    
+                    <div id="shopDisabler" style="display:none" onclick="hideItem()"></div>
+                    <div id="itemPopup" style="display:none; background-color: #fb78c9;">
+                        <div class="ii">
+                            <img id="itemImage"/>
+                        </div>
+                        <div class="ic">
+                            <button id="purchase">
+                                <span id="itemCost"></span>
+                                <img class="meteoriteCost" src="images/meteorite.png">
+                            </button>
+                        </div>
+                        
+                    </div>
+
                 </div>
+
                 <div class='contents' id='2' style="display:none">
                     <p id="key"></p>
                     <a onclick="switchPage('quiz')" href="#">quiz</a>
                 </div>
+
                 <div class='contents' id='3' style="display:none">
                     <h1 id="settingsTitle">Settings</h1>
-                    <div class="settings" id="opt1">
-                        <label class="switch">
-                            <input type="checkbox">
-                            <span class="slider round"></span>
-                        </label>
-                        Sound
-                        <label class="switch">
-                            <input type="checkbox">
-                            <span class="slider round"></span>
-                        </label>
-                        music
+                    <div class="settings">
+                        <table id="settingOpt">
+                            <tr>
+                                <td class="setLbl">
+                                    Sound
+                                </td>
+                                <td class="setTgl">
+                                    <label class="switch">
+                                        <input type="checkbox" onclick="toggleSound()" checked>
+                                        <span class="slider round"></span>
+                                    </label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="setLbl">
+                                    Music
+                                </td>
+                                <td class="setTgl">
+                                    <label class="switch">
+                                        <input type="checkbox" onclick="toggleMusic()" checked>
+                                        <span class="slider round"></span>
+                                    </label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="setLbl">
+                                    Username
+                                </td>
+                                <td class="setTgl">
+                                    <input class="txtInput" disabled>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">
+                                    <button class="setBtn" onclick="logOut()">Log Out</button>
+                                </td>
+                            </tr>
+                        </table>
+                        <br>
                     </div>
                 </div>
+
                 <div class='contents' id='4' style="display:none">
                     <h1 id="profileTitle">Profile</h1>
-                    <img id="profilePic">
-                    <p id="usernameProfile"></p>
-                    <h4>Achievements</h4>
-                    <ul id="achievements"></ul>
-
-                    <h4>My Stats</h4>
-                    <p id="stats">12/25</p>
+                    <div class="profile">
+                        <img id="profilePic" class="imageGrid" style="filter: grayscale(0%);">
+                        <p id="usernameProfile"></p>
+                    </div>
+                    <div class="profileScroll">
+                        <h4>Achievements</h4>
+                        <ul id="achievements"></ul>
+                        
+                        <h4>Inventory</h4>
+                        <ul id="inventory"></ul>
+    
+                        <h4>My Stats</h4>
+                        <p id="stats"></p>
+                    </div>
                     <div id="achievementDisabler" style="display:none" onclick="hideAchievement()"></div>
                     <div id="achievementPopup" style="display:none; background-color: #fb78c9;">
                         <div class="an">

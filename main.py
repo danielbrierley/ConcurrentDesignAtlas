@@ -1,3 +1,4 @@
+from getpass import getuser
 from flask import Flask, request, jsonify, send_file, render_template
 from flask_cors import CORS
 import json
@@ -250,13 +251,18 @@ def addResult():
     else:
         return '{"code": 404, "message": "User not found"}'
 
-@app.route('/getMeteors.json')
-def getMeteors():
-    username = request.args.get('username')
+def readMeteors(username):
     con = sqlite3.connect('questions.db')
     cur = con.cursor()
     meteors = cur.execute('SELECT SUM(amount) FROM meteorLog WHERE username=?', (username,)).fetchall()[0]
     con.close()
+    return meteors
+
+
+@app.route('/getMeteors.json')
+def getMeteors():
+    username = request.args.get('username')
+    meteors = readMeteors(username)
     return '{"code": 200, "message": "OK", "meteors": '+str(meteors[0])+'}'
 
 @app.route('/getResults.json')
@@ -298,6 +304,113 @@ def userList():
     else:
         return '{"code": 403, "message": "Forbidden"}'
         
+
+def owned(item, username):
+    con = sqlite3.connect('questions.db')
+    cur = con.cursor()
+    purchased = cur.execute('SELECT logid FROM meteorLog WHERE username=? AND item=?', (username, item)).fetchall()
+    cur.close()
+
+    return len(purchased) == 1
+
+@app.route('/shop.json')
+def getShop():
+    key = request.args.get('key')
+    con = sqlite3.connect('questions.db')
+    cur = con.cursor()
+    shopRaw = cur.execute('SELECT shopid, name, cost FROM shop')
+    shop = []
+    username = getUsername(key)
+    for item in shopRaw:
+        id = item[0]
+        print(id)
+        #granted = alreadyGranted(username, id)
+        if not owned(item[0], username):
+            shop.append({'id': id, 'name': item[1], 'cost': item[2]})
+    con.close()
+
+    meteors = readMeteors(getUsername(key))
+
+    jsonToReturn = {'code': 200, 'message': 'OK', 'shop': shop, 'meteors': meteors}
+    return jsonToReturn
+
+def getShopItem(id):
+    con = sqlite3.connect('questions.db')
+    cur = con.cursor()
+    item = cur.execute('SELECT shopid, name, cost FROM shop WHERE shopid=?', (id,)).fetchall()[0]
+    cur.close()
+    return item
+
+@app.route('/purchase.json')
+def purchase():
+    key = request.args.get('key')
+    print(key)
+    uid = request.args.get('uid')
+    item = request.args.get('item')
+    amount = getShopItem(item)[2]
+    print(amount)
+    amount = -amount
+    username = getUsername(key)
+    print(username)
+    if username:
+        if alreadyMeteor(uid):
+            return '{"code": 409, "message": "This request has already been fulfilled"}'
+        else:
+            con = sqlite3.connect('questions.db')
+            cur = con.cursor()
+            cur.execute('INSERT INTO meteorLog (logid, username, amount, item) VALUES (?, ?, ?, ?)', (uid,username,amount,item))
+            con.commit()
+            con.close()
+            meteors = readMeteors(username)
+            return {"code": 200, "message": "OK", "meteors": meteors}
+    else:
+        return '{"code": 404, "message": "User not found"}'
+
+
+
+
+@app.route('/inventory.json')
+def getInventory():
+    key = request.args.get('key')
+    con = sqlite3.connect('questions.db')
+    cur = con.cursor()
+    shopRaw = cur.execute('SELECT shopid, name, cost FROM shop')
+    shop = []
+    username = getUsername(key)
+    for item in shopRaw:
+        id = item[0]
+        print(id)
+        #granted = alreadyGranted(username, id)
+        if owned(item[0], username):
+            shop.append({'id': id, 'name': item[1], 'cost': item[2]})
+    con.close()
+
+    meteors = readMeteors(getUsername(key))
+
+    jsonToReturn = {'code': 200, 'message': 'OK', 'inventory': shop, 'meteors': meteors}
+    return jsonToReturn
+
+@app.route('/seticon.json')
+def setIcon():
+    key = request.args.get('key')
+    id = request.args.get('id')
+    username = getUsername(key)
+    con = sqlite3.connect('questions.db')
+    cur = con.cursor()
+    cur.execute('UPDATE users SET icon = ? WHERE username=?', (id, username))
+    con.commit()
+    con.close()
+    return {'code': 200, 'message': 'OK', 'icon': id}
+    
+@app.route('/geticon.json')
+def getIcon():
+    username = request.args.get('username')
+    con = sqlite3.connect('questions.db')
+    cur = con.cursor()
+    icon = cur.execute('SELECT icon FROM users WHERE username=?', (username,)).fetchall()[0]
+    con.close()
+    return {'code': 200, 'message': 'OK', 'icon': icon}
+    
 
 #@app.errorhandler(404)
 #def notFound(e):
