@@ -1,6 +1,6 @@
-//const ip = "apitest2-b5pthtwkoq-nw.a.run.app";
-const ip = "127.0.0.1:5000";
-const protocol = "http://";
+const ip = "apitest2-b5pthtwkoq-nw.a.run.app";
+//const ip = "127.0.0.1:5000";
+const protocol = "https://";
 
 const qn = 24;
 
@@ -16,6 +16,7 @@ var qNumber = 0;
 var achievements;
 var shopList;
 var achievements;
+var facts;
 var streak = 0;
 var incorrect = 0;
 var icon;
@@ -515,7 +516,35 @@ function switchTab(id) {
 }
 
 function learn() {
+  getJSON(protocol+ip+"/facts.json?key="+key+"").then(data => {
+    facts = data.facts;
+    console.log(facts);
+    factContents = document.getElementById('factContents');
+    factContents.innerHTML = "";
+    for (x = 0; x < facts.length; x++) {
+      factSet = facts[x];
+      tab = document.createElement('div');
+      tab.classList.add('learnTabs');
+      for (y = 0; y < factSet.length; y++) {
+        fact = factSet[y];
+        f = document.createElement('div');
+        f.innerHTML = fact.fact;
+        tab.appendChild(f);
+      }
+      tab.style.display = 'none';
+      factContents.appendChild(tab);
+    }
+    switchLearnTab(0);
+  });
   //console.log('learn');
+}
+
+function switchLearnTab(id) {
+  tabs = document.getElementsByClassName('learnTabs');
+  for (x = 0; x < tabs.length; x++) {
+    tabs[x].style.display = 'none';
+  }
+  tabs[id].style.display = 'block';
 }
 
 function shop() {
@@ -585,7 +614,7 @@ function home() {
   //console.log('home');
   getJSON(protocol+ip+"/fact.json?key="+key+"").then(data => {
     fact = document.getElementById('fact');
-    fact.innerHTML = data.fact;
+    fact.innerHTML = data.fact.fact;
     console.log(data);
   });
   

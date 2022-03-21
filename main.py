@@ -1,6 +1,7 @@
 from getpass import getuser
 from flask import Flask, request, jsonify, send_file, render_template
 from flask_cors import CORS
+import time
 import json
 import sqlite3
 import os
@@ -263,6 +264,8 @@ def readMeteors(username):
 def getMeteors():
     username = request.args.get('username')
     meteors = readMeteors(username)
+    if meteors[0] == None:
+        meteors = [0]
     return '{"code": 200, "message": "OK", "meteors": '+str(meteors[0])+'}'
 
 @app.route('/getResults.json')
@@ -272,7 +275,11 @@ def getResults():
     cur = con.cursor()
     results = cur.execute('SELECT SUM(amount), COUNT(amount) FROM questionLog WHERE username=?', (username,)).fetchall()[0]
     con.close()
-    return '{"code": 200, "message": "OK", "correct": '+str(results[0])+', "total": '+str(results[1]*5)+'}'
+    print(results[0])
+    if results[0]:
+        return '{"code": 200, "message": "OK", "correct": '+str(results[0])+', "total": '+str(results[1]*5)+'}'
+    else:
+        return '{"code": 200, "message": "OK", "correct": 0, "total": '+str(results[1]*5)+'}'
 
 
 @app.route('/image.png')
@@ -413,7 +420,16 @@ def getIcon():
     
 @app.route('/fact.json')
 def factOTD():
-    return {'code': 200, 'message': 'OK', 'fact': 'test fact'}
+    key = request.args.get('key')
+    timenow = time.localtime()
+    t = (int(str(timenow.tm_year)+str(timenow.tm_yday))%19)+1
+    print(t)
+    if verifyKey:
+        con = sqlite3.connect('questions.db')
+        cur = con.cursor()
+        values = cur.execute("SELECT category, fact FROM facts WHERE factid=?", (t,)).fetchall()[0]
+
+        return {'code': 200, 'message': 'OK', 'fact': {'category': values[0],'fact': values[1]}}
 
 @app.route('/facts.json')
 def facts():
@@ -421,23 +437,32 @@ def facts():
     key = hash(key)
     print(key)
     if verifyKey(key):
-        type = request.args.get('theme')
+        type = request.args.get('category')
         print(type)
 
         jsonToSend = {}
         factArray = []
+        fact2Array = []
         con = sqlite3.connect('questions.db')
         cur = con.cursor()
         v = (type,)
         if type == None:
-            values = cur.execute("SELECT category, fact FROM facts")
+            values = cur.execute("SELECT category, fact FROM facts WHERE category='Planets'")
+            for row in values:
+                fact = {'category':row[0], 'fact':row[1]}
+                factArray.append(fact)
+            values = cur.execute("SELECT category, fact FROM facts WHERE category='Stars'")
+            for row in values:
+                fact2 = {'category':row[0], 'fact':row[1]}
+                fact2Array.append(fact2)
+            jsonToSend['facts'] = [factArray, fact2Array]
         else:
             values = cur.execute("SELECT category, fact FROM facts WHERE category=?", v)
-        for row in values:
-            fact = {'category':row[0], 'fact':row[1]}
-            factArray.append(fact)
+            for row in values:
+                fact = {'category':row[0], 'fact':row[1]}
+                factArray.append(fact)
+            jsonToSend['facts'] = [factArray]
         con.close()
-        jsonToSend['facts'] = [factArray]
         
         jsonToSend['code'] = 200
         jsonToSend['message'] = 'OK'

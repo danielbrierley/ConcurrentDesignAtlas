@@ -8,10 +8,19 @@
 
 @media (max-width: 450px) {
     .learn {
-        height: calc(100% - 22vw);
+        height: calc(100% - 22vw - 4ch);
     }
 }
 
 .learn::-webkit-scrollbar {
     display: none;
+}
+
+.learnTabs div {
+    padding: 1ch;
+    background-color: #fb78c9;
+}
+
+.learnTabs div:nth-child(odd) {
+    background-color: #f8afdc;
 }
