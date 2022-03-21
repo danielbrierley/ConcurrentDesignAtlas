@@ -8,7 +8,7 @@ body {
     height: 100%; 
     left: 0%; 
     top: 0%; 
-    position:fixed;
+    /*position:fixed;*/
     overflow: hidden;
 }
 

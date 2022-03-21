@@ -32,7 +32,7 @@
 
 .question {
     width:90%;
-    height:12%;
+    min-height:12%;
     position:absolute;
     float:top;
     top: 10%;
@@ -46,7 +46,7 @@
 
 .timer {
     width:35%;
-    height:12%;
+    height:10ch;
     position:absolute;
     float:top;
     left:46%;
@@ -140,7 +140,7 @@
 }
 
 .questionResultSubTop {
-    height: 4ch;
+    min-height: 4ch;
     padding: 5px;
 }
 

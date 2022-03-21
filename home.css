@@ -1,5 +1,5 @@
 .fact {
-    height:8ch;
+    min-height:8ch;
     float:top;
     margin: calc(3ch - 6px);
     background-color: white;
