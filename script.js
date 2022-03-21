@@ -583,6 +583,12 @@ function shop() {
 
 function home() {
   //console.log('home');
+  getJSON(protocol+ip+"/fact.json?key="+key+"").then(data => {
+    fact = document.getElementById('fact');
+    fact.innerHTML = data.fact;
+    console.log(data);
+  });
+  
 }
 
 function settings() {
@@ -804,7 +810,6 @@ function setLoginColour(colour) {
 
 function start2(data){
   //console.log(data);
-  document.getElementById('key').innerHTML = key;
   if (data.code == 200) {
     getJSON(protocol+ip+'/getResults.json?username='+username).then(data => {
       incorrect += data.total-data.correct;

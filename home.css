@@ -1,0 +1,11 @@
+.fact {
+    height:8ch;
+    float:top;
+    margin: calc(3ch - 6px);
+    background-color: white;
+    border: 3px;
+    border-style: solid;
+    padding: 3px;
+    font-size:20;
+    text-align: left;
+}

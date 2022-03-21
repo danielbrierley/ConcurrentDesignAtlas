@@ -411,6 +411,10 @@ def getIcon():
     con.close()
     return {'code': 200, 'message': 'OK', 'icon': icon}
     
+@app.route('/fact.json')
+def factOTD():
+    return {'code': 200, 'message': 'OK', 'fact': 'test fact'}
+
 
 #@app.errorhandler(404)
 #def notFound(e):
