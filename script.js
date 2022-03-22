@@ -48,17 +48,12 @@ var rockety = rocketPositions[0][1];
 var music = true;
 var sound = true;
 
-function preventDefault(e){
+document.addEventListener("touchmove", function (e) {
   e.preventDefault();
-}
+}, { passive: false });
 
-function disableScroll(){
-  document.body.addEventListener('touchmove', preventDefault, { passive: false });
-}
 
-function enableScroll(){
-  document.body.removeEventListener('touchmove', preventDefault);
-}
+
 
 //useful functions
 function randint(min, max) {
@@ -626,6 +621,8 @@ function settings() {
 
 function profile() {
   //console.log('profile');
+  
+
   document.getElementById('usernameProfile').innerHTML = username;
   getJSON(protocol+ip+"/achievements.json?key="+key+"").then(data => {
     //console.log(data);
@@ -818,6 +815,15 @@ function authenticate(key) {
 }
 
 function start(txt=null) {
+
+  scrolls = document.getElementsByClassName('scroll');
+  for (x = 0; x < scrolls.length; x++) {
+    console.log(x);
+    scrolls[x].addEventListener("touchmove", function (e) {
+      e.stopPropagation();
+    }, { passive: false });
+  }
+
   //Load the page
   //window.location = '#';
   key = getCookie('key');
