@@ -47,6 +47,8 @@ var rockety = rocketPositions[0][1];
 
 var music = true;
 var sound = true;
+var titleMusic = new Audio('sound/Logic.wav');
+var quizMusic = new Audio('sound/quiz.wav');
 
 document.addEventListener("touchmove", function (e) {
   e.preventDefault();
@@ -155,6 +157,8 @@ function move(callback=function() {return}) { //Move progress bar
   var id = setInterval(frame, 10);
   function frame() {
     if (width >= 100) {
+      width = 100;
+      setRocket(width);
       clearInterval(id);
       callback();
     }
@@ -189,6 +193,9 @@ function grantAchievement(aid) {
 }
 
 function setRocket(width) {
+  if (width >= 100) {
+    width = 100;
+  }
   elem = document.getElementById("myBar");
   rocket = document.getElementById("rocket");
   elem.style.width = width + "%";
@@ -292,6 +299,12 @@ function timer() {
 }
 
 function startQuiz() {
+    if (music) {
+      titleMusic.pause();
+      titleMusic.currentTime = 0;
+      quizMusic.loop = true;
+      quizMusic.play();
+    }
     quiz2 = document.getElementById('quiz2');
     quiz2.style.display = 'block';
 
@@ -375,6 +388,13 @@ function planets() {
 function setCompleted() {
   //Clear the timer
   clearInterval(timerInterval);
+
+  if (music) {
+    quizMusic.pause();
+    quizMusic.currentTime = 0;
+    titleMusic.loop = true;
+    titleMusic.play();
+  }
 
   //Hide the quiz div
   qDisplay = document.getElementById('mcq'); 
@@ -479,6 +499,12 @@ function switchPage(id) {
 }
 
 function startStory() {
+  if (music) {
+    quizMusic.pause();
+    quizMusic.currentTime = 0;
+    titleMusic.loop = true;
+    titleMusic.play();
+  }
   grantAchievement(1);
   planets();
   meteors = 0;

@@ -25,13 +25,27 @@
     height: 20vh;
 }
 
+
 #achievementPopup {
     position: absolute;
-    width:96%;
+    width: calc(100% - 20vh - 40ch);
     height: 20%;
-    left: 2%;
+    left: calc(20vh + 20ch);
     top: 40%;
 }
+
+/*Mobile formatting*/
+@media (max-width: 450px) {
+    #achievementPopup {
+        position: absolute;
+        width:96%;
+        height: 20%;
+        left: 2%;
+        top: 40%;
+    }
+}
+
+
 
 .an {
     float: left;
