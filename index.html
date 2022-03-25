@@ -101,7 +101,7 @@
             </div>
 
             <div class='pages' id='home' style="display:none">
-                <div class='contents' id='0' style="display:none">
+                <div class='contents learntab' id='0' style="display:none">
                     <h1 id="learnTitle">Learn</h1>
                     <a href="#" onclick="switchLearnTab(0)">Planets</a>
                     <a href="#" onclick="switchLearnTab(1)">Stars</a>
@@ -112,17 +112,20 @@
                     </div>
                 </div>
 
-                <div class='contents' id='1' style="display:none">
+                <div class='contents tabshop' id='1' style="display:none">
                     <h1 id="shopTitle">Shop</h1>
                     <div class="meteorCounter" style="position:absolute; right:0%; top: 0%;">
                         <p id="meteorCountShop" style="float: left; font-size: 7ch">0</p>
                         <img class="meteoriteImage" src="images/meteorite.png" style="float: right"/>
                     </div>
-                    <ul class="scroll" id="shopContents"></ul>
+                    <div class="scroll">
+                        <h3>Profile Photos</h3>
+                        <ul id="shopContents"></ul>
+                    </div>
 
                     
                     <div id="shopDisabler" style="display:none" onclick="hideItem()"></div>
-                    <div id="itemPopup" style="display:none; background-color: #fb78c9;">
+                    <div id="itemPopup" style="display:none;">
                         <div class="ii">
                             <img id="itemImage"/>
                         </div>
@@ -137,21 +140,22 @@
 
                 </div>
 
-                <div class='contents' id='2' style="display:none">
+                <div class='contents tabs2' id='2' onclick="switchPage('quiz')" style="display:none">
                     <p id="key" style="display:none"></p>
                         <div class="fact">
                             <p id="fact"></p>
                         </div>
-                    <a onclick="switchPage('quiz')" href="#">quiz</a>
                 </div>
 
-                <div class='contents' id='3' style="display:none">
+                <div class='contents settingsTab' id='3' style="display:none">
+                    <img src="images/settings.png" class="settingsImage" />
                     <h1 id="settingsTitle">Settings</h1>
                     <div class="settings scroll">
                         <table id="settingOpt">
                             <tr>
                                 <td class="setLbl">
                                     Sound
+                                    <img class="settingIcons" src="images/settings/sound.png" />
                                 </td>
                                 <td class="setTgl">
                                     <label class="switch">
@@ -163,6 +167,7 @@
                             <tr>
                                 <td class="setLbl">
                                     Music
+                                    <img class="settingIcons" src="images/settings/music.png" />
                                 </td>
                                 <td class="setTgl">
                                     <label class="switch">
@@ -171,17 +176,20 @@
                                     </label>
                                 </td>
                             </tr>
-                            <tr>
+                            <!--<tr>
                                 <td class="setLbl">
                                     Username
                                 </td>
                                 <td class="setTgl">
                                     <input class="txtInput" disabled>
                                 </td>
-                            </tr>
+                            </tr>-->
                             <tr>
                                 <td colspan="2">
-                                    <button class="setBtn" onclick="logOut()">Log Out</button>
+                                    <button class="setBtn" onclick="logOut()">
+                                        <img class="settingIcons" src="images/settings/logout.png" />
+                                        Log Out
+                                    </button>
                                 </td>
                             </tr>
                         </table>
@@ -189,7 +197,7 @@
                     </div>
                 </div>
 
-                <div class='contents' id='4' style="display:none">
+                <div class='contents profileBack' id='4' style="display:none">
                     <h1 id="profileTitle">Profile</h1>
                     <div class="profile">
                         <img id="profilePic" class="imageGrid" style="filter: grayscale(0%);">
@@ -221,20 +229,15 @@
                 </div>
 
                 <div class='navbar'>
-                    <button class="tab" onclick="switchTab('0')">
-                        Learn
+                    <button class="tab" id="tab1" onclick="switchTab('0')">
                     </button>
-                    <button class="tab" onclick="switchTab('1')">
-                        Shop
+                    <button class="tab" id="tab2" onclick="switchTab('1')">
                     </button>
-                    <button class="tab" onclick="switchTab('2')">
-                        Home
+                    <button class="tab" id="tab3" onclick="switchTab('2')">
                     </button>
-                    <button class="tab" onclick="switchTab('3')">
-                        Settings
+                    <button class="tab" id="tab4" onclick="switchTab('3')">
                     </button>
-                    <button class="tab" onclick="switchTab('4')">
-                        Profile
+                    <button class="tab" id="tab5" onclick="switchTab('4')">
                     </button>
                 </div>
             </div>

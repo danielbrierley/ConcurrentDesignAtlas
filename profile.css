@@ -99,10 +99,15 @@
 
 @media (max-width: 450px) {
     .profileScroll {
-        height: calc(100% - 22vw);
+        height: calc(100% - 30vw);
     }
 }
 
 .profileScroll::-webkit-scrollbar {
     display: none;
+}
+
+.profileBack{
+    background: rgb(183,171,207);
+    background: linear-gradient(180deg, rgba(183,171,207,1) 0%, rgba(157,116,148,1) 100%);
 }

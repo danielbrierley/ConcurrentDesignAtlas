@@ -16,6 +16,7 @@ def hash(key):
     return key
 
 def verifyKey(key):
+    key = hash(key)
     con = sqlite3.connect('questions.db')
     cur = con.cursor()
     result = cur.execute('SELECT * FROM users WHERE credentials=?', (key,)).fetchall()
@@ -26,6 +27,7 @@ def verifyKey(key):
         return True
 
 def getUsername(key):
+    key = hash(key)
     con = sqlite3.connect('questions.db')
     cur = con.cursor()
     result = cur.execute('SELECT username FROM users WHERE credentials=?', (key,)).fetchall()
@@ -44,7 +46,6 @@ def home():
 @app.route('/questions.json')
 def question():
     key = request.args.get('key')
-    key = hash(key)
     print(key)
     if verifyKey(key):
         type = request.args.get('theme')
@@ -76,7 +77,6 @@ def question():
 @app.route('/auth.json')
 def auth():
     key = request.args.get('key')
-    key = hash(key)
     print(key)
     if verifyKey(key):
         return '{"code": 200, "message": "OK", "auth": "%s", "username": "%s"}' % (key, getUsername(key))
@@ -84,7 +84,7 @@ def auth():
         return '{"code": 403, "message": "Username or Password is incorrect", "auth": ""}'
 
 @app.route('/create.json')
-def createAccount():
+def createAccount(): 
     key = request.args.get('key')
     key = hash(key)
     username = request.args.get('username')
@@ -434,7 +434,6 @@ def factOTD():
 @app.route('/facts.json')
 def facts():
     key = request.args.get('key')
-    key = hash(key)
     print(key)
     if verifyKey(key):
         type = request.args.get('category')

@@ -46,6 +46,8 @@ p {
     }
 
     .navbar {
+        position: absolute;
+        bottom: 0%;
         width:100%;
         height:20vw;
     }
@@ -71,7 +73,7 @@ p {
 }
 
 .navbar .tab {
-    background-color:red;
+    background-color:#547479;
     color:black;
     border:none;
     float:left;
@@ -81,15 +83,39 @@ p {
 }
 
 .navbar .tab:hover {
-    background-color:darkred;
-    color:black;
-    border:none;
-    float:left;
-    text-align: center;
-    vertical-align: middle; 
+    background-color:#485f63;
 
 }
 
+.navbar .tabselected {
+    background-color:#2e4447;
+
+}
+
+.navbar #tab1 {
+    background-image: url("images/tabs/tab1.png");
+    background-size: auto 100%;
+}
+
+.navbar #tab2 {
+    background-image: url("images/tabs/tab2.png");
+    background-size: auto 100%;
+}
+
+.navbar #tab3 {
+    background-image: url("images/tabs/tab3.png");
+    background-size: auto 100%;
+}
+
+.navbar #tab4 {
+    background-image: url("images/tabs/tab4.png");
+    background-size: auto 100%;
+}
+
+.navbar #tab5 {
+    background-image: url("images/tabs/tab5.png");
+    background-size: auto 100%;
+}
 
 .fullscreen {
     width: 100%;
@@ -119,4 +145,22 @@ p {
 .imageGrid {
     width: 7ch;
     height: 7ch;
+}
+
+.tabs2 {
+    position: relative;
+    background: rgb(144,189,168);
+    background: linear-gradient(180deg, rgba(144,189,168,1) 0%, rgba(117,151,153,1) 100%);
+
+    background-image: url("images/home.png");
+    background-size: auto 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+/*Mobile formatting*/
+@media (max-width: 450px) {
+    .tabs2 {
+        height: 100%;
+    }
 }

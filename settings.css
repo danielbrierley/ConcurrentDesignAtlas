@@ -87,6 +87,16 @@ input:checked + .slider:before {
     scrollbar-width: none;  /* Firefox */
 }
 
+.settingIcons {
+  height: 2ch;
+}
+
+.settingsImage {
+  width: 100%; 
+  position: absolute; 
+  bottom: calc(0% + 20vw);
+}
+
 #settingOpt {
   width: 100%;
 }
@@ -110,4 +120,9 @@ input:checked + .slider:before {
 
 .settings::-webkit-scrollbar {
     display: none;
+}
+
+.settingsTab {
+  background: rgb(255,155,41);
+  background: linear-gradient(180deg, rgba(255,155,41,1) 0%, rgba(251,183,93,1) 41%, rgba(255,150,120,1) 100%);
 }

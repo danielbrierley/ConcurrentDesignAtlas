@@ -205,14 +205,15 @@ function setRocket(width) {
 }
 
 function generateQuestionID() { //Generat a random question ID
-  number = randint(0, qn-1);
+  number = randint(0, questions.questions.length-1);
+  console.log(number);
   if (completed.length == qn) {
     //alert('completed');
     return -1;
   }
   else {
     while (contains(number, completed)) {
-      number = randint(0, qn-1);
+      number = randint(0, questions.questions.length-1);
     }
     completed.push(number);
     qNumber = number;
@@ -264,6 +265,7 @@ function nextQuestion() {
   //Generate next question id
   index = generateQuestionID();
   
+  console.log(index);
   //Set text in question box
   //console.log(questions.questions);
   //console.log(index);
@@ -324,9 +326,9 @@ function startQuiz() {
     //console.log("Fetching data...");
 
     //Fetch questions from server
-    getJSON(protocol+ip+"/questions.json?key="+key+"&theme=SolarSystem").then(data => {
+    getJSON(protocol+ip+"/questions.json?key="+key+"&theme="+planetList[planetNo]).then(data => {
       questions = data;
-      //console.log(questions);
+      console.log(questions);
       nextQuestion();
     })//.catch(error => {
       //console.error(error);
@@ -515,10 +517,17 @@ function switchTab(id) {
   pages = document.getElementsByClassName("contents");
   for (x = 0; x < pages.length; x++) {
     pages[x].style.display = 'none';
+    //tabs[x].classList.remove('tabselected');
+  }
+  oldTab = document.getElementsByClassName('tabselected');
+  for (x = 0; x < oldTab.length; x++) {
+    oldTab[x].classList.remove('tabselected');
   }
   //Show the specified page
   page = document.getElementById(id);
   page.style.display = 'block';
+  tabSel = document.getElementById('tab'+(parseInt(id)+1));
+  tabSel.classList.add('tabselected');
   if (id == "0") {
     learn();
   }

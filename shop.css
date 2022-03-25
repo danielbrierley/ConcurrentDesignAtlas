@@ -1,8 +1,17 @@
+.tabshop {
+    background: rgb(183,171,207);
+    background: linear-gradient(180deg, rgba(183,171,207,1) 0%, rgba(157,116,148,1) 100%);
+}
+
 #shopContents {
     margin: 0;
     padding: 0;
     padding: 5px;
 }
+
+/*#itemPopup {
+    background-color: #a17c9d;
+}*/
 
 #shopContents li {
     margin-left: 2px;
@@ -69,7 +78,8 @@
 
 #purchase {
     font-size: 3ch;
-    width: 70%;
+    width: 100%;
+    height: 25%;
 }
 
 
