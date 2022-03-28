@@ -763,8 +763,8 @@ function showItem(id) {
   //itemCost.appendChild(mimg);
 
   itemImage = document.getElementById('itemImage');
-  itemImage.src = 'images/shop/item'+(parseInt(id)+1)+'.png';//achievements[id].image;
-  itemImage.alt = 'item '+(parseInt(id)+1);
+  itemImage.src = 'images/shop/item'+(parseInt(shopList[id].id))+'.png';//achievements[id].image;
+  itemImage.alt = 'item '+(parseInt(shopList[id].id));
   itemPopup = document.getElementById('itemPopup');
 
   purchaseButton = document.getElementById('purchase');
@@ -793,6 +793,7 @@ function purchaseItem(id) {
   console.log(id);
   sha256(id+username).then((uid) => {
     getJSON(protocol+ip+"/purchase.json?key="+key+"&uid="+uid+'&item='+id).then(data => {
+      document.getElementById('purchase').disabled = 'true';
       meteors = data.meteors;
       shop();
       console.log(data);
