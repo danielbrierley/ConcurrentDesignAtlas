@@ -325,20 +325,24 @@ def getShop():
     key = request.args.get('key')
     con = sqlite3.connect('questions.db')
     cur = con.cursor()
-    shopRaw = cur.execute('SELECT shopid, name, cost FROM shop')
+    shopRaw = cur.execute('SELECT shopid, name, cost, type FROM shop')
     shop = []
+    bgShop = []
     username = getUsername(key)
     for item in shopRaw:
         id = item[0]
         print(id)
         #granted = alreadyGranted(username, id)
         if not owned(item[0], username):
-            shop.append({'id': id, 'name': item[1], 'cost': item[2]})
+            if item[3] == 1:
+                bgShop.append({'id': id, 'name': item[1], 'cost': item[2]})
+            else:
+                shop.append({'id': id, 'name': item[1], 'cost': item[2]})
     con.close()
 
     meteors = readMeteors(getUsername(key))
 
-    jsonToReturn = {'code': 200, 'message': 'OK', 'shop': shop, 'meteors': meteors}
+    jsonToReturn = {'code': 200, 'message': 'OK', 'shop': shop, 'meteors': meteors, 'bgShop': bgShop}
     return jsonToReturn
 
 def getShopItem(id):
@@ -408,6 +412,19 @@ def setIcon():
     con.commit()
     con.close()
     return {'code': 200, 'message': 'OK', 'icon': id}
+
+
+@app.route('/setbg.json')
+def setBg():
+    key = request.args.get('key')
+    id = request.args.get('id')
+    username = getUsername(key)
+    con = sqlite3.connect('questions.db')
+    cur = con.cursor()
+    cur.execute('UPDATE users SET bg = ? WHERE username=?', (id, username))
+    con.commit()
+    con.close()
+    return {'code': 200, 'message': 'OK', 'icon': id}
     
 @app.route('/geticon.json')
 def getIcon():
@@ -415,6 +432,15 @@ def getIcon():
     con = sqlite3.connect('questions.db')
     cur = con.cursor()
     icon = cur.execute('SELECT icon FROM users WHERE username=?', (username,)).fetchall()[0]
+    con.close()
+    return {'code': 200, 'message': 'OK', 'icon': icon}
+    
+@app.route('/getbg.json')
+def getBg():
+    username = request.args.get('username')
+    con = sqlite3.connect('questions.db')
+    cur = con.cursor()
+    icon = cur.execute('SELECT bg FROM users WHERE username=?', (username,)).fetchall()[0]
     con.close()
     return {'code': 200, 'message': 'OK', 'icon': icon}
     

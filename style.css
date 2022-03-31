@@ -131,6 +131,7 @@ p {
 .achievementPopup {
     background-color: cyan;
     position: absolute; 
+    top:1ch;
     width: 90%; 
     left:5%; 
     height:10vh

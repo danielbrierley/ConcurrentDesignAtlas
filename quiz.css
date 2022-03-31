@@ -141,7 +141,7 @@
 .questionResult {
     background-color: #fb78c9dd;
     width:90%;
-    height:9ch;
+    min-height:9ch;
     padding: 5px;
 }
 
@@ -151,15 +151,20 @@
 }
 
 .questionResultSubBottom {
-    height: 3ch;
+    min-height: 4ch;
     padding: 5px;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr; /* fraction*/
 }
 
 .resultAnswer {
-    width:calc(100% / 3 - 3px);
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    width:calc(100%);
     border-style: solid;
     border: 3px;
-    height:100%;
+    min-height:4ch;
     top:0%;
     float:left;
 }
