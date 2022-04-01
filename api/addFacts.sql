@@ -1,6 +1,6 @@
 INSERT INTO  facts (category, fact)
 VALUES
-('Planets', 'There are 8 planets in our solar system. The order of he from closest from the sun to the farthest goes: Mercury, Venus, Earth, Mars, Jupiter, Saturn, Uranus and Neptune.'),
+('Planets', 'There are 8 planets in our solar system. The order of them from the closest to the farthest away from the sun goes: Mercury, Venus, Earth, Mars, Jupiter, Saturn, Uranus and Neptune.'),
 ('Planets', 'Among these planets, there are 4 Gas giants. These are the planets that are farthest away from the sun. Jupiter, Saturn, Uranus and Neptune.'),
 ('Planets', 'Jupiter is the largest planet in our solar system.'),
 ('Planets', 'Saturn’s rings are made up of billions of rocks and ice clustered together coated with dust.'),

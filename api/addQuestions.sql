@@ -14,7 +14,7 @@ VALUES ("Which planet is closest to the sun?", "Mercury", "Mercury", "Saturn", "
 ("Which is shorter, Mercury's day or year?", "Venus", "Year", "Day", "Neither"), 
 ("Which is one of Mars' moons?", "Venus", "Phobos", "Galileo", "Luna"),
 ("Which planet is famous for its big red spot?", "Venus", "Jupiter", "Saturn", "Neptune"),
-("What is the orbital period of the moon", "Venus", "27 days", "5 months", "12 days"),
+("What is the orbital period of the moon?", "Venus", "27 days", "5 months", "12 days"),
 ("When does a lunar eclipse occur?", "Venus", "When the earth is between the sun and the moon", "When the sun begins to lose its light", "When the moon moves out of orbit"),
 ("Is Neptune bigger than Earth?", "Venus", "Yes", "No", "They're the same size"),
 ("Is the sun a star or a planet?", "Venus", "A Star", "A Planet", "Neither a star nor a planet"),
@@ -30,7 +30,7 @@ VALUES ("Which planet is closest to the sun?", "Mercury", "Mercury", "Saturn", "
 ("What is the rotational period of Earth?", "Earth", "24 hours", "29 days", "360 days"),
 ("Pluto is what kind of planet?", "Earth", "Dwarf Planet", "Gas Giant", "Rocky Planet"),
 ("What is the name of NASA's most famous space telescope?", "Earth", "Hubble Space Telescope", "Gordon Space Telescope", "Galileo Space Telescope"),
-("What planet is the densest in our solar system", "Earth", "Earth", "Mars", "Venus"),
+("What planet is the densest in our solar system?", "Earth", "Earth", "Mars", "Venus"),
 ("Which planet is known as Earth's sister planet?", "Earth", "Venus", "Mars", "Uranus"),
 
 ("What is the diameter of Earth's moon?", "Mars", "2,159 miles", "2,159 km", "2,159 cm"),
