@@ -45,7 +45,7 @@ VALUES ("Which planet is closest to the sun?", "Mercury", "Mercury", "Saturn", "
 
 
 
-("What is the Earth's radius?", "Jupiter", "6,371km", "5674km", "4567km"), 
+("What is the Earth's radius?", "Jupiter", "6,371km", "5,674km", "4,567km"), 
 ("What type of star is the sun?", "Jupiter", "G-type main sequence star", "White Dwarf", "Red Giant"),
 ("What moon in our solar system is known to have its own magnetic fields?", "Jupiter", "Ganymede", "Charon", "Phobus"),
 ("How many planets can be seen without a telescope?", "Jupiter", "5", "6", "7"),
