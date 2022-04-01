@@ -51,6 +51,7 @@ var titleMusic = new Audio('sound/Logic.wav');
 var quizMusic = new Audio('sound/quiz.wav');
 
 var selectedLearn = 0;
+var shopLength;
 
 document.addEventListener("touchmove", function (e) {
   e.preventDefault();
@@ -600,6 +601,7 @@ function shop() {
   getJSON(protocol+ip+"/shop.json?key="+key+"").then(data => {
     //console.log(data);
     shopList = data.shop.concat(data.bgShop);
+    shopLength = data.shop.length;
     console.log(shopList);
     meteors = data.meteors[0];
     meteorCountShop = document.getElementById('meteorCountShop');
@@ -665,6 +667,10 @@ function showShop(list, shopList) {
     li.onclick = function() {showItem(this.id[0]);};
     li.appendChild(div);
     
+  }
+
+  else {
+    li.onclick = function() {showImage(parseInt(this.id[0])+shopLength);};
   }
   document.getElementById(list).appendChild(li);
   //console.log(item);
@@ -822,6 +828,21 @@ function showItem(id) {
   shopDisabler.style.display = 'block';
 }
 
+function showImage(id) {
+  //console.log(id);
+  console.log(id);
+  console.log(shopList);
+
+  itemImage = document.getElementById('fullImage');
+  itemImage.src = 'images/shop/item'+(parseInt(shopList[id].id))+'.png';//achievements[id].image;
+  itemImage.alt = 'item '+(parseInt(shopList[id].id));
+  itemPopup = document.getElementById('imagePopup');
+
+  itemPopup.style.display = 'block';
+  shopDisabler = document.getElementById('shopDisabler');
+  shopDisabler.style.display = 'block';
+}
+
 function purchaseItem(id) {
   console.log(id);
   sha256(id+username).then((uid) => {
@@ -836,6 +857,8 @@ function purchaseItem(id) {
 
 function hideItem() {
   itemPopup = document.getElementById('itemPopup');
+  itemPopup.style.display = 'none';
+  itemPopup = document.getElementById('imagePopup');
   itemPopup.style.display = 'none';
   shopDisabler = document.getElementById('shopDisabler');
   shopDisabler.style.display = 'none';
