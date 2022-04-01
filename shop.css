@@ -8,12 +8,28 @@
     padding: 0;
     padding: 5px;
 }
+#backgroundContents {
+    margin: 0;
+    padding: 0;
+    padding: 5px;
+}
+.bgGrid {
+    width: 13ch;
+    height: 7ch;
+}
 
 /*#itemPopup {
     background-color: #a17c9d;
 }*/
 
 #shopContents li {
+    margin-left: 2px;
+    margin-right: 2px;
+    margin: 2px;
+    list-style-type: none;
+    display: inline-block;
+}
+#backgroundContents li {
     margin-left: 2px;
     margin-right: 2px;
     margin: 2px;
@@ -83,7 +99,7 @@
 }
 
 
-#shopContents {
+#shopScroll {
     height: calc(100vh - 20vw);
     overflow-y:scroll;
     -ms-overflow-style: none;  /* IE and Edge */
@@ -92,11 +108,11 @@
 
 
 @media (max-width: 450px) {
-    #shopContents {
+    #shopScroll {
         height: calc(100% - 22vw);
     }
 }
 
-#shopContents::-webkit-scrollbar {
+#shopScroll::-webkit-scrollbar {
     display: none;
 }

@@ -50,6 +50,8 @@ var sound = true;
 var titleMusic = new Audio('sound/Logic.wav');
 var quizMusic = new Audio('sound/quiz.wav');
 
+var selectedLearn = 0;
+
 document.addEventListener("touchmove", function (e) {
   e.preventDefault();
 }, { passive: false });
@@ -546,6 +548,7 @@ function switchTab(id) {
 }
 
 function learn() {
+  selectedLearn = 0;
   getJSON(protocol+ip+"/facts.json?key="+key+"").then(data => {
     facts = data.facts;
     console.log(facts);
@@ -575,69 +578,98 @@ function switchLearnTab(id) {
     tabs[x].style.display = 'none';
   }
   tabs[id].style.display = 'block';
+  tabs = document.getElementsByClassName('learnTabsBtn');
+  for (x = 0; x < tabs.length; x++) {
+    tabs[x].style.backgroundColor = '#ffffff00';
+  }
+  tabs[id].style.backgroundColor = '#ffffff55';
+}
+
+function toggleLearnTab(id) {
+  tabs = document.getElementsByClassName('learnTabs');
+  if (tabs[id].style.display == 'block') {
+    tabs[id].style.display = 'none';
+  }
+  else {
+    tabs[id].style.display = 'block';
+  }
 }
 
 function shop() {
   //console.log('shop');
   getJSON(protocol+ip+"/shop.json?key="+key+"").then(data => {
     //console.log(data);
-    shopList = data.shop;
+    shopList = data.shop.concat(data.bgShop);
+    console.log(shopList);
     meteors = data.meteors[0];
     meteorCountShop = document.getElementById('meteorCountShop');
     meteorCountShop.innerHTML = meteors;
-    listItems = document.getElementById('shopContents').children;
-    for (x = 0; x < listItems.length; x++) {
-      listItems[x].style.display = 'none';
-    }
-    for (x = 0; x < shopList.length; x++) {
-      item = shopList[x];
-      ul = document.getElementById('acheivements');//.onclick();
-      li = document.createElement("li");
-      //li.innerHTML = item.name+': '+item.description;
-      img = document.createElement("img");
-      img.src = 'images/shop/item'+item.id+'.png';//item.image;
-      img.alt = 'item '+item.id;
-      img.classList.add('imageGrid');
-      //txt = document.createTextNode(item.name+': '+item.description);
-      //li.appendChild(txt);
-      /*if (item.granted) {
-        img.style.filter = "grayscale(0%)";
-      }
-      else {
-        img.style.filter = "grayscale(100%)";
-      }*/
-      //console.log(x);
-      l = x;
-      //img.onclick = function() {showitem(this.parentElement.id[0]);};
-      //console.log(img.onclick);
-      li.id = x+'item';
-      console.log(item.cost);
-      div = document.createElement("div");
-      div.classList.add("cost");
-
-      span = document.createElement("span");
-      span.classList.add("costText");
-      span.innerHTML = item.cost;
-      if (item.cost > meteors) {
-        span.style.color = 'red';
-        console.log('red');
-      }
-
-      mimg = document.createElement("img");
-      mimg.classList.add("meteoriteCost");
-      mimg.src = "images/meteorite.png";
-      
-      div.appendChild(span);
-      div.appendChild(mimg);
-
-      li.onclick = function() {showItem(this.id[0]);};
-
-      li.appendChild(img);
-      li.appendChild(div);
-      document.getElementById("shopContents").appendChild(li);
-      //console.log(item);
-    }
+    showShop('shopContents', data.shop);
+    showShop('backgroundContents', data.bgShop);
   })
+}
+
+function showShop(list, shopList) {
+  listItems = document.getElementById(list).children;
+  for (x = 0; x < listItems.length; x++) {
+    listItems[x].style.display = 'none';
+  }
+  for (x = 0; x < shopList.length; x++) {
+    item = shopList[x];
+    li = document.createElement("li");
+    //li.innerHTML = item.name+': '+item.description;
+    img = document.createElement("img");
+    img.src = 'images/shop/item'+item.id+'.png';//item.image;
+    img.alt = 'item '+item.id;
+    if (list == 'backgroundContents') {
+      img.classList.add('bgGrid');
+    }
+    else {
+      img.classList.add('imageGrid');
+    }
+    //txt = document.createTextNode(item.name+': '+item.description);
+    //li.appendChild(txt);
+    /*if (item.granted) {
+      img.style.filter = "grayscale(0%)";
+    }
+    else {
+      img.style.filter = "grayscale(100%)";
+    }*/
+    //console.log(x);
+    l = x;
+    //img.onclick = function() {showitem(this.parentElement.id[0]);};
+    //console.log(img.onclick);
+    li.id = x+'item';
+    console.log(item.cost);
+    div = document.createElement("div");
+    div.classList.add("cost");
+
+    span = document.createElement("span");
+    span.classList.add("costText");
+    span.innerHTML = item.cost;
+    if (item.cost > meteors) {
+      span.style.color = 'red';
+      console.log('red');
+  }
+
+  mimg = document.createElement("img");
+  mimg.classList.add("meteoriteCost");
+  mimg.src = "images/meteorite.png";
+  div.appendChild(span);
+  div.appendChild(mimg);
+
+
+  li.appendChild(img);
+  
+  if (list != 'backgroundContents'){
+    li.onclick = function() {showItem(this.id[0]);};
+    li.appendChild(div);
+    
+  }
+  document.getElementById(list).appendChild(li);
+  //console.log(item);
+}
+  
 }
 
 function home() {
@@ -754,6 +786,7 @@ function setIcon(id) {
 
 function showItem(id) {
   //console.log(id);
+  console.log(id);
   itemCost = document.getElementById('itemCost');
   itemCost.innerHTML = shopList[id].cost;
   
