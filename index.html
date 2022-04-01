@@ -40,11 +40,11 @@
                         <p id="meteorCount" style="float: left; font-size: 7ch"></p>
                         <img class="meteoriteImage" src="images/meteorite.png" style="float: right"/>
                     </div>
-                    <p id="planetName"></p>
+                    <h2 id="planetName"></h2>
                     <img id="rocket2" src="images/rocket.png" style="position: absolute; height: 20vh; transform: rotate(-90deg);">
                 </div>
                 <div id="quiz2" style='display:none'>
-                    <div id='mcq'>
+                    <div id='mcq' style="display:none">
                         <p id="resultview"></p>
                         <div class="question">
                             <p id="question"></p>
@@ -96,6 +96,10 @@
                         </div>
                     </div>
                     </center>
+                </div>
+
+                <div class="audioToggle" id="audioButton" onclick="toggleAudio()">
+                    <img src="images/settings/sound.png">
                 </div>
 
             </div>

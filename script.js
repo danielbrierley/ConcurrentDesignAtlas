@@ -312,6 +312,8 @@ function startQuiz() {
     }
     quiz2 = document.getElementById('quiz2');
     quiz2.style.display = 'block';
+    mcq = document.getElementById('mcq');
+    mcq.style.display = 'block';
 
     map = document.getElementById('map');
     map.style.display = 'none';
@@ -371,7 +373,7 @@ function planets() {
   endScreen.style.display = 'none';
 
   mcq = document.getElementById('mcq');
-  mcq.style.display = 'block';
+  mcq.style.display = 'none';
 
   mcq = document.getElementById('result');
   mcq.style.display = 'none';
@@ -509,6 +511,13 @@ function startStory() {
     quizMusic.currentTime = 0;
     titleMusic.loop = true;
     titleMusic.play();
+  }
+  audioButton = document.getElementById('audioButton');
+  if (music || sound) {
+    audioButton.style.filter = 'grayscale(0%)'
+  }
+  else {
+    audioButton.style.filter = 'grayscale(100%)'
   }
   grantAchievement(1);
   planets();
@@ -1084,6 +1093,34 @@ function toggleSound() {
 function toggleMusic() {
   music = !music;
   console.log(music);
+}
+
+function toggleAudio() {
+  console.log(document.getElementById('mcq').style.display)
+  audioButton = document.getElementById('audioButton')
+  if (music || sound) {
+    music = false;
+    sound = false;
+    titleMusic.pause();
+    titleMusic.currentTime = 0;
+    quizMusic.pause();
+    quizMusic.currentTime = 0;
+    audioButton.style.filter = 'grayscale(100%)'
+  }
+  else {
+    music = true;
+    sound = true;
+    if (document.getElementById('mcq').style.display == 'block') {
+      quizMusic.loop = true;
+      quizMusic.play();
+    }
+    else {
+      titleMusic.loop = true;
+      titleMusic.play();
+    }
+    audioButton.style.filter = 'grayscale(0%)'
+    
+  }
 }
 
 function convRadians(degrees){
