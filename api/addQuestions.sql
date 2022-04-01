@@ -24,7 +24,7 @@ VALUES ("Which planet is closest to the sun?", "Mercury", "Mercury", "Saturn", "
 
 ("Which planet has the highest atmospheric temperature?", "Earth", "Venus", "Mercury", "Earth"),
 ("How many moons are in our solar system?", "Earth", "181", "35", "28"),
-("How many moon does Jupiter have?", "Earth", "67", "44", "38"),
+("How many moons does Jupiter have?", "Earth", "67", "44", "38"),
 ("Which planet has a day that lasts eight months?", "Earth", "Venus", "Earth", "Mars"),
 ("Which planet has the largest ring system?", "Earth", "Saturn", "Pluto", "Mercury"),
 ("What is the rotational period of Earth?", "Earth", "24 hours", "29 days", "360 days"),
