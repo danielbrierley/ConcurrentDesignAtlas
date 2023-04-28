@@ -41,7 +41,26 @@ def getUsername(key):
 @app.route('/')
 def home():
     #redirect to questions.json
-    return '<html><head><script>window.location = "/questions.json"</script></head></html>'
+    return send_file('index.html')
+
+@app.route('/script.js')
+def script():
+    #redirect to questions.json
+    return send_file('script.js')
+
+@app.route('/<fname>.css')
+def css(fname):
+    print(fname)
+    return send_file(fname+'.css')
+
+@app.route('/images/<path:fname>')
+def images(fname):
+    return send_file('images/'+fname)
+
+@app.route('/sound/<path:fname>')
+def sound(fname):
+    return send_file('sound/'+fname)
+    
 
 @app.route('/questions.json')
 def question():
@@ -503,5 +522,5 @@ def facts():
 #    return 'test'
 
 if __name__ == '__main__':
-    app.run()
-    #app.run(debug=True, host="0.0.0.0", port=int(os.environ.get("PORT", 8080)))
+    # app.run()
+    app.run(debug=True, host="0.0.0.0", port=int(os.environ.get("PORT", 9985)))
