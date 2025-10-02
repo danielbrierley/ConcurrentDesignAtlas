@@ -1,0 +1,29 @@
+{
+  "achievements": {
+    "FirstQuiz": {
+      "description": "Start yout first quiz",
+      "id": 1,
+      "name": "1957"
+    },
+    "Neptune": {
+      "description": "Reach Neptune",
+      "id": 2,
+      "name": "Space Explorer"
+    },
+    "Streak5": {
+      "description": "Answer 5 questions in a row correctly",
+      "id": 3,
+      "name": "Hot Streak"
+    },
+    "Mistake10": {
+      "description": "Make 10 mistakes",
+      "id": 4,
+      "name": "Rocket Malfunction"
+    },
+    "FiveRow": {
+      "description": "Collect 25 meteorites in a single game",
+      "id": 5,
+      "name": "Where Did This Come From?"
+    }
+  }
+}

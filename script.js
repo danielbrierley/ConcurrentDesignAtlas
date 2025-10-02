@@ -176,23 +176,46 @@ function move(callback=function() {return}) { //Move progress bar
   }
 }
 
+function getAchievements() {
+  return JSON.parse(localStorage.getItem("achievements")) || {};
+}
+
 function grantAchievement(aid) {
-  console.log(key);
-  console.log(achievements);
-  getJSON(protocol+ip+"/grant.json?key="+key+"&achievementid="+aid).then(data => {
-    console.log(data);
-    if (data.code == 200) {
-      achievementName = document.getElementById('achievtitle');
-      achievementName.innerHTML = data.name+' - '+data.description;
-      achievementIcon = document.getElementById('achievIcn');
-      console.log(aid);
-      achievementIcon.src = 'images/achievements/ach'+aid+'.png';//achievements[id].image;
-      achievementIcon.alt = 'achievement '+aid;
-      achievementPopup2 = document.getElementById('achievUnlocked');
-      achievementPopup2.style.display = 'block';
-      a = setInterval(function() {achievementPopup2.style.display = 'none'; clearInterval(a)}, 3000)
-    }
-  })
+  // console.log(key);
+  grantedAchievements = getAchievements();
+
+  if (grantedAchievements[aid] == undefined) {
+    console.log('not granted')
+    grantedAchievements[aid] = new Date().toISOString()
+  }
+
+  localStorage.setItem("achievements", JSON.stringify(grantedAchievements));
+
+  achievementName = document.getElementById('achievtitle');
+  achievementName.innerHTML = achievements[aid].name+' - '+achievements[aid].description;
+  achievementIcon = document.getElementById('achievIcn');
+  console.log(aid);
+  achievementIcon.src = 'images/achievements/ach'+achievements[aid].id+'.png';//achievements[id].image;
+  achievementIcon.alt = aid;
+  achievementPopup2 = document.getElementById('achievUnlocked');
+  achievementPopup2.style.display = 'block';
+  a = setInterval(function() {achievementPopup2.style.display = 'none'; clearInterval(a)}, 3000)
+
+
+  // getJSON("/achievements.json").then(data => {
+  //   console.log(data);
+  //   if (data.code == 200) {
+  //     achievementName = document.getElementById('achievtitle');
+  //     achievementName.innerHTML = data.name+' - '+data.description;
+  //     achievementIcon = document.getElementById('achievIcn');
+  //     console.log(aid);
+  //     achievementIcon.src = 'images/achievements/ach'+aid+'.png';//achievements[id].image;
+  //     achievementIcon.alt = 'achievement '+aid;
+  //     achievementPopup2 = document.getElementById('achievUnlocked');
+  //     achievementPopup2.style.display = 'block';
+  //     a = setInterval(function() {achievementPopup2.style.display = 'none'; clearInterval(a)}, 3000)
+  //   }
+  // })
 }
 
 function setRocket(width) {
@@ -238,7 +261,7 @@ function answerClicked(ans) {
     timerBack.classList.add('correct');
     streak += 1;
     if (streak == 5) {
-      grantAchievement(3);
+      grantAchievement("Streak5");
     }
     console.log(streak);
   }
@@ -346,7 +369,7 @@ function startQuiz() {
 function planets() {
   planetNo += 1;
   if (planetNo == 7) {
-    grantAchievement(2);
+    grantAchievement("Neptune");
   }
   //console.log(planetNo+' '+(rocketPositions.length-2));
   planetName = document.getElementById('planetName');
@@ -460,12 +483,12 @@ function setCompleted() {
   }
   incorrect += (5-score);
   if (incorrect >= 10) {
-    grantAchievement(4);
+    grantAchievement("Mistake10");
   }
   meteors += score;
   totalScore += score;
   if (meteors >= 25) {
-    grantAchievement(5);
+    grantAchievement("FiveRow");
   }
   if (score == 1) {
     document.getElementById('meteorites').innerHTML = 'You have earned '+score+' meteorite!';
@@ -519,7 +542,7 @@ function startStory() {
   else {
     audioButton.style.filter = 'grayscale(100%)'
   }
-  grantAchievement(1);
+  grantAchievement("FirstQuiz");
   planets();
   meteors = 0;
 }
@@ -559,7 +582,7 @@ function switchTab(id) {
 
 function learn() {
   selectedLearn = 0;
-  getJSON(protocol+ip+"/facts.json?key="+key+"").then(data => {
+  getJSON("/facts.json").then(data => {
     facts = data.facts;
     console.log(facts);
     factContents = document.getElementById('factContents');
@@ -687,11 +710,42 @@ function showShop(list, shopList) {
   
 }
 
+function dailyRandom(min, max) {
+  const today = new Date();
+  const year = today.getFullYear();
+  const dayOfYear = Math.floor(
+    (today - new Date(year, 0, 0)) / (1000 * 60 * 60 * 24)
+  );
+
+  // Deterministic seed based on year + day of year
+  const seed = year * 1000 + dayOfYear;
+
+  // Simple seeded pseudo-random generator
+  function seededRand(seed) {
+    let x = Math.sin(seed) * 10000;
+    return x - Math.floor(x);
+  }
+
+  return Math.floor(seededRand(seed) * (max - min + 1)) + min;
+}
+
+function factOfTheDay(facts) {
+  factID = dailyRandom(1,19);
+  if (factID < facts.facts[0].length) {
+    fact = facts.facts[0][factID]
+  }
+  else {
+    fact = facts.facts[1][factID-facts.facts[0].length]
+  }
+  return fact.fact
+}
+
 function home() {
   //console.log('home');
-  getJSON(protocol+ip+"/fact.json?key="+key+"").then(data => {
+  getJSON("/facts.json").then(data => {
+    factMSG = factOfTheDay(data)
     fact = document.getElementById('fact');
-    fact.innerHTML = data.fact.fact;
+    fact.innerHTML = factMSG;
     console.log(data);
   });
   
@@ -706,42 +760,41 @@ function profile() {
   
 
   document.getElementById('usernameProfile').innerHTML = username;
-  getJSON(protocol+ip+"/achievements.json?key="+key+"").then(data => {
-    //console.log(data);
-    achievements = data.achievements;
-    listItems = document.getElementById('achievements').children;
-    for (x = 0; x < listItems.length; x++) {
-      listItems[x].style.display = 'none';
+
+  // Achievements
+  grantedAchievements = getAchievements()
+  listItems = document.getElementById('achievements').children;
+  for (x = 0; x < listItems.length; x++) {
+    listItems[x].style.display = 'none';
+  }
+  for (x in achievements) {
+    achievement = achievements[x];
+    ul = document.getElementById('achievements');//.onclick();
+    li = document.createElement("li");
+    //li.innerHTML = achievement.name+': '+achievement.description;
+    img = document.createElement("img");
+    img.src = 'images/achievements/ach'+achievement.id+'.png';//achievement.image;
+    img.alt = x;
+    img.classList.add('imageGrid');
+    //txt = document.createTextNode(achievement.name+': '+achievement.description);
+    //li.appendChild(txt);
+    if (grantedAchievements[x] != undefined) {
+      img.style.filter = "grayscale(0%)";
     }
-    for (x = 0; x < achievements.length; x++) {
-      achievement = achievements[x];
-      ul = document.getElementById('achievements');//.onclick();
-      li = document.createElement("li");
-      //li.innerHTML = achievement.name+': '+achievement.description;
-      img = document.createElement("img");
-      img.src = 'images/achievements/ach'+achievement.id+'.png';//achievement.image;
-      img.alt = 'achievement '+achievement.id;
-      img.classList.add('imageGrid');
-      //txt = document.createTextNode(achievement.name+': '+achievement.description);
-      //li.appendChild(txt);
-      if (achievement.granted) {
-        img.style.filter = "grayscale(0%)";
-      }
-      else {
-        img.style.filter = "grayscale(100%)";
-      }
-      //console.log(x);
-      l = x;
-      img.onclick = function() {showAchievement(this.parentElement.id[0]);};
-      //console.log(img.onclick);
-      li.id = x+'achievement';
-      li.appendChild(img);
-      document.getElementById("achievements").appendChild(li);
-      //console.log(achievement);
+    else {
+      img.style.filter = "grayscale(100%)";
     }
-  });//.catch(error => {
-    //console.error(error);
-  //});
+    //console.log(x);
+    l = x;
+    img.onclick = function() {showAchievement(this.parentElement.id);};
+    //console.log(img.onclick);
+    li.id = x;
+    li.appendChild(img);
+    document.getElementById("achievements").appendChild(li);
+    //console.log(achievement);
+  }
+
+
   getJSON(protocol+ip+"/getResults.json?username="+username+"").then(data => {
     correct = data.correct;
     total = data.total;
@@ -875,20 +928,24 @@ function hideItem() {
 }
 
 function showAchievement(id) {
-  //console.log(id);
+  console.log(id);
+  grantedAchievements = getAchievements()
+
   achievementName = document.getElementById('achievementName');
   achievementName.innerHTML = achievements[id].name;
   achievementDescription = document.getElementById('achievementDescription');
   achievementDescription.innerHTML = achievements[id].description;
   achievementImage = document.getElementById('achievementImage');
-  achievementImage.src = 'images/achievements/ach'+(parseInt(id)+1)+'.png';//achievements[id].image;
-  achievementImage.alt = 'achievement '+(parseInt(id)+1);
+  achievementImage.src = 'images/achievements/ach'+(parseInt(achievements[id].id))+'.png';//achievements[id].image;
+  achievementImage.alt = id;
   achievementPopup = document.getElementById('achievementPopup');
-  if (achievements[id].granted){
+  if (grantedAchievements[id] != undefined){
     achievementPopup.style.backgroundColor = '#fb78c9';
+    achievementImage.style.filter = "grayscale(0%)";
   }
   else {
     achievementPopup.style.backgroundColor = '#888888';
+    achievementImage.style.filter = "grayscale(100%)";
   }
   achievementPopup.style.display = 'block';
   achievementDisabler = document.getElementById('achievementDisabler');
@@ -950,12 +1007,16 @@ function start2(data){
     getJSON(protocol+ip+'/getResults.json?username='+username).then(data => {
       incorrect += data.total-data.correct;
       if (incorrect >= 10) {
-        grantAchievement(4);
+        grantAchievement('Mistake10');
       }
       console.log(incorrect);
     });
-    switchPage('home');
-    switchTab('2');
+    
+    getJSON("/achievements.json").then(data => {
+      achievements = data.achievements;
+      switchPage('home');
+      switchTab('2');
+    })
   }
   else {
     error = document.getElementById('error');
