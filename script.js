@@ -15,7 +15,7 @@ var ansList = [];
 var qNumber = 0;
 var achievements;
 var shopList;
-var achievements;
+var allItems;
 var facts;
 var streak = 0;
 var incorrect = 0;
@@ -180,6 +180,28 @@ function getAchievements() {
   return JSON.parse(localStorage.getItem("achievements")) || {};
 }
 
+function getItems() {
+  return JSON.parse(localStorage.getItem("items")) || {};
+}
+
+function getUser() {
+  return JSON.parse(localStorage.getItem("user")) || {'username': '', 'pfp': null};
+}
+
+function getStats() {
+  return JSON.parse(localStorage.getItem("stats")) || {'questions': 0, 'correct': 0, 'meteors': 0};
+}
+
+function addScore(total, score) {
+  stats = getStats()
+  stats.questions += total
+  stats.meteors += score
+  stats.correct += score
+
+  localStorage.setItem("stats", JSON.stringify(stats));
+}
+
+
 function grantAchievement(aid) {
   // console.log(key);
   grantedAchievements = getAchievements();
@@ -187,19 +209,21 @@ function grantAchievement(aid) {
   if (grantedAchievements[aid] == undefined) {
     console.log('not granted')
     grantedAchievements[aid] = new Date().toISOString()
+    
+    localStorage.setItem("achievements", JSON.stringify(grantedAchievements));
+
+    achievementName = document.getElementById('achievtitle');
+    achievementName.innerHTML = achievements[aid].name+' - '+achievements[aid].description;
+    achievementIcon = document.getElementById('achievIcn');
+    console.log(aid);
+    achievementIcon.src = 'images/achievements/ach'+achievements[aid].id+'.png';//achievements[id].image;
+    achievementIcon.alt = aid;
+    achievementPopup2 = document.getElementById('achievUnlocked');
+    achievementPopup2.style.display = 'block';
+    a = setInterval(function() {achievementPopup2.style.display = 'none'; clearInterval(a)}, 3000)
   }
 
-  localStorage.setItem("achievements", JSON.stringify(grantedAchievements));
 
-  achievementName = document.getElementById('achievtitle');
-  achievementName.innerHTML = achievements[aid].name+' - '+achievements[aid].description;
-  achievementIcon = document.getElementById('achievIcn');
-  console.log(aid);
-  achievementIcon.src = 'images/achievements/ach'+achievements[aid].id+'.png';//achievements[id].image;
-  achievementIcon.alt = aid;
-  achievementPopup2 = document.getElementById('achievUnlocked');
-  achievementPopup2.style.display = 'block';
-  a = setInterval(function() {achievementPopup2.style.display = 'none'; clearInterval(a)}, 3000)
 
 
   // getJSON("/achievements.json").then(data => {
@@ -507,6 +531,7 @@ function setCompleted() {
       console.log(data);
     });
   })
+  addScore(5, score)
   //console.log(score);
 }
 
@@ -630,84 +655,85 @@ function toggleLearnTab(id) {
 
 function shop() {
   //console.log('shop');
-  getJSON(protocol+ip+"/shop.json?key="+key+"").then(data => {
-    //console.log(data);
-    shopList = data.shop.concat(data.bgShop);
-    shopLength = data.shop.length;
-    console.log(shopList);
-    meteors = data.meteors[0];
-    meteorCountShop = document.getElementById('meteorCountShop');
-    meteorCountShop.innerHTML = meteors;
-    showShop('shopContents', data.shop);
-    showShop('backgroundContents', data.bgShop);
-  })
+  meteors = getStats().meteors;
+  meteorCountShop = document.getElementById('meteorCountShop');
+  meteorCountShop.innerHTML = meteors;
+
+  shopList = { ...allItems.shop, ...allItems.bgShop };
+  shopLength = allItems.shop.length;
+  console.log(shopList);
+  showShop('shopContents', allItems.shop);
+  showShop('backgroundContents', allItems.bgShop);
 }
 
 function showShop(list, shopList) {
   listItems = document.getElementById(list).children;
+  ownedItems = getItems()
   for (x = 0; x < listItems.length; x++) {
     listItems[x].style.display = 'none';
   }
-  for (x = 0; x < shopList.length; x++) {
-    item = shopList[x];
-    li = document.createElement("li");
-    //li.innerHTML = item.name+': '+item.description;
-    img = document.createElement("img");
-    img.src = 'images/shop/item'+item.id+'.png';//item.image;
-    img.alt = 'item '+item.id;
-    if (list == 'backgroundContents') {
-      img.classList.add('bgGrid');
+  for (x in shopList) {
+    if (ownedItems[x] == undefined) {
+      item = shopList[x];
+      li = document.createElement("li");
+      //li.innerHTML = item.name+': '+item.description;
+      img = document.createElement("img");
+      img.src = 'images/shop/item'+item.id+'.png';//item.image;
+      img.alt = 'item '+item.id;
+      if (list == 'backgroundContents') {
+        img.classList.add('bgGrid');
+      }
+      else {
+        img.classList.add('imageGrid');
+      }
+      //txt = document.createTextNode(item.name+': '+item.description);
+      //li.appendChild(txt);
+      /*if (item.granted) {
+        img.style.filter = "grayscale(0%)";
+      }
+      else {
+        img.style.filter = "grayscale(100%)";
+      }*/
+      //console.log(x);
+      l = x;
+      //img.onclick = function() {showitem(this.parentElement.id[0]);};
+      //console.log(img.onclick);
+      li.id = x+'Shop';
+      li.setAttribute('name', x)
+      console.log(item.cost);
+      div = document.createElement("div");
+      div.classList.add("cost");
+
+      span = document.createElement("span");
+      span.classList.add("costText");
+      span.innerHTML = item.cost;
+      if (item.cost > meteors) {
+        span.style.color = 'red';
+        console.log('red');
+      }
+
+      mimg = document.createElement("img");
+      mimg.classList.add("meteoriteCost");
+      mimg.src = "images/meteorite.png";
+      div.appendChild(span);
+      div.appendChild(mimg);
+
+
+      li.appendChild(img);
+      
+      if (list != 'backgroundContents'){
+        li.onclick = function() {showItem(this.getAttribute('name'));};
+        li.appendChild(div);
+        
+      }
+
+      else {
+        li.onclick = function() {showImage(parseInt(this.getAttribute('name')));};
+      }
+      document.getElementById(list).appendChild(li);
+      //console.log(item);
     }
-    else {
-      img.classList.add('imageGrid');
-    }
-    //txt = document.createTextNode(item.name+': '+item.description);
-    //li.appendChild(txt);
-    /*if (item.granted) {
-      img.style.filter = "grayscale(0%)";
-    }
-    else {
-      img.style.filter = "grayscale(100%)";
-    }*/
-    //console.log(x);
-    l = x;
-    //img.onclick = function() {showitem(this.parentElement.id[0]);};
-    //console.log(img.onclick);
-    li.id = x+'item';
-    console.log(item.cost);
-    div = document.createElement("div");
-    div.classList.add("cost");
-
-    span = document.createElement("span");
-    span.classList.add("costText");
-    span.innerHTML = item.cost;
-    if (item.cost > meteors) {
-      span.style.color = 'red';
-      console.log('red');
   }
-
-  mimg = document.createElement("img");
-  mimg.classList.add("meteoriteCost");
-  mimg.src = "images/meteorite.png";
-  div.appendChild(span);
-  div.appendChild(mimg);
-
-
-  li.appendChild(img);
-  
-  if (list != 'backgroundContents'){
-    li.onclick = function() {showItem(this.id[0]);};
-    li.appendChild(div);
-    
-  }
-
-  else {
-    li.onclick = function() {showImage(parseInt(this.id[0])+shopLength);};
-  }
-  document.getElementById(list).appendChild(li);
-  //console.log(item);
-}
-  
 }
 
 function dailyRandom(min, max) {
@@ -758,7 +784,7 @@ function settings() {
 function profile() {
   //console.log('profile');
   
-
+  username = getUser().username
   document.getElementById('usernameProfile').innerHTML = username;
 
   // Achievements
@@ -786,32 +812,28 @@ function profile() {
     }
     //console.log(x);
     l = x;
-    img.onclick = function() {showAchievement(this.parentElement.id);};
+    img.onclick = function() {showAchievement(this.parentElement.getAttribute("name"));};
     //console.log(img.onclick);
-    li.id = x;
+    li.id = x+"Achievement";
+    li.setAttribute("name", x);
     li.appendChild(img);
     document.getElementById("achievements").appendChild(li);
     //console.log(achievement);
   }
 
+  stats = getStats()
+  document.getElementById('stats').innerHTML = stats.correct+'/'+stats.questions
 
-  getJSON(protocol+ip+"/getResults.json?username="+username+"").then(data => {
-    correct = data.correct;
-    total = data.total;
-    stats = document.getElementById('stats');
-    stats.innerHTML = correct+'/'+total;
 
-  });
-
-  getJSON(protocol+ip+"/inventory.json?key="+key+"").then(data => {
-    //console.log(data);
-    inventory = data.inventory;
-    listItems = document.getElementById('inventory').children;
-    for (x = 0; x < listItems.length; x++) {
-      listItems[x].style.display = 'none';
-    }
-    for (x = 0; x < inventory.length; x++) {
-      item = inventory[x];
+  
+  listItems = document.getElementById('inventory').children;
+  for (x = 0; x < listItems.length; x++) {
+    listItems[x].style.display = 'none';
+  }
+  ownedItems = getItems()
+  for (x in allItems.shop) {
+    if (ownedItems[x] != undefined) {
+      item = allItems.shop[x];
       ul = document.getElementById('inventory');//.onclick();
       li = document.createElement("li");
       //li.innerHTML = item.name+': '+item.description;
@@ -823,33 +845,35 @@ function profile() {
       //li.appendChild(txt);
       //console.log(x);
       l = x;
-      img.onclick = function() {setPFP(this.parentElement.id[0]);};
+      img.onclick = function() {setPFP(this.parentElement.getAttribute("name"));};
       //console.log(img.onclick);
-      li.id = x+'item';
+      li.id = x+'Item';
+      li.setAttribute("name", x);
       li.appendChild(img);
       document.getElementById("inventory").appendChild(li);
       //console.log(item);
     }
-  }); 
-  getJSON(protocol+ip+"/geticon.json?username="+username+"").then(data => {
-    console.log(data);
-    setIcon(data.icon);
-  });
+  }
+
+  setIcon();
 }
 
 function setPFP(id) {
-  id = inventory[id].id;
-  getJSON(protocol+ip+"/seticon.json?key="+key+"&id="+id).then(data => {
-    console.log(data);
-    setIcon(data.icon);
-  });
-  console.log(id);
+  user = getUser()
+  user.pfp = id;
+  localStorage.setItem("user", JSON.stringify(user));
+  setIcon();
 }
 
-function setIcon(id) {
-  icon = id;
+function setIcon() {
+  pfp = getUser().pfp
   profilePic = document.getElementById('profilePic');
-  profilePic.src = "images/shop/item"+id+".png"
+  if (pfp == undefined) {
+    profilePic.src = "images/shop/item.png"
+  }
+  else {
+    profilePic.src = "images/shop/item"+allItems.shop[pfp].id+".png"
+  }
 }
 
 function showItem(id) {
@@ -876,7 +900,7 @@ function showItem(id) {
   else {
     purchaseButton.disabled = false;
     itemCost.style.color = 'black';
-    purchaseButton.onclick = function() {purchaseItem(shopList[id].id);};
+    purchaseButton.onclick = function() {purchaseItem(id);};
   }
 
   /*if (achievements[id].granted){
@@ -905,16 +929,32 @@ function showImage(id) {
   shopDisabler.style.display = 'block';
 }
 
+// function purchaseItem(id) {
+//   console.log(id);
+//   sha256(id+username).then((uid) => {
+//     getJSON(protocol+ip+"/purchase.json?key="+key+"&uid="+uid+'&item='+id).then(data => {
+//       document.getElementById('purchase').disabled = 'true';
+//       meteors = data.meteors;
+//       shop();
+//       console.log(data);
+//     });
+//   });
+// }
+
 function purchaseItem(id) {
-  console.log(id);
-  sha256(id+username).then((uid) => {
-    getJSON(protocol+ip+"/purchase.json?key="+key+"&uid="+uid+'&item='+id).then(data => {
-      document.getElementById('purchase').disabled = 'true';
-      meteors = data.meteors;
-      shop();
-      console.log(data);
-    });
-  });
+  console.log(id)
+  ownedItems = getItems()
+  if (ownedItems[id] == undefined) {
+    ownedItems[id] = new Date().toISOString()
+    
+    localStorage.setItem("items", JSON.stringify(ownedItems));
+
+    stats = getStats()
+    stats.meteors -= shopList[id].cost
+    localStorage.setItem("stats", JSON.stringify(stats))
+    shop();
+  }
+  
 }
 
 function hideItem() {
@@ -1004,18 +1044,13 @@ function setLoginColour(colour) {
 function start2(data){
   //console.log(data);
   if (data.code == 200) {
-    getJSON(protocol+ip+'/getResults.json?username='+username).then(data => {
-      incorrect += data.total-data.correct;
-      if (incorrect >= 10) {
-        grantAchievement('Mistake10');
-      }
-      console.log(incorrect);
-    });
-    
     getJSON("/achievements.json").then(data => {
       achievements = data.achievements;
-      switchPage('home');
-      switchTab('2');
+      getJSON("/shop.json").then(data => {
+        allItems = data
+        switchPage('home');
+        switchTab('2');
+      })
     })
   }
   else {

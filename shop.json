@@ -1,0 +1,51 @@
+{
+  "bgShop": {
+    "item6": {
+      "cost": 50,
+      "id": 6,
+      "name": null
+    },
+    "item7": {
+      "cost": 100,
+      "id": 7,
+      "name": null
+    },
+    "item8": {
+      "cost": 200,
+      "id": 8,
+      "name": null
+    },
+    "item9": {
+      "cost": 400,
+      "id": 9,
+      "name": null
+    }
+  },
+  "shop": {
+    "Astronaut": {
+      "cost": 10,
+      "id": 1,
+      "name": "Astronaut"
+    },
+    "Alien": {
+      "cost": 20,
+      "id": 2,
+      "name": "Alien"
+    },
+    "Rocket": {
+      "cost": 50,
+      "id": 3,
+      "name": "Rocket"
+    },
+    "Meteor": {
+      "cost": 100,
+      "id": 4,
+      "name": "Meteor"
+    },
+    "Moon": {
+      "cost": 200,
+      "id": 5,
+      "name": "Moon"
+    }
+  }
+}
