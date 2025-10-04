@@ -25,12 +25,17 @@
         <div id="root">
         <!--<div style="width: 100%; height: 100%; left: 0%; top: 0%; position:fixed">-->
             <div class="pages" id='login' style='display:none; overflow: hidden'>
-                <form>
+                <!-- <form>
                     <p id="error"></p>
                     <input class="loginInput" type="text" id="username" placeholder="USERNAME" autocomplete="username">
                     <input class="loginInput" type="password" id="password" placeholder="PASSWORD" autocomplete="current-password">
                     <button class="loginButtons" id="createButton" onclick="logIn(createAccount)">Create Account</button>
                     <button class="loginButtons" id="loginButton" onclick="logIn()">Log In</button>
+                </form> -->
+                <form>
+                    <p id="error"></p>
+                    <input class="loginInput" type="text" id="username" placeholder="USERNAME" autocomplete="username">
+                    <button class="loginButtons" id="begin" onclick="beginLocal()">Begin!</button>
                 </form>
             </div>
 

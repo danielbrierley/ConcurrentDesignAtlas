@@ -31,8 +31,10 @@ form input {
 #username {
     top:60%;
 }
-#password {
+#begin {
     top:calc(60% + 60px);
+    left:15%;
+    width: 70%;
 }
 
 .loginButtons {

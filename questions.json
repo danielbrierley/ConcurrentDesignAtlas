@@ -1,0 +1,578 @@
+{
+  "questions": {
+    "Mercury": [
+      {
+        "answers": [
+          "Mercury",
+          "Saturn",
+          "Uranus"
+        ],
+        "question": "Which planet is closest to the sun?",
+        "theme": "Mercury"
+      },
+      {
+        "answers": [
+          "Jupiter",
+          "Saturn",
+          "Venus"
+        ],
+        "question": "What is the biggest planet in our solar system?",
+        "theme": "Mercury"
+      },
+      {
+        "answers": [
+          "8",
+          "10",
+          "12"
+        ],
+        "question": "How many planets does our solar system consist of?",
+        "theme": "Mercury"
+      },
+      {
+        "answers": [
+          "Earth",
+          "Mars",
+          "Venus"
+        ],
+        "question": "What is the third planet from the sun?",
+        "theme": "Mercury"
+      },
+      {
+        "answers": [
+          "Uranus",
+          "Neptune",
+          "Jupiter"
+        ],
+        "question": "What is the seventh planet from the sun in our solar system?",
+        "theme": "Mercury"
+      },
+      {
+        "answers": [
+          "365 days",
+          "66 days",
+          "102 days"
+        ],
+        "question": "How many days does it take Earth to orbit the sun?",
+        "theme": "Mercury"
+      },
+      {
+        "answers": [
+          "Milky Way",
+          "Dairy Milk",
+          "Mars Bar"
+        ],
+        "question": "What galaxy is the solar system in?",
+        "theme": "Mercury"
+      },
+      {
+        "answers": [
+          "Luna",
+          "Munya",
+          "Charon"
+        ],
+        "question": "What is the name of our moon?",
+        "theme": "Mercury"
+      },
+      {
+        "answers": [
+          "Saturn",
+          "Venus",
+          "Uranus"
+        ],
+        "question": "What is the second biggest planet in our solar system?",
+        "theme": "Mercury"
+      },
+      {
+        "answers": [
+          "Venus",
+          "Uranus",
+          "Neptune"
+        ],
+        "question": "Which planet is closest to the earth?",
+        "theme": "Mercury"
+      }
+    ],
+    "Venus": [
+      {
+        "answers": [
+          "4",
+          "9",
+          "10"
+        ],
+        "question": "How many gas giants are there in the solar system?",
+        "theme": "Venus"
+      },
+      {
+        "answers": [
+          "Year",
+          "Day",
+          "Neither"
+        ],
+        "question": "Which is shorter, Mercury's day or year?",
+        "theme": "Venus"
+      },
+      {
+        "answers": [
+          "Phobos",
+          "Galileo",
+          "Luna"
+        ],
+        "question": "Which is one of Mars' moons?",
+        "theme": "Venus"
+      },
+      {
+        "answers": [
+          "Jupiter",
+          "Saturn",
+          "Neptune"
+        ],
+        "question": "Which planet is famous for its big red spot?",
+        "theme": "Venus"
+      },
+      {
+        "answers": [
+          "27 days",
+          "5 months",
+          "12 days"
+        ],
+        "question": "What is the orbital period of the moon?",
+        "theme": "Venus"
+      },
+      {
+        "answers": [
+          "When the earth is between the sun and the moon",
+          "When the sun begins to lose its light",
+          "When the moon moves out of orbit"
+        ],
+        "question": "When does a lunar eclipse occur?",
+        "theme": "Venus"
+      },
+      {
+        "answers": [
+          "Yes",
+          "No",
+          "They're the same size"
+        ],
+        "question": "Is Neptune bigger than Earth?",
+        "theme": "Venus"
+      },
+      {
+        "answers": [
+          "A Star",
+          "A Planet",
+          "Neither a star nor a planet"
+        ],
+        "question": "Is the sun a star or a planet?",
+        "theme": "Venus"
+      },
+      {
+        "answers": [
+          "Jupiter",
+          "Mercury",
+          "Mars"
+        ],
+        "question": "Ganymede is the moon of which planet?",
+        "theme": "Venus"
+      },
+      {
+        "answers": [
+          "Gravity",
+          "Solar Winds",
+          "There is no name"
+        ],
+        "question": "What is the name of the force holding us to Earth?",
+        "theme": "Venus"
+      }
+    ],
+    "Earth": [
+      {
+        "answers": [
+          "Venus",
+          "Mercury",
+          "Earth"
+        ],
+        "question": "Which planet has the highest atmospheric temperature?",
+        "theme": "Earth"
+      },
+      {
+        "answers": [
+          "181",
+          "35",
+          "28"
+        ],
+        "question": "How many moons are in our solar system?",
+        "theme": "Earth"
+      },
+      {
+        "answers": [
+          "67",
+          "44",
+          "38"
+        ],
+        "question": "How many moons does Jupiter have?",
+        "theme": "Earth"
+      },
+      {
+        "answers": [
+          "Venus",
+          "Earth",
+          "Mars"
+        ],
+        "question": "Which planet has a day that lasts eight months?",
+        "theme": "Earth"
+      },
+      {
+        "answers": [
+          "Saturn",
+          "Pluto",
+          "Mercury"
+        ],
+        "question": "Which planet has the largest ring system?",
+        "theme": "Earth"
+      },
+      {
+        "answers": [
+          "24 hours",
+          "29 days",
+          "360 days"
+        ],
+        "question": "What is the rotational period of Earth?",
+        "theme": "Earth"
+      },
+      {
+        "answers": [
+          "Dwarf Planet",
+          "Gas Giant",
+          "Rocky Planet"
+        ],
+        "question": "Pluto is what kind of planet?",
+        "theme": "Earth"
+      },
+      {
+        "answers": [
+          "Hubble Space Telescope",
+          "Gordon Space Telescope",
+          "Galileo Space Telescope"
+        ],
+        "question": "What is the name of NASA's most famous space telescope?",
+        "theme": "Earth"
+      },
+      {
+        "answers": [
+          "Earth",
+          "Mars",
+          "Venus"
+        ],
+        "question": "What planet is the densest in our solar system?",
+        "theme": "Earth"
+      },
+      {
+        "answers": [
+          "Venus",
+          "Mars",
+          "Uranus"
+        ],
+        "question": "Which planet is known as Earth's sister planet?",
+        "theme": "Earth"
+      }
+    ],
+    "Mars": [
+      {
+        "answers": [
+          "2,159 miles",
+          "2,159 km",
+          "2,159 cm"
+        ],
+        "question": "What is the diameter of Earth's moon?",
+        "theme": "Mars"
+      },
+      {
+        "answers": [
+          "Mars",
+          "Jupiter",
+          "Saturn"
+        ],
+        "question": "Which planet is named after the Roman god of war?",
+        "theme": "Mars"
+      },
+      {
+        "answers": [
+          "Charon",
+          "Plutonia",
+          "Ganymede"
+        ],
+        "question": "What is the only known moon of Pluto?",
+        "theme": "Mars"
+      },
+      {
+        "answers": [
+          "Uranus",
+          "Neptune",
+          "Jupiter"
+        ],
+        "question": "Which planet is tilted on its side nearly at a right angle?",
+        "theme": "Mars"
+      },
+      {
+        "answers": [
+          "2,250kmph",
+          "2,222kmph",
+          "4,567kmph"
+        ],
+        "question": "At what speed does the moon move around the sun?",
+        "theme": "Mars"
+      },
+      {
+        "answers": [
+          "Mars",
+          "Venus",
+          "Jupiter"
+        ],
+        "question": "Olympus Mons is a large volcanic mountain on which planet?",
+        "theme": "Mars"
+      },
+      {
+        "answers": [
+          "Stars",
+          "Moons",
+          "Planets"
+        ],
+        "question": "Which of the following objects emits light?",
+        "theme": "Mars"
+      },
+      {
+        "answers": [
+          "Jupiter",
+          "Venus",
+          "Earth"
+        ],
+        "question": "What is the oldest planet in our solar system?",
+        "theme": "Mars"
+      }
+    ],
+    "Jupiter": [
+      {
+        "answers": [
+          "6,371km",
+          "5,674km",
+          "4,567km"
+        ],
+        "question": "What is the Earth's radius?",
+        "theme": "Jupiter"
+      },
+      {
+        "answers": [
+          "G-type main sequence star",
+          "White Dwarf",
+          "Red Giant"
+        ],
+        "question": "What type of star is the sun?",
+        "theme": "Jupiter"
+      },
+      {
+        "answers": [
+          "Ganymede",
+          "Charon",
+          "Phobus"
+        ],
+        "question": "What moon in our solar system is known to have its own magnetic fields?",
+        "theme": "Jupiter"
+      },
+      {
+        "answers": [
+          "5",
+          "6",
+          "7"
+        ],
+        "question": "How many planets can be seen without a telescope?",
+        "theme": "Jupiter"
+      },
+      {
+        "answers": [
+          "Its atomsphere is too thin to burn up meteorites",
+          "Asteroids have impacted the surface very hard",
+          "It's too hot so it has craters"
+        ],
+        "question": "Why does mercury have craters?",
+        "theme": "Jupiter"
+      },
+      {
+        "answers": [
+          "About 7 and a half minutes",
+          "About 5 minutes",
+          "About an hour"
+        ],
+        "question": "How long does a solar eclipse last?",
+        "theme": "Jupiter"
+      }
+    ],
+    "Saturn": [
+      {
+        "answers": [
+          "Ceres, Pallas, Vesta",
+          "Charon, Phobos, Ganymede",
+          "Neptune, Uranus, Titan"
+        ],
+        "question": "Name three famous asteroids",
+        "theme": "Saturn"
+      },
+      {
+        "answers": [
+          "One million",
+          "Three million",
+          "Two hundred"
+        ],
+        "question": "How many Earths could fit inside the sun?",
+        "theme": "Saturn"
+      },
+      {
+        "answers": [
+          "Between Mars and Jupiter",
+          "Between Saturn and Uranus",
+          "Between Uranus and Neptune"
+        ],
+        "question": "Where is the asteroid belt located?",
+        "theme": "Saturn"
+      },
+      {
+        "answers": [
+          "Any human made object stuck orbiting Earth",
+          "Any left over meteorites after an impact",
+          "Any space dust lingering around"
+        ],
+        "question": "What is space junk?",
+        "theme": "Saturn"
+      },
+      {
+        "answers": [
+          "Blue",
+          "Red",
+          "Orange"
+        ],
+        "question": "What colour are Mars' sunsets?",
+        "theme": "Saturn"
+      },
+      {
+        "answers": [
+          "Hydrogen and Helium",
+          "Oxygen and Carbon Dioxide",
+          "Sulphur and Oxygen"
+        ],
+        "question": "What elements is the sun composed of?",
+        "theme": "Saturn"
+      },
+      {
+        "answers": [
+          "Ices, Dust, and Rocks",
+          "Water, Space dust, oxygen",
+          "Carbon Dioxide, Carbon Monoxide, Oxygen"
+        ],
+        "question": "What is a comet made of?",
+        "theme": "Saturn"
+      }
+    ],
+    "Uranus": [
+      {
+        "answers": [
+          "29 Days",
+          "12 Days",
+          "45 Days"
+        ],
+        "question": "How long does it take the moon to pass through all its phases?",
+        "theme": "Uranus"
+      },
+      {
+        "answers": [
+          "Galileo",
+          "Einstein",
+          "Armstrong"
+        ],
+        "question": "Who described Saturn's rings as a teacup?",
+        "theme": "Uranus"
+      },
+      {
+        "answers": [
+          "Accretion Disk",
+          "Circular Arc",
+          "Outer Disk"
+        ],
+        "question": "What do scientists call the disk that encircles the black hole?",
+        "theme": "Uranus"
+      },
+      {
+        "answers": [
+          "A Galaxy",
+          "A Solar System",
+          "A Comet"
+        ],
+        "question": "What do you call a large group of stars, dust and gas?",
+        "theme": "Uranus"
+      },
+      {
+        "answers": [
+          "7 stars",
+          "100 stars",
+          "30 stars"
+        ],
+        "question": "How many stars make up the Big Dipper?",
+        "theme": "Uranus"
+      }
+    ],
+    "Neptune": [
+      {
+        "answers": [
+          "Neptune",
+          "Mars",
+          "Saturn"
+        ],
+        "question": "Which planet was the first planet located through mathematical predictions rather than through regular observations of the sky?",
+        "theme": "Neptune"
+      },
+      {
+        "answers": [
+          "Magnetar",
+          "Astrostar",
+          "The sun"
+        ],
+        "question": "What special type of neutron star would disintegrate your molecular structure if you get too close to it?",
+        "theme": "Neptune"
+      },
+      {
+        "answers": [
+          "Yes, a brown dwarf star",
+          "Yes, a white dwarf star",
+          "No they cannot"
+        ],
+        "question": "Can a star turn into a planet?",
+        "theme": "Neptune"
+      },
+      {
+        "answers": [
+          "Yes, gravitational waves are ripples through the universe",
+          "No it cannot form waves",
+          "It can form waves occasionally"
+        ],
+        "question": "Can gravity form waves?",
+        "theme": "Neptune"
+      },
+      {
+        "answers": [
+          "Lower part of the atmosphere",
+          "Upper part of the atmosphere",
+          "Central part of the atmosphere"
+        ],
+        "question": "Where can a biosphere be found?",
+        "theme": "Neptune"
+      },
+      {
+        "answers": [
+          "Just beyond Pluto",
+          "Near Jupiter",
+          "By Earth"
+        ],
+        "question": "Where is the oort cloud located?",
+        "theme": "Neptune"
+      }
+    ]
+  }
+}

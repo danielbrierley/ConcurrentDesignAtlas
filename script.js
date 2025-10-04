@@ -16,6 +16,7 @@ var qNumber = 0;
 var achievements;
 var shopList;
 var allItems;
+let allQuestions
 var facts;
 var streak = 0;
 var incorrect = 0;
@@ -255,7 +256,7 @@ function setRocket(width) {
 }
 
 function generateQuestionID() { //Generat a random question ID
-  number = randint(0, questions.questions.length-1);
+  number = randint(0, questions.length-1);
   console.log(number);
   if (completed.length == qn) {
     //alert('completed');
@@ -263,7 +264,7 @@ function generateQuestionID() { //Generat a random question ID
   }
   else {
     while (contains(number, completed)) {
-      number = randint(0, questions.questions.length-1);
+      number = randint(0, questions.length-1);
     }
     completed.push(number);
     qNumber = number;
@@ -317,9 +318,9 @@ function nextQuestion() {
   
   console.log(index);
   //Set text in question box
-  //console.log(questions.questions);
+  //console.log(questions);
   //console.log(index);
-  question = questions.questions[index];
+  question = questions[index];
   questionElement = document.getElementById("question");
   questionElement.innerHTML = question.question;
 
@@ -378,11 +379,14 @@ function startQuiz() {
     //console.log("Fetching data...");
 
     //Fetch questions from server
-    getJSON(protocol+ip+"/questions.json?key="+key+"&theme="+planetList[planetNo]).then(data => {
-      questions = data;
-      console.log(questions);
-      nextQuestion();
-    })//.catch(error => {
+    questions = allQuestions[planetList[planetNo]]
+    console.log(questions);
+    nextQuestion();
+    // getJSON(protocol+ip+"/questions.json?key="+key+"&theme="+planetList[planetNo]).then(data => {
+    //   questions = data;
+    //   console.log(questions);
+    //   nextQuestion();
+    // })//.catch(error => {
       //console.error(error);
     //});
 
@@ -473,7 +477,7 @@ function setCompleted() {
 
     questionBox = document.createElement('div');
     questionBox.setAttribute('class','questionResultSubTop');
-    question = questions.questions[answers[x][0]];
+    question = questions[answers[x][0]];
     //console.log(question);
     questionBox.innerHTML = question.question;
     questionResult.appendChild(questionBox);
@@ -500,7 +504,7 @@ function setCompleted() {
   score = 0;
   for (x = 0; x < answers.length; x++) {
     answer = answers[x];
-    //question = questions.questions[x];
+    //question = questions[x];
     if (answer[1] == 0) {
       score += 1;
     } 
@@ -523,14 +527,14 @@ function setCompleted() {
   timestamp = Date.now();
   console.log(timestamp);
   console.log(username);
-  sha256(timestamp+username).then((uid) => {
-    getJSON(protocol+ip+"/addmeteors.json?key="+key+"&uid="+uid+'&amount='+score).then(data => {
-      console.log(data);
-    });
-    getJSON(protocol+ip+"/addResult.json?key="+key+"&uid="+uid+'&amount='+score).then(data => {
-      console.log(data);
-    });
-  })
+  // sha256(timestamp+username).then((uid) => {
+  //   getJSON(protocol+ip+"/addmeteors.json?key="+key+"&uid="+uid+'&amount='+score).then(data => {
+  //     console.log(data);
+  //   });
+  //   getJSON(protocol+ip+"/addResult.json?key="+key+"&uid="+uid+'&amount='+score).then(data => {
+  //     console.log(data);
+  //   });
+  // })
   addScore(5, score)
   //console.log(score);
 }
@@ -607,26 +611,23 @@ function switchTab(id) {
 
 function learn() {
   selectedLearn = 0;
-  getJSON("/facts.json").then(data => {
-    facts = data.facts;
-    console.log(facts);
-    factContents = document.getElementById('factContents');
-    factContents.innerHTML = "";
-    for (x = 0; x < facts.length; x++) {
-      factSet = facts[x];
-      tab = document.createElement('div');
-      tab.classList.add('learnTabs');
-      for (y = 0; y < factSet.length; y++) {
-        fact = factSet[y];
-        f = document.createElement('div');
-        f.innerHTML = fact.fact;
-        tab.appendChild(f);
-      }
-      tab.style.display = 'none';
-      factContents.appendChild(tab);
+  console.log(facts);
+  factContents = document.getElementById('factContents');
+  factContents.innerHTML = "";
+  for (x = 0; x < facts.length; x++) {
+    factSet = facts[x];
+    tab = document.createElement('div');
+    tab.classList.add('learnTabs');
+    for (y = 0; y < factSet.length; y++) {
+      fact = factSet[y];
+      f = document.createElement('div');
+      f.innerHTML = fact.fact;
+      tab.appendChild(f);
     }
-    switchLearnTab(0);
-  });
+    tab.style.display = 'none';
+    factContents.appendChild(tab);
+  }
+  switchLearnTab(0);
   //console.log('learn');
 }
 
@@ -757,23 +758,21 @@ function dailyRandom(min, max) {
 
 function factOfTheDay(facts) {
   factID = dailyRandom(1,19);
-  if (factID < facts.facts[0].length) {
-    fact = facts.facts[0][factID]
+  if (factID < facts[0].length) {
+    fact = facts[0][factID]
   }
   else {
-    fact = facts.facts[1][factID-facts.facts[0].length]
+    fact = facts[1][factID-facts[0].length]
   }
   return fact.fact
 }
 
 function home() {
   //console.log('home');
-  getJSON("/facts.json").then(data => {
-    factMSG = factOfTheDay(data)
-    fact = document.getElementById('fact');
-    fact.innerHTML = factMSG;
-    console.log(data);
-  });
+  factMSG = factOfTheDay(facts)
+  fact = document.getElementById('fact');
+  fact.innerHTML = factMSG;
+  console.log(fact);
   
 }
 
@@ -1024,14 +1023,30 @@ function start(txt=null) {
 
   //Load the page
   //window.location = '#';
-  key = getCookie('key');
+  // key = getCookie('key');
   //console.log(key);
-  if (key == "") {
+  // if (key == "") {
+  //   switchPage('login');
+  // }
+  // else {
+  //     authenticate(key);
+  // }
+  if (getUser().username == '') {
     switchPage('login');
   }
   else {
-      authenticate(key);
+    start2({'code': '200'});
   }
+
+}
+
+function beginLocal() {
+  username = document.getElementById("username").value;
+  user = getUser()
+  user.username = username;
+  localStorage.setItem("user", JSON.stringify(user))
+
+  start2({'code': '200'})
 }
 
 function setLoginColour(colour) {
@@ -1048,8 +1063,14 @@ function start2(data){
       achievements = data.achievements;
       getJSON("/shop.json").then(data => {
         allItems = data
-        switchPage('home');
-        switchTab('2');
+        getJSON("/questions.json").then(data => {
+          allQuestions = data.questions
+          getJSON("/facts.json").then(data => {
+            facts = data.facts
+            switchPage('home');
+            switchTab('2');
+          })
+        })
       })
     })
   }
