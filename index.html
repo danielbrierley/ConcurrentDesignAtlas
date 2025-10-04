@@ -22,256 +22,258 @@
         
     </head>
     <body onload="start()">
-        <div id="root">
-        <!--<div style="width: 100%; height: 100%; left: 0%; top: 0%; position:fixed">-->
-            <div class="pages" id='login' style='display:none; overflow: hidden'>
-                <!-- <form>
-                    <p id="error"></p>
-                    <input class="loginInput" type="text" id="username" placeholder="USERNAME" autocomplete="username">
-                    <input class="loginInput" type="password" id="password" placeholder="PASSWORD" autocomplete="current-password">
-                    <button class="loginButtons" id="createButton" onclick="logIn(createAccount)">Create Account</button>
-                    <button class="loginButtons" id="loginButton" onclick="logIn()">Log In</button>
-                </form> -->
-                <form>
-                    <p id="error"></p>
-                    <input class="loginInput" type="text" id="username" placeholder="USERNAME" autocomplete="username">
-                    <button class="loginButtons" id="begin" onclick="beginLocal()">Begin!</button>
-                </form>
-            </div>
-
-            <div class="pages" id='quiz' style='display:none'>
-                <div id="map" style='display:none' onclick="startQuiz()">
-                    <div class="meteorCounter">
-                        <p id="meteorCount" style="float: left; font-size: 7ch"></p>
-                        <img class="meteoriteImage" src="images/meteorite.png" style="float: right"/>
-                    </div>
-                    <h2 id="planetName"></h2>
-                    <img id="rocket2" src="images/rocket.png" style="position: absolute; height: 20vh; transform: rotate(-90deg);">
+        <div id="mobileContainer">
+            <div id="root">
+            <!--<div style="width: 100%; height: 100%; left: 0%; top: 0%; position:fixed">-->
+                <div class="pages" id='login' style='display:none; overflow: hidden'>
+                    <!-- <form>
+                        <p id="error"></p>
+                        <input class="loginInput" type="text" id="username" placeholder="USERNAME" autocomplete="username">
+                        <input class="loginInput" type="password" id="password" placeholder="PASSWORD" autocomplete="current-password">
+                        <button class="loginButtons" id="createButton" onclick="logIn(createAccount)">Create Account</button>
+                        <button class="loginButtons" id="loginButton" onclick="logIn()">Log In</button>
+                    </form> -->
+                    <form>
+                        <p id="error"></p>
+                        <input class="loginInput" type="text" id="username" placeholder="USERNAME" autocomplete="username">
+                        <button class="loginButtons" id="begin" onclick="beginLocal()">Begin!</button>
+                    </form>
                 </div>
-                <div id="quiz2" style='display:none'>
-                    <div id='mcq' style="display:none">
-                        <p id="resultview"></p>
-                        <div class="question">
-                            <p id="question"></p>
+
+                <div class="pages" id='quiz' style='display:none'>
+                    <div id="map" style='display:none' onclick="startQuiz()">
+                        <div class="meteorCounter">
+                            <p id="meteorCount" style="float: left; font-size: 7ch"></p>
+                            <img class="meteoriteImage" src="images/meteorite.png" style="float: right"/>
                         </div>
-                        <div class="timer" id="timerBackground">
+                        <h2 id="planetName"></h2>
+                        <img id="rocket2" src="images/rocket.png" style="position: absolute; height: 20vh; transform: rotate(-90deg);">
+                    </div>
+                    <div id="quiz2" style='display:none'>
+                        <div id='mcq' style="display:none">
+                            <p id="resultview"></p>
+                            <div class="question">
+                                <p id="question"></p>
+                            </div>
+                            <div class="timer" id="timerBackground">
+                                <center>
+                                    <p id="timer"></p>
+                                </center>
+                            </div>
+                            <div class="answers">
+                                <button class="ans" id="ansB1" onclick="answerClicked(0)"><div class="bDiv" id="ans1"></div></button>
+                                <button class="ans" id="ansB2" onclick="answerClicked(1)"><div class="bDiv" id="ans2"></div></button>
+                                <button class="ans" id="ansB3" onclick="answerClicked(2)"><div class="bDiv" id="ans3"></div></button>
+                            </div>
+                        </div>
+                        <div class="result" id="result" style='display:none' onclick="planets()">
+                            <div id="resultTitle">
+                                <h1 id="congrats">Mission Complete!</h1>
+                            </div>
                             <center>
-                                <p id="timer"></p>
+                            <div class="scroll" id="resultDiv"></div>
                             </center>
+                            <div class="rewardDiv">
+                                <p id="meteorites"></p>
+                                <img class="meteoriteImage" src="images/meteorite.png" />
+                            </div>
                         </div>
-                        <div class="answers">
-                            <button class="ans" id="ansB1" onclick="answerClicked(0)"><div class="bDiv" id="ans1"></div></button>
-                            <button class="ans" id="ansB2" onclick="answerClicked(1)"><div class="bDiv" id="ans2"></div></button>
-                            <button class="ans" id="ansB3" onclick="answerClicked(2)"><div class="bDiv" id="ans3"></div></button>
+
+                        <div id="myProgress">
+                            <div id="myBar" style="float: left">0%</div>
+                            <img id="rocket" src="images/rocket.png" style="float: right; height: 20vh; position:absolute;left:calc(0% - 70px); top:-50%"/>
                         </div>
                     </div>
-                    <div class="result" id="result" style='display:none' onclick="planets()">
+
+                        
+                    <div class="result" id="endofstory" style='display:none' onclick="switchPage('home')">
                         <div id="resultTitle">
-                            <h1 id="congrats">Mission Complete!</h1>
+                            <h1 id="congrats">Congratulations!</h1>
                         </div>
+
                         <center>
-                        <div class="scroll" id="resultDiv"></div>
+                        <div id="resultDivEnd">
+                            <p>You have completed the Solar System Storyline!</p>
+                            <p id="resultCorrect">12/40</p>
+                            <div class="rewardDivEnd">
+
+                                <p id="meteoritesEnd">You earned a total of 40 Meteorites!</p>
+                                <img class="meteoriteImage" src="images/meteorite.png" />
+                            </div>
+                        </div>
                         </center>
-                        <div class="rewardDiv">
-                            <p id="meteorites"></p>
-                            <img class="meteoriteImage" src="images/meteorite.png" />
-                        </div>
                     </div>
 
-                    <div id="myProgress">
-                        <div id="myBar" style="float: left">0%</div>
-                        <img id="rocket" src="images/rocket.png" style="float: right; height: 20vh; position:absolute;left:calc(0% - 70px); top:-50%"/>
+                    <div class="audioToggle" id="audioButton" onclick="toggleAudio()">
+                        <img src="images/settings/sound.png">
                     </div>
+
                 </div>
 
-                    
-                <div class="result" id="endofstory" style='display:none' onclick="switchPage('home')">
-                    <div id="resultTitle">
-                        <h1 id="congrats">Congratulations!</h1>
-                    </div>
-
-                    <center>
-                    <div id="resultDivEnd">
-                        <p>You have completed the Solar System Storyline!</p>
-                        <p id="resultCorrect">12/40</p>
-                        <div class="rewardDivEnd">
-
-                            <p id="meteoritesEnd">You earned a total of 40 Meteorites!</p>
-                            <img class="meteoriteImage" src="images/meteorite.png" />
-                        </div>
-                    </div>
-                    </center>
-                </div>
-
-                <div class="audioToggle" id="audioButton" onclick="toggleAudio()">
-                    <img src="images/settings/sound.png">
-                </div>
-
-            </div>
-
-            <div class='pages' id='home' style="display:none">
-                <div class='contents learntab' id='0' style="display:none">
-                    <h1 id="learnTitle">Learn</h1>
-                    <div class="learnImg" >
-                    <button class="learnTabsBtn" onclick="switchLearnTab(0)">Planets</button>
-                    
-                    <button class="learnTabsBtn" onclick="switchLearnTab(1)">Stars</button>
-                    </div>
-                    <div class="learn scroll">
-                        <div id="factContents">
-
-                        </div>
-                    </div>
-                </div>
-
-                <div class='contents tabshop' id='1' style="display:none">
-                    <h1 id="shopTitle">Shop</h1>
-                    <div class="meteorCounter" style="position:absolute; right:0%; top: 0%;">
-                        <p id="meteorCountShop" style="float: left; font-size: 7ch">0</p>
-                        <img class="meteoriteImage" src="images/meteorite.png" style="float: right"/>
-                    </div>
-                    <div id="shopScroll" class="scroll">
-                        <h3 style="margin-top: 0">Profile Pictures</h3>
-                        <ul id="shopContents"></ul>
-                        <h3>Artwork</h3>
-                        <ul id="backgroundContents"></ul>
-                    </div>
-
-                    
-                    <div id="shopDisabler" style="display:none" onclick="hideItem()"></div>
-                    <div id="itemPopup" style="display:none;">
-                        <div class="ii">
-                            <img id="itemImage"/>
-                        </div>
-                        <div class="ic">
-                            <button id="purchase">
-                                <span id="itemCost"></span>
-                                <img class="meteoriteCost" src="images/meteorite.png">
-                            </button>
-                        </div>
+                <div class='pages' id='home' style="display:none">
+                    <div class='contents learntab' id='0' style="display:none">
+                        <h1 id="learnTitle">Learn</h1>
+                        <div class="learnImg" >
+                        <button class="learnTabsBtn" onclick="switchLearnTab(0)">Planets</button>
                         
-                    </div>
-                    <div id="imagePopup" style="display:none;">
-                        <div class="ii">
-                            <img id="fullImage"/>
+                        <button class="learnTabsBtn" onclick="switchLearnTab(1)">Stars</button>
                         </div>
+                        <div class="learn scroll">
+                            <div id="factContents">
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class='contents tabshop' id='1' style="display:none">
+                        <h1 id="shopTitle">Shop</h1>
+                        <div class="meteorCounter" style="position:absolute; right:0%; top: 0%;">
+                            <p id="meteorCountShop" style="float: left; font-size: 7ch">0</p>
+                            <img class="meteoriteImage" src="images/meteorite.png" style="float: right"/>
+                        </div>
+                        <div id="shopScroll" class="scroll">
+                            <h3 style="margin-top: 0">Profile Pictures</h3>
+                            <ul id="shopContents"></ul>
+                            <h3>Artwork</h3>
+                            <ul id="backgroundContents"></ul>
+                        </div>
+
                         
-                    </div>
-
-                </div>
-
-                <div class='contents tabs2' id='2' onclick="switchPage('quiz')" style="display:none">
-                    <p id="key" style="display:none"></p>
-                        <div class="fact">
-                            <p id="fact"></p>
+                        <div id="shopDisabler" style="display:none" onclick="hideItem()"></div>
+                        <div id="itemPopup" style="display:none;">
+                            <div class="ii">
+                                <img id="itemImage"/>
+                            </div>
+                            <div class="ic">
+                                <button id="purchase">
+                                    <span id="itemCost"></span>
+                                    <img class="meteoriteCost" src="images/meteorite.png">
+                                </button>
+                            </div>
+                            
                         </div>
+                        <div id="imagePopup" style="display:none;">
+                            <div class="ii">
+                                <img id="fullImage"/>
+                            </div>
+                            
+                        </div>
+
+                    </div>
+
+                    <div class='contents tabs2' id='2' onclick="switchPage('quiz')" style="display:none">
+                        <p id="key" style="display:none"></p>
+                            <div class="fact">
+                                <p id="fact"></p>
+                            </div>
+                    </div>
+
+                    <div class='contents settingsTab' id='3' style="display:none">
+                        <img src="images/settings.png" class="settingsImage" />
+                        <h1 id="settingsTitle">Settings</h1>
+                        <div class="settings scroll">
+                            <table id="settingOpt">
+                                <tr>
+                                    <td class="setLbl">
+                                        Sound
+                                        <img class="settingIcons" src="images/settings/sound.png" />
+                                    </td>
+                                    <td class="setTgl">
+                                        <label class="switch">
+                                            <input type="checkbox" onclick="toggleSound()" checked>
+                                            <span class="slider round"></span>
+                                        </label>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="setLbl">
+                                        Music
+                                        <img class="settingIcons" src="images/settings/music.png" />
+                                    </td>
+                                    <td class="setTgl">
+                                        <label class="switch">
+                                            <input type="checkbox" onclick="toggleMusic()" checked>
+                                            <span class="slider round"></span>
+                                        </label>
+                                    </td>
+                                </tr>
+                                <!--<tr>
+                                    <td class="setLbl">
+                                        Username
+                                    </td>
+                                    <td class="setTgl">
+                                        <input class="txtInput" disabled>
+                                    </td>
+                                </tr>-->
+                                <!-- <tr>
+                                    <td colspan="2">
+                                        <button class="setBtn" onclick="logOut()">
+                                            <img class="settingIcons" src="images/settings/logout.png" />
+                                            Log Out
+                                        </button>
+                                    </td>
+                                </tr> -->
+                            </table>
+                            <br>
+                        </div>
+                    </div>
+
+                    <div class='contents profileBack' id='4' style="display:none">
+                        <h1 id="profileTitle">Profile</h1>
+                        <div class="profile">
+                            <img id="profilePic" class="imageGrid" style="filter: grayscale(0%);">
+                            <p id="usernameProfile"></p>
+                        </div>
+                        <div class="profileScroll scroll">
+                            <h4>Achievements</h4>
+                            <ul id="achievements"></ul>
+                            
+                            <h4>Inventory</h4>
+                            <ul id="inventory"></ul>
+        
+                            <h4>My Stats</h4>
+                            <p id="stats"></p>
+                        </div>
+                        <div id="achievementDisabler" style="display:none" onclick="hideAchievement()"></div>
+                        <div id="achievementPopup" style="display:none; background-color: #fb78c9;">
+                            <div class="an">
+                                <h3 id="achievementName"></h3>
+                            </div>
+                            <div class="ai">
+                                <img id="achievementImage"/>
+                            </div>
+                            <div class="ad">
+                                <p id="achievementDescription"></p>
+                            </div>
+                            
+                        </div>
+                    </div>
+
+                    <div class='navbar'>
+                        <button class="tab" id="tab1" onclick="switchTab('0')">
+                        </button>
+                        <button class="tab" id="tab2" onclick="switchTab('1')">
+                        </button>
+                        <button class="tab" id="tab3" onclick="switchTab('2')">
+                        </button>
+                        <button class="tab" id="tab4" onclick="switchTab('3')">
+                        </button>
+                        <button class="tab" id="tab5" onclick="switchTab('4')">
+                        </button>
+                    </div>
                 </div>
 
-                <div class='contents settingsTab' id='3' style="display:none">
-                    <img src="images/settings.png" class="settingsImage" />
-                    <h1 id="settingsTitle">Settings</h1>
-                    <div class="settings scroll">
-                        <table id="settingOpt">
-                            <tr>
-                                <td class="setLbl">
-                                    Sound
-                                    <img class="settingIcons" src="images/settings/sound.png" />
-                                </td>
-                                <td class="setTgl">
-                                    <label class="switch">
-                                        <input type="checkbox" onclick="toggleSound()" checked>
-                                        <span class="slider round"></span>
-                                    </label>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="setLbl">
-                                    Music
-                                    <img class="settingIcons" src="images/settings/music.png" />
-                                </td>
-                                <td class="setTgl">
-                                    <label class="switch">
-                                        <input type="checkbox" onclick="toggleMusic()" checked>
-                                        <span class="slider round"></span>
-                                    </label>
-                                </td>
-                            </tr>
-                            <!--<tr>
-                                <td class="setLbl">
-                                    Username
-                                </td>
-                                <td class="setTgl">
-                                    <input class="txtInput" disabled>
-                                </td>
-                            </tr>-->
-                            <tr>
-                                <td colspan="2">
-                                    <button class="setBtn" onclick="logOut()">
-                                        <img class="settingIcons" src="images/settings/logout.png" />
-                                        Log Out
-                                    </button>
-                                </td>
-                            </tr>
-                        </table>
-                        <br>
-                    </div>
+                <div class="achievementPopup" id="achievUnlocked" style="display:none">
+                    <img id="achievIcn"/>
+                    <p id="achievunlock" style="font-size: 2.5ch;">Achievement Unlocked!</p>
+                    <p id="achievtitle"></p>
                 </div>
 
-                <div class='contents profileBack' id='4' style="display:none">
-                    <h1 id="profileTitle">Profile</h1>
-                    <div class="profile">
-                        <img id="profilePic" class="imageGrid" style="filter: grayscale(0%);">
-                        <p id="usernameProfile"></p>
-                    </div>
-                    <div class="profileScroll scroll">
-                        <h4>Achievements</h4>
-                        <ul id="achievements"></ul>
-                        
-                        <h4>Inventory</h4>
-                        <ul id="inventory"></ul>
-    
-                        <h4>My Stats</h4>
-                        <p id="stats"></p>
-                    </div>
-                    <div id="achievementDisabler" style="display:none" onclick="hideAchievement()"></div>
-                    <div id="achievementPopup" style="display:none; background-color: #fb78c9;">
-                        <div class="an">
-                            <h3 id="achievementName"></h3>
-                        </div>
-                        <div class="ai">
-                            <img id="achievementImage"/>
-                        </div>
-                        <div class="ad">
-                            <p id="achievementDescription"></p>
-                        </div>
-                        
-                    </div>
+                <div class="pages" id="noscript" style="display:block">
+                    <noscript>JavaScript is required to use this app</noscript>
                 </div>
-
-                <div class='navbar'>
-                    <button class="tab" id="tab1" onclick="switchTab('0')">
-                    </button>
-                    <button class="tab" id="tab2" onclick="switchTab('1')">
-                    </button>
-                    <button class="tab" id="tab3" onclick="switchTab('2')">
-                    </button>
-                    <button class="tab" id="tab4" onclick="switchTab('3')">
-                    </button>
-                    <button class="tab" id="tab5" onclick="switchTab('4')">
-                    </button>
-                </div>
+            <!--</div>-->
             </div>
-
-            <div class="achievementPopup" id="achievUnlocked" style="display:none">
-                <img id="achievIcn"/>
-                <p id="achievunlock" style="font-size: 2.5ch;">Achievement Unlocked!</p>
-                <p id="achievtitle"></p>
-            </div>
-
-            <div class="pages" id="noscript" style="display:block">
-                <noscript>JavaScript is required to use this app</noscript>
-            </div>
-        <!--</div>-->
         </div>
     </body>
 </html>
