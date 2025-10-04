@@ -224,23 +224,6 @@ function grantAchievement(aid) {
     a = setInterval(function() {achievementPopup2.style.display = 'none'; clearInterval(a)}, 3000)
   }
 
-
-
-
-  // getJSON("/achievements.json").then(data => {
-  //   console.log(data);
-  //   if (data.code == 200) {
-  //     achievementName = document.getElementById('achievtitle');
-  //     achievementName.innerHTML = data.name+' - '+data.description;
-  //     achievementIcon = document.getElementById('achievIcn');
-  //     console.log(aid);
-  //     achievementIcon.src = 'images/achievements/ach'+aid+'.png';//achievements[id].image;
-  //     achievementIcon.alt = 'achievement '+aid;
-  //     achievementPopup2 = document.getElementById('achievUnlocked');
-  //     achievementPopup2.style.display = 'block';
-  //     a = setInterval(function() {achievementPopup2.style.display = 'none'; clearInterval(a)}, 3000)
-  //   }
-  // })
 }
 
 function setRocket(width) {
@@ -1059,13 +1042,13 @@ function setLoginColour(colour) {
 function start2(data){
   //console.log(data);
   if (data.code == 200) {
-    getJSON("/achievements.json").then(data => {
+    getJSON("achievements.json").then(data => {
       achievements = data.achievements;
-      getJSON("/shop.json").then(data => {
+      getJSON("shop.json").then(data => {
         allItems = data
-        getJSON("/questions.json").then(data => {
+        getJSON("questions.json").then(data => {
           allQuestions = data.questions
-          getJSON("/facts.json").then(data => {
+          getJSON("facts.json").then(data => {
             facts = data.facts
             switchPage('home');
             switchTab('2');
