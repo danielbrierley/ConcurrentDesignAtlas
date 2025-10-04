@@ -1014,12 +1014,13 @@ function start(txt=null) {
   // else {
   //     authenticate(key);
   // }
-  if (getUser().username == '') {
-    switchPage('login');
-  }
-  else {
-    start2({'code': '200'});
-  }
+  start2({'code': '200'});
+  // if (getUser().username == '') {
+  //   switchPage('login');
+  // }
+  // else {
+  //   start2({'code': '200'});
+  // }
 
 }
 
